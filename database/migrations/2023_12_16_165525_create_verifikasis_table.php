@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('id_pembeli');
             $table->enum('status', ['belum_verified', 'data_salah', 'verified'])->default('belum_verified');
-            $table->enum('jenis_kesalahan', ['nihil','nama_pembeli', 'pekerjaan', 'foto_pembeli', 'foto_ktp'])->default('nihil');
+            $table->enum('jenis_kesalahan', ['nihil','nama_pembeli', 'pekerjaan', 'foto'])->default('nihil');
             $table->text('komentar');
         });
     }

@@ -19,16 +19,12 @@ class PembeliController extends Controller
     {
         return view('profile.edit',[
             'title' => 'Profile',
-            'active' => 'active'
+            'active' => 'active',
         ]);
     }
 
     public function updateProfile(Request $request, $id)
-    {
-        $validatedData = $request->validate([
-            'foto_ktp' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'foto_pembeli' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
+    {   
 
         $data_pembeli = User::where('username', $id)->first();
         $pembeli = Pembeli::where('user_id', $data_pembeli->id)->first();
@@ -37,6 +33,8 @@ class PembeliController extends Controller
             $image_ktp = $request->file('foto_ktp');
             $path_ktp = $image_ktp->storeAs('public/photos', 'ktp_'.$request->nama_pembeli . time() . '.' . $image_ktp->getClientOriginalExtension());
             $url_ktp = Storage::url($path_ktp);
+            $pembeli->foto_ktp = $url_ktp;  
+
         }
 
         // Simpan foto pembeli
@@ -44,14 +42,16 @@ class PembeliController extends Controller
             $image_pembeli = $request->file('foto_pembeli');
             $path_pembeli = $image_pembeli->storeAs('public/photos', 'pembeli_'.$request->nama_pembeli . time() . '.' . $image_pembeli->getClientOriginalExtension());
             $url_pembeli = Storage::url($path_pembeli);
+            $pembeli->foto_pembeli = $url_pembeli;  
+
         }
 
-        $pembeli->foto_ktp = $url_ktp;  
-        $pembeli->foto_pembeli = $url_pembeli;  
+        $pembeli->nama_pembeli = $request->nama_pembeli;  
+        $pembeli->pekerjaan = $request->pekerjaan;  
         $pembeli->save();
 
         Session::flash('success', 'Berhasil update data. Mohon menunggu admin untuk verifikasi kembali');
-        return redirect('/profile');
+        return redirect('/');
 
     }
 

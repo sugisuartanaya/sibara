@@ -31,18 +31,22 @@ class LoginController extends Controller
             $pembeli = $user->pembeli;
 
             if ($pembeli) {
-                $verifikasiStatus = $pembeli->verifikasi ? $pembeli->verifikasi->status : null;
+                $verifikasi = $pembeli->verifikasi;
 
-                if ($verifikasiStatus === 'belum_verified') {
-                    Auth::logout(); // Log the user out
-                    return back()->with('loginError', 'Akun Anda belum diverifikasi. Mohon menunggu konfirmasi melalui WhatsApp pada nomor telepon yang terdaftar.');
-                } elseif ($verifikasiStatus === 'data_salah') {
-                    $request->session()->regenerate();
-                    // Redirect the user to the edit page with additional data
-                    return redirect()->intended('/account/profile/edit')->with([
-                        'title' => 'Masuk',
-                        'active' => 'active'
-                    ]);
+                if ($verifikasi) {
+                    $verifikasiStatus = $verifikasi->status;
+
+                    if ($verifikasiStatus === 'belum_verified') {
+                        Auth::logout(); // Log the user out
+                        return back()->with('loginError', 'Akun Anda belum diverifikasi. Mohon menunggu konfirmasi melalui WhatsApp pada nomor telepon yang terdaftar.');
+                    } elseif ($verifikasiStatus === 'data_salah') {
+                        $request->session()->regenerate();
+
+                        return redirect()->intended('/account/profile/edit')->with([
+                            'title' => 'Masuk',
+                            'actie' => 'active'
+                        ]);
+                    }
                 }
             }
 
@@ -50,8 +54,10 @@ class LoginController extends Controller
             return redirect()->intended('/');
         }
 
+
         return back()->with('loginError', 'Login gagal!');
     }
+
 
     public function logout(Request $request){
         Auth::logout();
