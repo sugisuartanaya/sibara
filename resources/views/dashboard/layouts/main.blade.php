@@ -24,10 +24,10 @@
           <ul class="nav">
             @auth
               <li class="nav-item dropdown">
-                <a href="#" class="nav-link px-2 active dropdown-toggle" role="button" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">&nbsp;Selamat Datang, {{ auth()->user()->pembeli->nama_pembeli }}</a>
+                <a href="#" class="nav-link px-2 dropdown-toggle {{ ($title === "Profile") ? 'active' : '' }}" role="button" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">&nbsp;Selamat Datang, {{ auth()->user()->pembeli->nama_pembeli }}</a>
                 <ul class="dropdown-menu dropdown-menu-end">
                     {{-- Konten Dropdown --}}
-                    <li><a class="dropdown-item" href="#"><i class="fa fa-user"></i>&nbsp;My Profile</a></li>
+                    <li><a class="dropdown-item" href="/account/profile/edit"><i class="fa fa-user"></i>&nbsp;My Profile</a></li>
                     <li><a class="dropdown-item" href="/logout"><i class="fa fa-sign-out"></i>&nbsp;Logout</a></li>
                 </ul>
               </li>
@@ -130,6 +130,8 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    <script src="{{ asset('js/main.js') }}"></script>
 
   </body>
 </html>

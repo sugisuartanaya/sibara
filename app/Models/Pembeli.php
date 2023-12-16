@@ -11,10 +11,6 @@ class Pembeli extends Model
 
     public $timestamps = false;
 
-    protected $casts = [
-        'is_verified' => 'boolean',
-    ];
-
     public function user(){
         return $this->belongsTo(User::class, 'user_id');
     }
@@ -29,4 +25,8 @@ class Pembeli extends Model
         'foto_ktp',
         'is_verified',
     ];
+
+    public function verifikasi(){
+        return $this->hasOne(Verifikasi::class, 'id_pembeli');
+    }
 }

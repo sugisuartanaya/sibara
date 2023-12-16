@@ -20,7 +20,8 @@
           @csrf
 
           <input type="text" style="display:none;" id="role" name="role" class="form-control" value="2">
-          <input type="checkbox" style="display:none;" id="is_verified" name="is_verified" class="form-control">
+          <input type="text" style="display:none;" id="role" name="komentar" class="form-control" value="belum ada komentar">
+          {{-- <input type="checkbox" style="display:none;" id="is_verified" name="is_verified" class="form-control"> --}}
   
           <div class="row mb-3">
             <div class="col-sm-3 col-md-3 col-xs-12">

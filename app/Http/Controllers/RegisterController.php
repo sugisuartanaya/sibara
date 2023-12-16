@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Pembeli;
+use App\Models\Verifikasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
@@ -39,6 +40,7 @@ class RegisterController extends Controller
             'role' => $validatedData['role'],
         ]);
 
+        
         // Simpan foto
         // Simpan foto KTP
         if ($request->hasFile('foto_ktp')) {
@@ -54,7 +56,7 @@ class RegisterController extends Controller
             $url_pembeli = Storage::url($path_pembeli);
         }
 
-        Pembeli::create([
+        $pembeli = Pembeli::create([
             'user_id' => $user->id,
             'nama_pembeli' => $validatedData['nama_pembeli'],
             'pekerjaan' => $validatedData['pekerjaan'],
@@ -62,7 +64,14 @@ class RegisterController extends Controller
             'alamat' => $validatedData['alamat'],
             'foto_ktp' => $url_ktp,
             'foto_pembeli' => $url_pembeli,
-            'is_verified' => $request->has('is_verified')
+            // 'is_verified' => $request->has('is_verified')
+        ]);
+
+        $id_pembeli = $pembeli->id;
+
+        Verifikasi::create([
+            'id_pembeli' => $id_pembeli,
+            'komentar' => $request['komentar']
         ]);
 
         // Set flash message

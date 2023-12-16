@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PembeliController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
 
@@ -24,3 +25,6 @@ Route::get('/logout', [LoginController::class, 'logout']);
 
 Route::get('/account/register', [RegisterController::class, 'index']);
 Route::post('/account/register', [RegisterController::class, 'store']);
+
+Route::get('/account/profile/edit', [PembeliController::class, 'myProfile']);
+Route::put('/account/profile/{username}', [PembeliController::class, 'updateProfile']);
