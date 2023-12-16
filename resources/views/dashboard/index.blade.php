@@ -5,6 +5,19 @@
 
 <div class="container-fluid cover" style="background-image: url('{{ asset('images/bg-carousel.jpg') }}');">
   <div class="container">
+
+    {{-- Alert  --}}
+    
+    @if(session('success'))
+      <div class="alert alert-success custom-alert alert-dismissible fade show" role="alert">
+        <div class="text-center">
+          <strong>Terimakasih, mohon menunggu sampai data Anda terverifikasi.</strong>
+          <p>Kami akan menghubungi anda lewat Whatsapp jika data anda sudah berhasil terverifikasi</p>
+        </div> 
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    @endif
+
     <div class="row justify-content-md-center py-5">
       <div class="col-md-12">
         <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">

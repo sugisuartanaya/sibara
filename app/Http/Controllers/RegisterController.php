@@ -66,7 +66,7 @@ class RegisterController extends Controller
         ]);
 
         // Set flash message
-        Session::flash('success', 'Terimakasih, mohon menunggu sampai data Anda terverifikasi. Kami akan menghubungi anda lewat Whatsapp jika data anda sudah berhasil terverifikasi');
+        Session::flash('success');
 
         return redirect('/');
 
