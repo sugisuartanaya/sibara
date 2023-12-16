@@ -16,9 +16,13 @@
         <div class="card mt-1">
           <div class="card-body">
       
-            <form action="/account/login" method="post" enctype="multipart/form-data">
+            <form action="/account/login" method="post">
               @csrf
-              
+              @if (session()->has('loginError'))
+                <div class="alert alert-danger" role="alert">
+                  {{ session('loginError') }}
+                </div>
+              @endif
               
               <div class="mb-3">
                 <label for="username" class="form-label">Username</label>

@@ -21,9 +21,8 @@ class RegisterController extends Controller
 
     public function store(Request $request)
     {
-
         $validatedData = $request->validate([
-            'username' => 'required',
+            'username' => 'required|unique:users',
             'password' => 'required|min:8',
             'nama_pembeli' => 'required',
             'role' => 'required',
@@ -63,6 +62,7 @@ class RegisterController extends Controller
             'alamat' => $validatedData['alamat'],
             'foto_ktp' => $url_ktp,
             'foto_pembeli' => $url_pembeli,
+            'is_verified' => $request->has('is_verified')
         ]);
 
         // Set flash message

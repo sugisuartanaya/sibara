@@ -11,6 +11,10 @@ class Pembeli extends Model
 
     public $timestamps = false;
 
+    protected $casts = [
+        'is_verified' => 'boolean',
+    ];
+
     public function user(){
         return $this->belongsTo(User::class, 'user_id');
     }
@@ -23,5 +27,6 @@ class Pembeli extends Model
         'alamat',
         'foto_pembeli',
         'foto_ktp',
+        'is_verified',
     ];
 }

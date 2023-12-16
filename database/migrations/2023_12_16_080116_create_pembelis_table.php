@@ -22,6 +22,7 @@ return new class extends Migration
             $table->text('alamat');
             $table->text('foto_pembeli');
             $table->text('foto_ktp');
+            $table->boolean('is_verified');
         });
     }
 
