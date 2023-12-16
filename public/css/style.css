@@ -1,0 +1,28 @@
+
+.logo { 
+  float: left; margin-right: 10px; width: 70px; height: 70px;
+}
+
+.nav-link {
+  color: #B0D9B1;
+  font-weight: bold; 
+}
+
+.nav-item .active {
+  color: #ffff; 
+}
+
+.nav-link:hover {
+  color: #ffff;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #198754;
+}
+
+.cover {
+  background-size: cover;
+  background-position: center;
+  display: flex;
+}
+
