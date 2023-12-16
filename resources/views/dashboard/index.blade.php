@@ -1,4 +1,4 @@
-@extends('dashboard.layouts.index')
+@extends('dashboard.layouts.main')
 
 
 @section('content')
@@ -14,10 +14,10 @@
           </div>
           <div class="carousel-inner">
             <div class="carousel-item active">
-              <img src="images/banner 2.jpg" class="d-block w-100" alt="...">
+              <img src="{{ asset('images/banner 2.jpg') }}" class="d-block w-100" alt="...">
             </div>
             <div class="carousel-item">
-              <img src="images/banner 3.jpg" class="d-block w-100" alt="...">
+              <img src="{{ asset('images/banner 3.jpg') }}" class="d-block w-100" alt="...">
             </div>
           </div>
           <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">

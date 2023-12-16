@@ -8,7 +8,7 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
   </head>
 
@@ -22,8 +22,8 @@
               <li class="nav-item"><a href="#" class="nav-link px-2">Pengumuman</a></li>
           </ul>
           <ul class="nav">
-              <li class="nav-item"><a href="#" class="nav-link px-2"><i class="fa fa-sign-in"></i>&nbsp;Masuk</a></li>
-              <li class="nav-item"><a href="#" class="nav-link px-2"><i class="fa fa-edit"></i>&nbsp;Daftar</a></li>
+              <li class="nav-item"><a href="/account/login" class="nav-link px-2"><i class="fa fa-sign-in"></i>&nbsp;Masuk</a></li>
+              <li class="nav-item"><a href="/account/register" class="nav-link px-2"><i class="fa fa-edit"></i>&nbsp;Daftar</a></li>
           </ul>
       </div>
     </nav>
@@ -32,7 +32,7 @@
       <div class="container">
         <div class="row">
           <div class="col-md-6 d-flex align-items-center ">
-            <img src="images/logo.png" alt="logo" class="logo">
+            <img src="{{ asset('images/logo.png') }}" alt="logo" class="logo">
             <div>
                 <h6 class="mb-0" style="font-weight: normal;">Sistem Informasi Penjualan Langsung Barang Rampasan Negara</h6>
                 <strong><h4 class="mt-0">Kejaksaan Negeri Denpasar</h4></strong>
