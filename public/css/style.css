@@ -26,3 +26,16 @@
   display: flex;
 }
 
+.outer-card {
+  position: relative;
+  overflow: hidden;
+}
+.background-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50px; 
+  background-color: #198754; 
+  z-index: -1;
+}

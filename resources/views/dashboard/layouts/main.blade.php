@@ -16,14 +16,14 @@
     <nav class="navbar py-1 sticky-top" style="background-color: #198754;">
       <div class="container d-flex justify-content-between align-items-center">
           <ul class="nav me-auto">
-              <li class="nav-item"><a href="#" class="nav-link px-2 active" aria-current="page">Beranda</a></li>
-              <li class="nav-item"><a href="#" class="nav-link px-2">Barang Rampasan</a></li>
-              <li class="nav-item"><a href="#" class="nav-link px-2">Jadwal</a></li>
-              <li class="nav-item"><a href="#" class="nav-link px-2">Pengumuman</a></li>
+              <li class="nav-item"><a href="/" class="nav-link px-2 {{ ($title === "Beranda") ? 'active' : '' }}" aria-current="page">Beranda</a></li>
+              <li class="nav-item"><a href="#" class="nav-link px-2 {{ ($title === "Barang") ? 'active' : '' }}">Barang Rampasan</a></li>
+              <li class="nav-item"><a href="#" class="nav-link px-2 {{ ($title === "Jadwal") ? 'active' : '' }}">Jadwal</a></li>
+              <li class="nav-item"><a href="#" class="nav-link px-2 {{ ($title === "Pengumuman") ? 'active' : '' }}">Pengumuman</a></li>
           </ul>
           <ul class="nav">
-              <li class="nav-item"><a href="/account/login" class="nav-link px-2"><i class="fa fa-sign-in"></i>&nbsp;Masuk</a></li>
-              <li class="nav-item"><a href="/account/register" class="nav-link px-2"><i class="fa fa-edit"></i>&nbsp;Daftar</a></li>
+              <li class="nav-item"><a href="/account/login" class="nav-link px-2 {{ ($title === "Masuk") ? 'active' : '' }}"><i class="fa fa-sign-in"></i>&nbsp;Masuk</a></li>
+              <li class="nav-item"><a href="/account/register" class="nav-link px-2 {{ ($title === "Daftar") ? 'active' : '' }}"><i class="fa fa-edit"></i>&nbsp;Daftar</a></li>
           </ul>
       </div>
     </nav>
@@ -60,7 +60,7 @@
 
 
 
-    <div class="container-fluid" style="background-color: #198754">
+    <div class="container-fluid mt-5" style="background-color: #198754">
       <div class="container">
         <footer class="py-4" style="width: 100%; color:#ffff">
           <div class="row">
@@ -82,13 +82,13 @@
                   <i class="fa fa-envelope mr-2" style="margin-right: 10px" ></i> kejari.denpasar@kejaksaan.go.id
                 </li>
                 <li class="nav-item mb-2 d-flex align-items-center">
-                  <i class="fa fa-phone mr-2" style="margin-right: 10px"></i>
+                  <i class="fa fa-globe mr-2" style="margin-right: 10px"></i>
                   <a href="https://kejari-denpasar.kejaksaan.go.id" style="text-decoration: none; color: #ffff">https://kejari-denpasar.kejaksaan.go.id</a>
                 </li>
               </ul>          
               
             </div>
-         
+          
             <div class="col-md-5 offset-md-1 mb-3">
               <form>
                 <h5>Subscribe to our newsletter</h5>
@@ -111,6 +111,7 @@
         </footer>
       </div>
     </div>
+
       
 
 

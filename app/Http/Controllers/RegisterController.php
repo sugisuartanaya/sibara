@@ -2,81 +2,91 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Pembeli;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class RegisterController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function index()
     {
-        //
+        return view('register.index',[
+            'title' => 'Daftar',
+            'active' => 'active'
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+
+        $validatedData = $request->validate([
+            'username' => 'required',
+            'password' => 'required|min:8',
+            'nama_pembeli' => 'required',
+            'role' => 'required',
+            'pekerjaan' => 'required',
+            'no_telepon' => 'required',
+            'alamat' => 'required',
+            'foto_ktp' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'foto_pembeli' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $user = User::create([
+            'username' => $validatedData['username'],
+            'password' => bcrypt($validatedData['password']),
+            'role' => $validatedData['role'],
+        ]);
+
+        // Simpan foto
+        // Simpan foto KTP
+        if ($request->hasFile('foto_ktp')) {
+            $image_ktp = $request->file('foto_ktp');
+            $path_ktp = $image_ktp->storeAs('public/photos', 'ktp_'.$request->nama_pembeli . time() . '.' . $image_ktp->getClientOriginalExtension());
+            $url_ktp = Storage::url($path_ktp);
+        }
+
+        // Simpan foto pembeli
+        if ($request->hasFile('foto_pembeli')) {
+            $image_pembeli = $request->file('foto_pembeli');
+            $path_pembeli = $image_pembeli->storeAs('public/photos', 'pembeli_'.$request->nama_pembeli . time() . '.' . $image_pembeli->getClientOriginalExtension());
+            $url_pembeli = Storage::url($path_pembeli);
+        }
+
+        Pembeli::create([
+            'user_id' => $user->id,
+            'nama_pembeli' => $validatedData['nama_pembeli'],
+            'pekerjaan' => $validatedData['pekerjaan'],
+            'no_telepon' => $validatedData['no_telepon'],
+            'alamat' => $validatedData['alamat'],
+            'foto_ktp' => $url_ktp,
+            'foto_pembeli' => $url_pembeli,
+        ]);
+
+        // Set flash message
+        Session::flash('success', 'Terimakasih, mohon menunggu sampai data Anda terverifikasi. Kami akan menghubungi anda lewat Whatsapp jika data anda sudah berhasil terverifikasi');
+
+        return redirect('/');
+
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //
