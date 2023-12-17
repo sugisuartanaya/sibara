@@ -71,7 +71,6 @@ class RegisterController extends Controller
 
         Verifikasi::create([
             'id_pembeli' => $id_pembeli,
-            'komentar' => $request['komentar']
         ]);
 
         // Set flash message

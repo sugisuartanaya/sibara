@@ -27,6 +27,6 @@ class Pembeli extends Model
     ];
 
     public function verifikasi(){
-        return $this->hasOne(Verifikasi::class, 'id_pembeli');
+        return $this->hasMany(Verifikasi::class, 'id_pembeli');
     }
 }

@@ -31,7 +31,7 @@ class LoginController extends Controller
             $pembeli = $user->pembeli;
 
             if ($pembeli) {
-                $verifikasi = $pembeli->verifikasi;
+                $verifikasi = $pembeli->verifikasi->last();
 
                 if ($verifikasi) {
                     $verifikasiStatus = $verifikasi->status;
@@ -46,7 +46,7 @@ class LoginController extends Controller
                             'title' => 'Masuk',
                             'actie' => 'active'
                         ]);
-                    }
+                    } 
                 }
             }
 
