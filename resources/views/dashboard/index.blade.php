@@ -48,20 +48,50 @@
 </div>
 
 <div class="container py-3">
+
   <div class="row">
-    <div class="col-md-12">
+
+    <div class="col-md-8">
       <div class="card">
         <div class="card-body">
           <h3 class="card-title text-center">Jadwal  
             <b class="text-success">Penjualan Langsung</b>
           </h3>
           <div class="card-text text-center">
-            test
+            @if ($range_jadwal)
+              <p>
+                Jadwal masih berlangsung hingga {{ $jadwal->end_date->format('d F Y') }}.
+                <div id="countdown"></div>
+              </p>
+            @else
+              <p>
+                Belum ada jadwal penjualan langsung.
+              </p>
+            @endif
           </div>
         </div>
       </div>
     </div>
+
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header text-center text-success">
+          <h4>Waktu Server</h4>
+        </div>
+        <div class="card-body">
+          <div class="card-text text-center">
+            <h5>
+              <i class="fa fa-clock-o"></i>
+              <span id="currentDate"></span>
+            </h5>
+            <p id="currentTime"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
+
 </div>
 
 <div class="container py-3 mx-auto">

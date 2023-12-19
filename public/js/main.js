@@ -24,4 +24,31 @@ $(function() {
   $('#image-selfie').on('change', function() {
       previewImage('image-selfie', 'image-preview-selfie');
   });
+
+  $(document).ready(function () {
+    function updateDateTime() {
+        var currentDateElement = $('#currentDate');
+        var currentTimeElement = $('#currentTime');
+
+        var now = new Date();
+
+        // Format the date
+        var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        var formattedDate = now.toLocaleDateString('id-ID', options);
+
+        // Format the time
+        var formattedTime = now.toLocaleTimeString();
+
+        // Update the HTML elements
+        currentDateElement.text(formattedDate);
+        currentTimeElement.text(formattedTime);
+    }
+
+    // Update date and time every second (1000 milliseconds)
+    setInterval(updateDateTime, 1000);
+
+    // Call the function immediately to set the initial values
+    updateDateTime();
+    });
+
 });
