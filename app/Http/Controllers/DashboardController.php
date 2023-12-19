@@ -12,30 +12,31 @@ class DashboardController extends Controller
     public function index()
     {
         $jadwal = Jadwal::latest('id')->first();
-
-        if ($jadwal) {
-            // Jika ada jadwal
+        
+        if($jadwal){
             $jadwal->start_date = Carbon::parse($jadwal->start_date);
             $jadwal->end_date = Carbon::parse($jadwal->end_date);
             
-            // Cek jadwal di antara start_date dan end_date
-            $range_jadwal = Carbon::today()->between($jadwal->start_date, $jadwal->end_date);
-        
-            return view('dashboard.index', [
-                'title' => 'Beranda',
-                'active' => 'active',
-                'jadwal' => $jadwal,
-                'range_jadwal' => $range_jadwal,
-            ]);
+            $today = Carbon::now();
+    
+            if ($today->lt($jadwal->start_date)) {
+                $status = 'coming_soon';
+            } elseif ($today->gte($jadwal->start_date) && $today->lte($jadwal->end_date)) {
+                $status = 'range_jadwal';
+            } elseif ($today->gt($jadwal->end_date)) {
+                $status = 'past_event';
+            } 
         } else {
-            // Jika tidak ada jadwal
-            return view('dashboard.index', [
-                'title' => 'Beranda',
-                'active' => 'active',
-                'jadwal' => null,  
-                'range_jadwal' => false, 
-            ]);
+            $status = null;
         }
+
+        return view('dashboard.index', [
+            'title' => 'Beranda',
+            'active' => 'active',
+            'jadwal' => $jadwal,
+            'status' => $status,
+        ]);
+        
     }
 
     public function create()

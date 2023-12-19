@@ -47,22 +47,52 @@
   </div>
 </div>
 
-<div class="container py-3">
+<div class="container py-5">
 
   <div class="row">
 
-    <div class="col-md-8">
+    <div class="col-md-4 offset-md-2">
       <div class="card">
+        <div class="card-header">
+          <h4 class="card-title text-center">
+            Jadwal Penjualan Langsung
+          </h4>
+        </div>
         <div class="card-body">
-          <h3 class="card-title text-center">Jadwal  
-            <b class="text-success">Penjualan Langsung</b>
-          </h3>
-          <div class="card-text text-center">
-            @if ($range_jadwal)
-              <p>
-                Jadwal masih berlangsung hingga {{ $jadwal->end_date->format('d F Y') }}.
-                <div id="countdown"></div>
-              </p>
+          <div class="card-text">
+            @if ($jadwal)
+              @if ($status == 'coming_soon')
+                <h5 class="text-center mb-4">
+                  <span class="badge text-bg-success">Segera Hadir!</span></h5>
+                <p style="margin-bottom: 5px;">
+                  <i class="fa-regular fa-calendar-days"></i> Hari:  {{ $jadwal->start_date->format('l') }} - {{ $jadwal->end_date->format('l') }}</p>
+                <p style="margin-bottom: 5px;">
+                  <i class="fa-solid fa-calendar-check"></i> Tanggal:  {{ $jadwal->start_date->format('j F Y') }} - {{ $jadwal->end_date->format('j F Y') }}</p>
+                <p style="margin-bottom: 5px;">
+                  <i class="fa-regular fa-clock"></i> Waktu:  {{ $jadwal->start_date->format('H:i') }} - {{ $jadwal->end_date->format('H:i') }} WITA</p>
+                <p style="margin-bottom: 5px;">
+                  <i class="fa-solid fa-location-dot"></i> Tempat:  Kejaksaan Negeri Denpasar</p>
+
+              @elseif ($status == 'range_jadwal')
+                <h5 class="text-center mb-4">
+                  <span class="badge text-bg-danger">Countdown</span></h5>
+                </h5>
+                <p style="margin-bottom: 5px;">
+                  <i class="fa-regular fa-calendar-days"></i> Hari:  {{ $jadwal->start_date->format('l') }} - {{ $jadwal->end_date->format('l') }}</p>
+                <p style="margin-bottom: 5px;">
+                  <i class="fa-solid fa-calendar-check"></i> Tanggal:  {{ $jadwal->start_date->format('j F Y') }} - {{ $jadwal->end_date->format('j F Y') }}</p>
+                <p style="margin-bottom: 5px;">
+                  <i class="fa-regular fa-clock"></i> Waktu:  {{ $jadwal->start_date->format('H:i') }} - {{ $jadwal->end_date->format('H:i') }} WITA</p>
+                <p style="margin-bottom: 5px;">
+                  <i class="fa-solid fa-location-dot"></i> Tempat:  Kejaksaan Negeri Denpasar</p>
+
+              @elseif ($status == 'past_event')
+                <h6 class="text-center">
+                  Penjualan langsung sudah berakhir.
+                  <p>Nantikan jadwal selanjutnya.</p>
+                </h6>
+              @endif
+
             @else
               <p>
                 Belum ada jadwal penjualan langsung.
@@ -75,8 +105,10 @@
 
     <div class="col-md-4">
       <div class="card">
-        <div class="card-header text-center text-success">
-          <h4>Waktu Server</h4>
+        <div class="card-header">
+          <div class="card-title text-center text-success">
+            <h4>Waktu Server</h4>
+          </div> 
         </div>
         <div class="card-body">
           <div class="card-text text-center">
