@@ -44,11 +44,29 @@ $(function() {
         currentTimeElement.text(formattedTime);
     }
 
-    // Update date and time every second (1000 milliseconds)
     setInterval(updateDateTime, 1000);
 
-    // Call the function immediately to set the initial values
     updateDateTime();
+    });
+
+    $(document).ready(function() {
+        var endDate = document.getElementById("end_date").getAttribute("dataEndDate");
+
+        var myCountDown = new ysCountDown(endDate, function (remaining, finished) {
+            console.log(myCountDown);
+            if (finished) {
+              
+                document.getElementById("countdown").style.display = "none"; 
+                document.getElementById("hide_countdown").style.display = "none"; 
+                document.getElementById("end_event").style.display = "block";
+          
+            } else {
+          
+                document.getElementById("countdown").innerHTML = remaining.days + "d : "+ remaining.hours + "h : " + remaining.minutes + "m : " + remaining.seconds + "s";
+                document.getElementById("end_event").style.display = "none";
+            }
+          
+          });
     });
 
 });

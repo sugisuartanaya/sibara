@@ -125,6 +125,8 @@
     
     <script src="https://kit.fontawesome.com/513e5e702d.js" crossorigin="anonymous"></script>
 
+    <script src="{{ asset('js/yscountdown.min.js') }}"></script>
+
     <script src="{{ asset('js/main.js') }}"></script>
 
   </body>

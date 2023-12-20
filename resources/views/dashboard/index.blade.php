@@ -63,7 +63,7 @@
             @if ($jadwal)
               @if ($status == 'coming_soon')
                 <h5 class="text-center mb-4">
-                  <span class="badge text-bg-success">Segera Hadir!</span></h5>
+                  <span class="badge text-bg-success">Penjualan Langsung Mendatang!</span></h5>
                 <p style="margin-bottom: 5px;">
                   <i class="fa-regular fa-calendar-days"></i> Hari:  {{ $jadwal->start_date->format('l') }} - {{ $jadwal->end_date->format('l') }}</p>
                 <p style="margin-bottom: 5px;">
@@ -75,20 +75,30 @@
 
               @elseif ($status == 'range_jadwal')
                 <h5 class="text-center mb-4">
-                  <span class="badge text-bg-danger">Countdown</span></h5>
+                  <div id="countdown" class="text-danger"></div></span>
                 </h5>
-                <p style="margin-bottom: 5px;">
-                  <i class="fa-regular fa-calendar-days"></i> Hari:  {{ $jadwal->start_date->format('l') }} - {{ $jadwal->end_date->format('l') }}</p>
-                <p style="margin-bottom: 5px;">
-                  <i class="fa-solid fa-calendar-check"></i> Tanggal:  {{ $jadwal->start_date->format('j F Y') }} - {{ $jadwal->end_date->format('j F Y') }}</p>
-                <p style="margin-bottom: 5px;">
-                  <i class="fa-regular fa-clock"></i> Waktu:  {{ $jadwal->start_date->format('H:i') }} - {{ $jadwal->end_date->format('H:i') }} WITA</p>
-                <p style="margin-bottom: 5px;">
-                  <i class="fa-solid fa-location-dot"></i> Tempat:  Kejaksaan Negeri Denpasar</p>
+                <div id="hide_countdown">
+                  <p id="end_date" dataEndDate= {{ $jadwal->end_date->toIso8601String() }}></p>
 
+                  <p style="margin-bottom: 5px;">
+                    <i class="fa-regular fa-calendar-days"></i> Hari:  {{ $jadwal->start_date->format('l') }} - {{ $jadwal->end_date->format('l') }}</p>
+                  <p style="margin-bottom: 5px;">
+                    <i class="fa-solid fa-calendar-check"></i> Tanggal:  {{ $jadwal->start_date->format('j F Y') }} - {{ $jadwal->end_date->format('j F Y') }}</p>
+                  <p style="margin-bottom: 5px;">
+                    <i class="fa-regular fa-clock"></i> Waktu:  {{ $jadwal->start_date->format('H:i') }} - {{ $jadwal->end_date->format('H:i') }} WITA</p>
+                  <p >
+                    <i class="fa-solid fa-location-dot"></i> Tempat:  Kejaksaan Negeri Denpasar</p>
+                </div>
+                <div id="end_event">
+                  <h6 class="text-center">
+                    Penjualan Langsung sudah berakhir.
+                    <p>Nantikan jadwal selanjutnya.</p>
+                  </h6>
+                </div>
+                
               @elseif ($status == 'past_event')
                 <h6 class="text-center">
-                  Penjualan langsung sudah berakhir.
+                  Penjualan Langsung sudah berakhir.
                   <p>Nantikan jadwal selanjutnya.</p>
                 </h6>
               @endif
@@ -98,6 +108,7 @@
                 Belum ada jadwal penjualan langsung.
               </p>
             @endif
+
           </div>
         </div>
       </div>
