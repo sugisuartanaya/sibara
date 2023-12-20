@@ -89,7 +89,7 @@
                   <p >
                     <i class="fa-solid fa-location-dot"></i> Tempat:  Kejaksaan Negeri Denpasar</p>
                 </div>
-                <div id="end_event">
+                <div id="end_event" style="display: none">
                   <h6 class="text-center">
                     Penjualan Langsung sudah berakhir.
                     <p>Nantikan jadwal selanjutnya.</p>
