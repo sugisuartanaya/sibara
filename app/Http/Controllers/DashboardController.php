@@ -12,7 +12,7 @@ class DashboardController extends Controller
     public function index()
     {
         $jadwal = Jadwal::latest('id')->first();
-        
+
         if($jadwal){
             $jadwal->start_date = Carbon::parse($jadwal->start_date);
             $jadwal->end_date = Carbon::parse($jadwal->end_date);
