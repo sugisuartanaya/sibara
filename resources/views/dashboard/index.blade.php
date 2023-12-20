@@ -135,8 +135,8 @@
             <p id="end_date" dataEndDate= {{ $jadwal->end_date->toIso8601String() }}></p>
 
             <div class="badge-container">
-              <h4 class="text-center">
-                <span class="badge text-bg-danger"><div id="countdown"></div></span>
+              <h4 class="text-center text-danger">
+                <strong><div id="countdown"></div></strong>
               </h4>
             </div>
 
@@ -204,6 +204,10 @@
                   </div>
                 </div>
               </div>
+
+              <div class="col-md-12 text-center">
+                <button class="btn btn-secondary">Daftar Barang Yang Dijual</button>
+              </div>
             </div>
 
             <div id="end_event" style="display: none">
@@ -255,26 +259,45 @@
 
 </div>
 
-<div class="container py-3 mx-auto">
+<div class="container py-5 mx-auto">
   <div class="row">
-    
-    <div class="col-md-4">
-      <div class="card shadow-sm">
-        <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-        <div class="card-body">
-          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-          <div class="d-flex justify-content-between align-items-center">
-            <div class="btn-group">
-              <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-              <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+    <div class="col-md-12">
+      <h2 class="section-title">barang rampasan terbaru</h2>
+      <div class="centered-icon">
+        <hr>
+        <div class="icon"><i class="fa-solid fa-dolly fa-2xl" style="color: #198754;"></i></i></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row py-5">
+    @if ($daftar_barang)
+      @foreach ($daftar_barang as $daftar)
+      {{-- Retrieve the latest harga for the current id_barang --}}
+      @php
+        $latestHarga = $harga_terakhir[$daftar->id_barang];
+      @endphp
+      <div class="col-md-3">
+        <div class="card shadow-sm">
+          {{-- <img class="bd-placeholder-img card-img-top" src="asset{{ $daftar->barang_rampasan->foto_thumbnail }}" width="100%" height="225" alt="Your Alt Text"> --}}
+          <img class="bd-placeholder-img card-img-top" src="http://admin.sibara.test{{ $daftar->barang_rampasan->foto_thumbnail }}" width="100%" height="225" alt="Your Alt Text">
+
+          <div class="card-body">
+            <div class="card-text text-center">
+              <p class="mb-0">{{ $daftar->barang_rampasan->nama_barang }}</p>
+              <h5 class="text-success"><strong>Rp. {{ number_format($latestHarga->harga, 0, ',', '.') }}</strong></h5>
+              <p class="text-secondary">Kategori: {{ $daftar->barang_rampasan->kategori->nama_kategori }}
+              </p>
             </div>
-            <small class="text-body-secondary">9 mins</small>
           </div>
         </div>
       </div>
-    </div>
-    
+      @endforeach
+    @else
+      <h3>Belum ada barang rampasan negara</h3>
+    @endif
   </div>
+    
 </div>
 
 
