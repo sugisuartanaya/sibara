@@ -25,7 +25,12 @@ class LoginController extends Controller
             'password' => 'required'
         ]);
 
-        $user = User::where('username', $credentials['username'])->first();
+
+        $user = User::where('role', '2')
+            ->where(function ($query) use ($credentials) {
+                $query->where('username', $credentials['username']);
+            })
+            ->first();
 
         if ($user && Auth::attempt($credentials)) {
             $pembeli = $user->pembeli;
