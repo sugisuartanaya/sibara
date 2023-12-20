@@ -55,7 +55,7 @@ $(function() {
         var myCountDown = new ysCountDown(endDate, function (remaining, finished) {
             console.log(myCountDown);
             if (finished) {
-                document.getElementById("countdown").style.display = "none"; 
+                document.getElementsByClassName("badge-container")[0].style.display = "none"; 
                 document.getElementById("hide_countdown").style.display = "none"; 
                 document.getElementById("end_event").style.display = "block";
             } else {

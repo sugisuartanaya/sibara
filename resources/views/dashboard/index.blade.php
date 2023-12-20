@@ -51,70 +51,192 @@
 
   <div class="row">
 
-    <div class="col-md-4 offset-md-2">
-      <div class="card">
-        <div class="card-header">
-          <h4 class="card-title text-center">
-            Jadwal Penjualan Langsung
-          </h4>
-        </div>
-        <div class="card-body">
-          <div class="card-text">
-            @if ($jadwal)
-              @if ($status == 'coming_soon')
-                <h5 class="text-center mb-4">
-                  <span class="badge text-bg-success">Penjualan Langsung Mendatang!</span></h5>
-                <p style="margin-bottom: 5px;">
-                  <i class="fa-regular fa-calendar-days"></i> Hari:  {{ $jadwal->start_date->format('l') }} - {{ $jadwal->end_date->format('l') }}</p>
-                <p style="margin-bottom: 5px;">
-                  <i class="fa-solid fa-calendar-check"></i> Tanggal:  {{ $jadwal->start_date->format('j F Y') }} - {{ $jadwal->end_date->format('j F Y') }}</p>
-                <p style="margin-bottom: 5px;">
-                  <i class="fa-regular fa-clock"></i> Waktu:  {{ $jadwal->start_date->format('H:i') }} - {{ $jadwal->end_date->format('H:i') }} WITA</p>
-                <p style="margin-bottom: 5px;">
-                  <i class="fa-solid fa-location-dot"></i> Tempat:  Kejaksaan Negeri Denpasar</p>
+    <div class="col-md-12">
+      <h2 class="section-title">Jadwal Penjualan Langsung</h2>
+      <div class="centered-icon">
+        <hr>
+        <div class="icon"><i class="fa-solid fa-gavel fa-2xl" style="color: #198754;"></i></i></div>
+      </div>
+      
+      <div class="row py-3">
 
-              @elseif ($status == 'range_jadwal')
-                <h5 class="text-center mb-4">
-                  <div id="countdown" class="text-danger"></div></span>
-                </h5>
-                <div id="hide_countdown">
-                  <p id="end_date" dataEndDate= {{ $jadwal->end_date->toIso8601String() }}></p>
+        @if ($jadwal)
+          @if ($status == 'coming_soon')
+            <h5 class="text-center">
+              <span class="badge text-bg-success">Penjualan Langsung Mendatang!</span>
+            </h5>
 
-                  <p style="margin-bottom: 5px;">
-                    <i class="fa-regular fa-calendar-days"></i> Hari:  {{ $jadwal->start_date->format('l') }} - {{ $jadwal->end_date->format('l') }}</p>
-                  <p style="margin-bottom: 5px;">
-                    <i class="fa-solid fa-calendar-check"></i> Tanggal:  {{ $jadwal->start_date->format('j F Y') }} - {{ $jadwal->end_date->format('j F Y') }}</p>
-                  <p style="margin-bottom: 5px;">
-                    <i class="fa-regular fa-clock"></i> Waktu:  {{ $jadwal->start_date->format('H:i') }} - {{ $jadwal->end_date->format('H:i') }} WITA</p>
-                  <p >
-                    <i class="fa-solid fa-location-dot"></i> Tempat:  Kejaksaan Negeri Denpasar</p>
+            <div class="col-md-3">
+              <div class="card border-0">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-2">
+                      <h1><i class="fa-regular fa-calendar-days"></i> </h1>
+                    </div>
+                    <div class="col-md-10">
+                      <strong><p style="margin-bottom: 0px">Hari:</p></strong>
+                      <p>{{ $jadwal->start_date->format('l') }} - {{ $jadwal->end_date->format('l') }}</p>
+                    </div>
+                  </div>
                 </div>
-                <div id="end_event" style="display: none">
-                  <h6 class="text-center">
-                    Penjualan Langsung sudah berakhir.
-                    <p>Nantikan jadwal selanjutnya.</p>
-                  </h6>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="card border-0">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-2">
+                      <h1><i class="fa-regular fa-calendar-check"></i> </h1>
+                    </div>
+                    <div class="col-md-10">
+                      <strong><p style="margin-bottom: 0px">Tanggal:</p></strong>
+                      <p>{{ $jadwal->start_date->format('j M Y') }} - {{ $jadwal->end_date->format('j M Y') }}</p>
+                    </div>
+                  </div>
                 </div>
-                
-              @elseif ($status == 'past_event')
-                <h6 class="text-center">
-                  Penjualan Langsung sudah berakhir.
-                  <p>Nantikan jadwal selanjutnya.</p>
-                </h6>
-              @endif
+              </div>
+            </div>
 
-            @else
-              <p>
-                Belum ada jadwal penjualan langsung.
-              </p>
-            @endif
+            <div class="col-md-3">
+              <div class="card border-0">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-2">
+                      <h1><i class="fa-regular fa-clock"></i> </h1>
+                    </div>
+                    <div class="col-md-10">
+                      <strong><p style="margin-bottom: 0px">Waktu:</p></strong>
+                      <p>{{ $jadwal->start_date->format('H:i') }} - {{ $jadwal->end_date->format('H:i') }} WITA</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-md-3">
+              <div class="card border-0">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-2">
+                      <h1><i class="fa-solid fa-location-dot"></i> </h1>
+                    </div>
+                    <div class="col-md-10">
+                      <strong><p style="margin-bottom: 0px">Tempat:</p></strong>
+                      <p>Kejaksaan Negeri Denpasar</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
 
-          </div>
-        </div>
+          @elseif ($status == 'range_jadwal')
+            <p id="end_date" dataEndDate= {{ $jadwal->end_date->toIso8601String() }}></p>
+
+            <div class="badge-container">
+              <h4 class="text-center">
+                <span class="badge text-bg-danger"><div id="countdown"></div></span>
+              </h4>
+            </div>
+
+            {{-- <h4 class="text-center">
+              <span class="badge text-bg-danger"><div id="countdown"></div></span>
+            </h4> --}}
+
+            <div id="hide_countdown" class="row">
+              <div class="col-md-3">
+                <div class="card border-0">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-2">
+                        <h1><i class="fa-regular fa-calendar-days"></i> </h1>
+                      </div>
+                      <div class="col-md-10">
+                        <strong><p style="margin-bottom: 0px">Hari:</p></strong>
+                        <p>{{ $jadwal->start_date->format('l') }} - {{ $jadwal->end_date->format('l') }}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+              <div class="col-md-3">
+                <div class="card border-0">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-2">
+                        <h1><i class="fa-regular fa-calendar-check"></i> </h1>
+                      </div>
+                      <div class="col-md-10">
+                        <strong><p style="margin-bottom: 0px">Tanggal:</p></strong>
+                        <p>{{ $jadwal->start_date->format('j M Y') }} - {{ $jadwal->end_date->format('j M Y') }}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+              <div class="col-md-3">
+                <div class="card border-0">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-2">
+                        <h1><i class="fa-regular fa-clock"></i> </h1>
+                      </div>
+                      <div class="col-md-10">
+                        <strong><p style="margin-bottom: 0px">Waktu:</p></strong>
+                        <p>{{ $jadwal->start_date->format('H:i') }} - {{ $jadwal->end_date->format('H:i') }} WITA</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-md-3">
+                <div class="card border-0">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-2">
+                        <h1><i class="fa-solid fa-location-dot"></i> </h1>
+                      </div>
+                      <div class="col-md-10">
+                        <strong><p style="margin-bottom: 0px">Tempat:</p></strong>
+                        <p>Kejaksaan Negeri Denpasar</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="end_event" style="display: none">
+              <h4 class="text-center">
+                Penjualan Langsung sudah berakhir.
+                <p>Nantikan jadwal selanjutnya.</p>
+              </h4>
+            </div>
+          
+          @elseif ($status == 'past_event')
+            <h6 class="text-center">
+              Penjualan Langsung sudah berakhir.
+              <p>Nantikan jadwal selanjutnya.</p>
+            </h6>
+          @endif
+
+        @else
+          <p>
+            Belum ada jadwal penjualan langsung.
+          </p>
+        @endif
+
       </div>
     </div>
 
-    <div class="col-md-4">
+
+    
+
+    {{-- <div class="col-md-4">
       <div class="card">
         <div class="card-header">
           <div class="card-title text-center text-success">
@@ -131,7 +253,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> --}}
 
   </div>
 
