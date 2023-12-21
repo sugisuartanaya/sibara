@@ -1,4 +1,9 @@
 
+body{
+  font-family: -apple-system,BlinkMacSystemFont,Roboto,"Work Sans","Segoe UI",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font-weight: 400;
+}
+
 .logo { 
   float: left; margin-right: 10px; width: 70px; height: 70px;
 }

@@ -136,8 +136,8 @@
 
             <div class="badge-container">
               <h4 class="text-center">
-                <strong>Penjualan Langsung Barang Rampasan Negara</strong>
-                <p class="text-secondary" style="margin-top: 5px; margin-bottom: 0px; ">Berakhir dalam: <span id="countdown" class="badge text-bg-danger"></span>
+                <strong>Lelang Penjualan Langsung Barang Rampasan Negara</strong>
+                <p class="text-secondary" style="margin-top: 5px; margin-bottom: 0px; ">Berakhir dalam: <strong id="countdown" class="text-danger"></strong>
                 </p>
                 <strong>
                   <p style="margin-top: 0px">
@@ -279,26 +279,30 @@
   <div class="row py-5">
     @if ($daftar_barang->isNotEmpty())
       @foreach ($daftar_barang as $daftar)
-      {{-- Retrieve the latest harga for the current id_barang --}}
+      {{-- dapatkan harga terakhir --}}
       @php
         $latestHarga = $harga_terakhir[$daftar->id_barang];
       @endphp
-      <div class="col-md-3">
-        <div class="card shadow-sm">
-          {{-- <img class="bd-placeholder-img card-img-top" src="asset{{ $daftar->barang_rampasan->foto_thumbnail }}" width="100%" height="225" alt="Your Alt Text"> --}}
-          <img class="bd-placeholder-img card-img-top" src="http://admin.sibara.test{{ $daftar->barang_rampasan->foto_thumbnail }}" width="100%" height="225" alt="Your Alt Text">
+      <div class="col-md-3 mb-4">
+        <div class="card shadow-sm position-relative">
+          {{-- <img class="bd-placeholder-img card-img-top" src="asset{{ $daftar->barang_rampasan->foto_thumbnail }}" style="object-fit: cover; width: 100%; height: 300px;"  alt="Your Alt Text"> --}}
+          <img class="bd-placeholder-img card-img-top" src="http://admin.sibara.test{{ $daftar->barang_rampasan->foto_thumbnail }}" style="object-fit: cover; width: 100%; height: 300px;"  alt="Your Alt Text">
 
-          <div class="card-body">
+          <div class="position-absolute top-0 start-0 m-3">
+            <span class="badge bg-danger" style="border-radius: 4px;">{{ $daftar->barang_rampasan->kategori->nama_kategori }}</span>
+          </div>
+
+          <div class="card-body" style="background-color: #F4F4F2;">
             <div class="card-text text-center">
-              <p class="mb-0">{{ $daftar->barang_rampasan->nama_barang }}</p>
-              <h5 class="text-success"><strong>Rp. {{ number_format($latestHarga->harga, 0, ',', '.') }}</strong></h5>
-              <p class="text-secondary">Kategori: {{ $daftar->barang_rampasan->kategori->nama_kategori }}
-              </p>
+              <p class="mb-0">{{ \Illuminate\Support\Str::limit($daftar->barang_rampasan->nama_barang, 72, '...') }}</p>
+              <h5 class=""><strong>Rp. {{ number_format($latestHarga->harga, 0, ',', '.') }}</strong></h5>
+              <button class="btn btn-sm btn-outline-success">Detail Barang</button>
             </div>
           </div>
         </div>
       </div>
       @endforeach
+
     @else
       <h5 class="text-center">
         Saat ini belum ada Barang Rampasan Negara Terdaftar
