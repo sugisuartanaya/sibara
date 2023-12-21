@@ -40,19 +40,14 @@ class DashboardController extends Controller
             ->limit(8)
             ->get();
         
-        if($daftar_barang) {
-            $id_barang = $daftar_barang->pluck('id_barang')->toArray();
-            $harga = Harga_wajar::whereIn('id_barang', $id_barang)
-                ->orderBy('tgl_laporan_penilaian', 'desc')  
-                ->get()
-                ->groupBy('id_barang')
-                ->map(function ($group) {
-                    return $group->first(); // Retrieve the first record for each group
-                });
-        } else {
-            $daftar_barang = null;
-            $harga = null;
-        }
+        $id_barang = $daftar_barang->pluck('id_barang')->toArray();
+        $harga = Harga_wajar::whereIn('id_barang', $id_barang)
+            ->orderBy('tgl_laporan_penilaian', 'desc')  
+            ->get()
+            ->groupBy('id_barang')
+            ->map(function ($group) {
+                return $group->first(); // per group
+            });
 
         return view('dashboard.index', [
             'title' => 'Beranda',

@@ -58,7 +58,7 @@
         <div class="icon"><i class="fa-solid fa-gavel fa-2xl" style="color: #198754;"></i></i></div>
       </div>
       
-      <div class="row py-3">
+      <div class="row py-2">
 
         @if ($jadwal)
           @if ($status == 'coming_soon')
@@ -135,11 +135,18 @@
             <p id="end_date" dataEndDate= {{ $jadwal->end_date->toIso8601String() }}></p>
 
             <div class="badge-container">
-              <h4 class="text-center text-danger">
-                <strong><div id="countdown"></div></strong>
+              <h4 class="text-center">
+                <strong>Penjualan Langsung Barang Rampasan Negara</strong>
+                <p class="text-secondary" style="margin-top: 5px; margin-bottom: 0px; ">Berakhir dalam: <span id="countdown" class="badge text-bg-danger"></span>
+                </p>
+                <strong>
+                  <p style="margin-top: 0px">
+                    <a href="#" class="text-success" style="text-decoration: none; font-size: 15pt">Lihat Daftar Barang</a>
+                  </p>
+                </strong>
               </h4>
             </div>
-
+            
             <div id="hide_countdown" class="row">
               <div class="col-md-3">
                 <div class="card border-0">
@@ -205,36 +212,35 @@
                 </div>
               </div>
 
-              <div class="col-md-12 text-center">
-                <button class="btn btn-secondary">Daftar Barang Yang Dijual</button>
-              </div>
+              {{-- <div class="col-md-12 text-center">
+                <button class="btn btn-secondary">Cek Daftar Barang Yang Dijual</button>
+              </div> --}}
             </div>
 
             <div id="end_event" style="display: none">
-              <h4 class="text-center">
+              <h5 class="text-center">
                 Penjualan Langsung sudah berakhir.
                 <p>Nantikan jadwal selanjutnya.</p>
-              </h4>
+              </h5>
             </div>
           
           @elseif ($status == 'past_event')
-            <h6 class="text-center">
+            <h5 class="text-center">
               Penjualan Langsung sudah berakhir.
               <p>Nantikan jadwal selanjutnya.</p>
-            </h6>
+            </h5>
           @endif
 
         @else
-          <p>
-            Belum ada jadwal penjualan langsung.
-          </p>
+          <h5 class="text-center">
+            Saat ini belum ada Jadawal Penjualan Langsung Barang Rampasan Negara
+            <p>Nantikan jadwal selanjutnya.</p>
+          </h5>
         @endif
 
       </div>
     </div>
 
-
-    
 
     {{-- <div class="col-md-4">
       <div class="card">
@@ -259,7 +265,7 @@
 
 </div>
 
-<div class="container py-5 mx-auto">
+<div class="container py-2 mx-auto">
   <div class="row">
     <div class="col-md-12">
       <h2 class="section-title">barang rampasan terbaru</h2>
@@ -271,7 +277,7 @@
   </div>
 
   <div class="row py-5">
-    @if ($daftar_barang)
+    @if ($daftar_barang->isNotEmpty())
       @foreach ($daftar_barang as $daftar)
       {{-- Retrieve the latest harga for the current id_barang --}}
       @php
@@ -294,11 +300,12 @@
       </div>
       @endforeach
     @else
-      <h3>Belum ada barang rampasan negara</h3>
+      <h5 class="text-center">
+        Saat ini belum ada Barang Rampasan Negara Terdaftar
+      </h5>
     @endif
   </div>
     
 </div>
-
 
 @endsection
