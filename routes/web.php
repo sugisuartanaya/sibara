@@ -21,10 +21,11 @@ Route::get('/', [DashboardController::class, 'index']);
 
 Route::get('/account/login', [LoginController::class, 'index']);
 Route::post('/account/login', [LoginController::class, 'authenticate']);
-Route::get('/logout', [LoginController::class, 'logout']);
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::get('/account/register', [RegisterController::class, 'index']);
 Route::post('/account/register', [RegisterController::class, 'store']);
 
 Route::get('/account/profile/edit', [PembeliController::class, 'myProfile']);
 Route::put('/account/profile/{username}', [PembeliController::class, 'updateProfile']);
+Route::get('/update-data/{username}', [PembeliController::class, 'updateData']);

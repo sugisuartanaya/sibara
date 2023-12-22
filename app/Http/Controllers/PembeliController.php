@@ -24,6 +24,15 @@ class PembeliController extends Controller
         ]);
     }
 
+    public function updateData($id)
+    {
+        $user = User::where('username', $id)->first();
+        $pembeli = Pembeli::where('user_id', $user->id)->first();
+        return view('pembeli.updateData',[
+            'pembeli' => $pembeli
+        ]);
+    }
+
     public function updateProfile(Request $request, $id)
     {   
 
@@ -48,16 +57,16 @@ class PembeliController extends Controller
             $pembeli->foto_pembeli = $url_pembeli;  
         }
 
-        //check nama pembeli dalam array jenis_kesalahan
-        $verifikasi_nama = $verifikasiCollection->first(function ($verifikasi) {
-            return in_array('nama_pembeli', json_decode($verifikasi->jenis_kesalahan));
-        });
+        $verifikasi_nama = null;
+        $verifikasi_pekerjaan = null;
 
-        $verifikasi_pekerjaan = $verifikasiCollection->first(function ($verifikasi) {
-            return in_array('pekerjaan', json_decode($verifikasi->jenis_kesalahan));
-        });
+        $verifikasi_terakhir = $verifikasiCollection->last();
 
-        // dd($pembeli->nama_pembeli);
+        if ($verifikasi_terakhir) {
+            $verifikasi_nama = in_array('nama_pembeli', json_decode($verifikasi_terakhir->jenis_kesalahan));
+            $verifikasi_pekerjaan = in_array('pekerjaan', json_decode($verifikasi_terakhir->jenis_kesalahan));
+        }
+
         if ($verifikasi_nama || $verifikasi_pekerjaan) {
             $pembeli->nama_pembeli = $verifikasi_nama ?  $request->nama_pembeli : $pembeli->nama_pembeli;
             $pembeli->pekerjaan = $verifikasi_pekerjaan ? $request->pekerjaan : $pembeli->pekerjaan;
@@ -74,7 +83,6 @@ class PembeliController extends Controller
 
         Session::flash('success', 'Berhasil update data. Mohon menunggu admin untuk verifikasi kembali');
         return redirect('/');
-
     }
 
     public function store(Request $request)
