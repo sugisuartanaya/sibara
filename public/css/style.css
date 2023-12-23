@@ -16,6 +16,16 @@ p, h1, h2, h3, h4, h5, h6 {
   font-weight: bold; 
 }
 
+.navigasi .nav-link {
+  color: #198754;
+  font-weight: bold;
+}
+.navigasi .nav-link:hover {
+  color: black;
+  font-weight: bold;
+}
+
+
 .nav-item .active {
   color: #ffff; 
 }

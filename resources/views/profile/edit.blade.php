@@ -3,185 +3,124 @@
 
 @section('content')
 
-<div class="container ">
-  <hr>
-  <div class="py-3">
-    <h3>Data Anda Salah</b></h3>
-  </div>
-  <div class="outer-card">
-    <div class="card background-card"></div>
-    <div class="card mt-1">
-      <div class="card-body">
-        <div class="alert alert-success" role="alert">
-          {{ auth()->user()->pembeli->verifikasi->last()->komentar }}
+<div class="container py-4">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="outer-card">
+        <div class="card background-card"></div>
+        <div class="card mt-1">
+          <div class="card-header">
+            <strong>Informasi Pribadi</strong>
+          </div>
+          <div class="card-body">
+            <p class="text-secondary mb-0" >Nama</p>          
+            <h6 class="mb-3">{{ auth()->user()->pembeli->nama_pembeli }}</h6>
+            <p class="text-secondary mb-0" >Pekerjaan</p>          
+            <h6 class="mb-3">{{ auth()->user()->pembeli->pekerjaan }}</h6>
+            <p class="text-secondary mb-0" >Alamat</p>          
+            <h6 class="mb-3">{{ auth()->user()->pembeli->alamat }}</h6>
+            <p class="text-secondary mb-0" >No Telepon</p>          
+            <h6 class="mb-3">+62{{ auth()->user()->pembeli->no_telepon }}</h6>
+          </div>
         </div>
-  
-        <form action="/account/profile/{{ auth()->user()->username }}" method="post" enctype="multipart/form-data">
-          @csrf
-          @method('PUT')
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="outer-card">
+        <div class="card background-card"></div>
+        <div class="card mt-1">
+          <div class="card-body">
+            <h5><strong>Pembelian</strong></h5>
 
-          @if (auth()->user()->pembeli->verifikasi->last()->jenis_kesalahan)
-            @php
-              $jenisKesalahan = json_decode(auth()->user()->pembeli->verifikasi->last()->jenis_kesalahan);
-            @endphp
+            <ul class="nav nav-underline" id="myTabs">
+              <li class="nav-item navigasi">
+                <a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#current">Terbaru</a>
+              </li>
+              <li class="nav-item navigasi">
+                <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#history">Riwayat</a>
+              </li>
+            </ul>
 
-            @if (in_array('nama_pembeli', $jenisKesalahan))
-              {{-- <input type="text" name="pekerjaan" value="{{ auth()->user()->pembeli->pekerjaan }}" style="display:none;"> --}}
-
-              <div class="row mb-3">
-                <div class="col-sm-3 col-md-3 col-xs-12">
-                  <label for="nama_pembeli" class="col-form-label">Nama Lengkap</label>
-                  <span style="color: #eb340a;">*</span>
-                </div>
-                <div class="col-sm-9 col-md-9 col-xs-12">
-                  <input type="text" name="nama_pembeli" id="nama_pembeli" placeholder="Isi dengan nama Anda sesuai dengan yang tertera pada KTP" class="form-control @error('nama_pembeli') is-invalid @enderror" value="{{ auth()->user()->pembeli->nama_pembeli }}" required>
-                  @error('nama_pembeli')
-                    <div class="invalid-feedback">
-                      {{ $message }}
-                    </div>
-                  @enderror
-                </div>
+            <div class="tab-content">
+              <div class="tab-pane fade show active" id="current">
+                <h4 class="py-2">Pembelian Terbaru Anda</h4>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">No</th>
+                      <th scope="col">Tgl Lelang</th>
+                      <th scope="col">Nama Barang</th>
+                      <th scope="col">Harga Tertinggi</th>
+                      <th scope="col">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row">1</th>
+                      <td>23-12-2023</td>
+                      <td>Satu unit Spm Honda Beat DK 3467 ABL, STNKnya</td>
+                      <td>Rp. 1.000.000</td>
+                      <td>@mdo</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">2</th>
+                      <td>23-12-2023</td>
+                      <td>1 (satu) spm Honda Scoopy No.Pol DK 2285 FBY</td>
+                      <td>Rp. 1.000.000</td>
+                      <td>@fat</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">3</th>
+                      <td>23-12-2023</td>
+                      <td>1 (satu) buah HP Android Oppo warna hitam</td>
+                      <td>Rp. 1.000.000</td>
+                      <td>@twitter</td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
-            @endif
 
-            @if(in_array('pekerjaan', $jenisKesalahan))
-              {{-- <input type="text" name="nama_pembeli" value="{{ auth()->user()->pembeli->nama_pembeli }}" style="display:none;"> --}}
-
-              <div class="row mb-3">
-                <div class="col-sm-3 col-md-3 col-xs-12">
-                  <label for="pekerjaan" class="col-form-label">Pekerjaan</label>
-                  <span style="color: #eb340a;">*</span>
-                </div>
-                <div class="col-sm-9 col-md-9 col-xs-12">
-                  <input type="text" name="pekerjaan" id="pekerjaan" placeholder="Isi dengan pekerjaan Anda yang sebenarnya" class="form-control @error('pekerjaan') is-invalid @enderror" value="{{ auth()->user()->pembeli->pekerjaan }}" required>
-                  @error('pekerjaan')
-                    <div class="invalid-feedback">
-                      {{ $message }}
-                    </div>
-                  @enderror
-                </div>
-              </div>
-            @endif
-
-            @if (in_array('foto', $jenisKesalahan))
-              {{-- <input type="text" name="nama_pembeli" value="{{ auth()->user()->pembeli->nama_pembeli }}" style="display:none;">
-              <input type="text" name="pekerjaan" value="{{ auth()->user()->pembeli->pekerjaan }}" style="display:none;"> --}}
-
-              <div class="row mb-3">
-                <div class="col-sm-3 col-md-3 col-xs-12">
-                  <label for="foto_ktp" class="col-form-label">Foto KTP</label>
-                  <span style="color: #eb340a;">*</span>
-                </div>
-                <div class="col-sm-9 col-md-9 col-xs-12">
-                  <input name="foto_ktp" type="file" id="image-ktp" accept="image/*" class="form-control @error('foto_ktp') is-invalid @enderror" value="{{ auth()->user()->pembeli->foto_ktp }}">
-                  @error('foto_ktp')
-                      <div class="invalid-feedback">
-                          {{ $message }}
-                      </div>
-                  @enderror
-                  <img id="image-preview-ktp" class="image-preview" alt="Image Preview KTP">
-                </div>
-              </div>
-        
-              <div class="row mb-3">
-                <div class="col-sm-3 col-md-3 col-xs-12">
-                  <label for="foto_pembeli" class="col-form-label">Foto Selfie dengan KTP</label>
-                  <span style="color: #eb340a;">*</span>
-                </div>
-                <div class="col-sm-9 col-md-9 col-xs-12">
-                  <input name="foto_pembeli" type="file" id="image-selfie" accept="image/*" class="form-control @error('foto_pembeli') is-invalid @enderror" value="{{ auth()->user()->pembeli->foto_pembeli }}">
-                  @error('foto_pembeli')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                  @enderror
-                  <img id="image-preview-selfie" class="image-preview" alt="Image Preview Selfie">
-                </div>
-              </div>
-            @endif
-          @endif
-
-          {{-- @if (auth()->user()->pembeli->verifikasi->jenis_kesalahan === 'foto')
-
-            <input type="text" name="nama_pembeli" value="{{ auth()->user()->pembeli->nama_pembeli }}" style="display:none;">
-            <input type="text" name="pekerjaan" value="{{ auth()->user()->pembeli->pekerjaan }}" style="display:none;">
-
-            <div class="row mb-3">
-              <div class="col-sm-3 col-md-3 col-xs-12">
-                <label for="foto_ktp" class="col-form-label">Foto KTP</label>
-                <span style="color: #eb340a;">*</span>
-              </div>
-              <div class="col-sm-9 col-md-9 col-xs-12">
-                <input name="foto_ktp" type="file" id="image-ktp" accept="image/*" class="form-control @error('foto_ktp') is-invalid @enderror" value="{{ auth()->user()->pembeli->foto_ktp }}">
-                @error('foto_ktp')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                @enderror
-                <img id="image-preview-ktp" class="image-preview" alt="Image Preview KTP">
+              <div class="tab-pane fade" id="history">
+                <h4 class="py-2">Riwayat Pembelian Anda</h4>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">No</th>
+                      <th scope="col">Tgl Lelang</th>
+                      <th scope="col">Nama Barang</th>
+                      <th scope="col">Harga Pengajuan Tertinggi</th>
+                      <th scope="col">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row">1</th>
+                      <td>23-12-2023</td>
+                      <td>Satu unit Spm Honda Beat DK 3467 ABL, STNKnya</td>
+                      <td>Rp. 1.000.000</td>
+                      <td>@mdo</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">2</th>
+                      <td>23-12-2023</td>
+                      <td>1 (satu) spm Honda Scoopy No.Pol DK 2285 FBY</td>
+                      <td>Rp. 1.000.000</td>
+                      <td>@fat</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">3</th>
+                      <td>23-12-2023</td>
+                      <td>1 (satu) buah HP Android Oppo warna hitam</td>
+                      <td>Rp. 1.000.000</td>
+                      <td>@twitter</td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
-      
-            <div class="row mb-3">
-              <div class="col-sm-3 col-md-3 col-xs-12">
-                <label for="foto_pembeli" class="col-form-label">Foto Selfie dengan KTP</label>
-                <span style="color: #eb340a;">*</span>
-              </div>
-              <div class="col-sm-9 col-md-9 col-xs-12">
-                <input name="foto_pembeli" type="file" id="image-selfie" accept="image/*" class="form-control @error('foto_pembeli') is-invalid @enderror" value="{{ auth()->user()->pembeli->foto_pembeli }}">
-                @error('foto_pembeli')
-                  <div class="invalid-feedback">
-                      {{ $message }}
-                  </div>
-                @enderror
-                <img id="image-preview-selfie" class="image-preview" alt="Image Preview Selfie">
-              </div>
-            </div> --}}
 
-
-          {{-- @elseif (auth()->user()->pembeli->verifikasi->jenis_kesalahan === 'nama_pembeli')
-            <input type="text" name="pekerjaan" value="{{ auth()->user()->pembeli->pekerjaan }}" style="display:none;">
-
-            <div class="row mb-3">
-              <div class="col-sm-3 col-md-3 col-xs-12">
-                <label for="nama_pembeli" class="col-form-label">Nama Lengkap</label>
-                <span style="color: #eb340a;">*</span>
-              </div>
-              <div class="col-sm-9 col-md-9 col-xs-12">
-                <input type="text" name="nama_pembeli" id="nama_pembeli" placeholder="Isi dengan nama Anda sesuai dengan yang tertera pada KTP" class="form-control @error('nama_pembeli') is-invalid @enderror" value="{{ auth()->user()->pembeli->nama_pembeli }}" required>
-                @error('nama_pembeli')
-                  <div class="invalid-feedback">
-                    {{ $message }}
-                  </div>
-                @enderror
-              </div>
-            </div> --}}
-
-          {{-- @elseif (auth()->user()->pembeli->verifikasi->jenis_kesalahan === 'pekerjaan')
-            <input type="text" name="nama_pembeli" value="{{ auth()->user()->pembeli->nama_pembeli }}" style="display:none;">
-
-            <div class="row mb-3">
-              <div class="col-sm-3 col-md-3 col-xs-12">
-                <label for="pekerjaan" class="col-form-label">Pekerjaan</label>
-                <span style="color: #eb340a;">*</span>
-              </div>
-              <div class="col-sm-9 col-md-9 col-xs-12">
-                <input type="text" name="pekerjaan" id="pekerjaan" placeholder="Isi dengan pekerjaan Anda yang sebenarnya" class="form-control @error('pekerjaan') is-invalid @enderror" value="{{ auth()->user()->pembeli->pekerjaan }}" required>
-                @error('pekerjaan')
-                  <div class="invalid-feedback">
-                    {{ $message }}
-                  </div>
-                @enderror
-              </div>
-            </div>
-          
-          @endif --}}
-
-          <p style="color: #eb340a; text-align:right">* Wajib diisi</p>
-          <br>
-          <button type="submit" class="btn btn-success d-block mx-auto">Perbaiki Data</button>
-          <br>
-        </form>
+          </div>
+        </div>
       </div>
     </div>
   </div>
