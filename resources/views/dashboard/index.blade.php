@@ -62,9 +62,9 @@
 
         @if ($jadwal)
           @if ($status == 'coming_soon')
-            <h5 class="text-center">
+            <h4 class="text-center">
               <span class="badge text-bg-success">Penjualan Langsung Mendatang!</span>
-            </h5>
+            </h4>
 
             <div class="col-md-3">
               <div class="card border-0">
@@ -225,17 +225,17 @@
             </div>
           
           @elseif ($status == 'past_event')
-            <h5 class="text-center">
+            <h4 class="text-center">
               Penjualan Langsung sudah berakhir.
               <p>Nantikan jadwal selanjutnya.</p>
-            </h5>
+            </h4>
           @endif
 
         @else
-          <h5 class="text-center">
+          <h4 class="text-center">
             Saat ini belum ada Jadawal Penjualan Langsung Barang Rampasan Negara
             <p>Nantikan jadwal selanjutnya.</p>
-          </h5>
+          </h4>
         @endif
 
       </div>
@@ -265,18 +265,56 @@
 
 </div>
 
-<div class="container py-2 mx-auto">
+<div class="container py-2">
   <div class="row">
-    <div class="col-md-12">
-      <h2 class="section-title">barang rampasan terbaru</h2>
-      <div class="centered-icon">
-        <hr>
-        <div class="icon"><i class="fa-solid fa-dolly fa-2xl" style="color: #198754;"></i></i></div>
+    <div class="col-md-12 d-flex align-items-center">
+      <h2 class="section-title2">Alur Lelang</h2>
+      <hr class="flex-grow-1 mx-2">
+    </div>
+  </div>
+  <div class="row py-5">
+    <div class="col-md-3 step-container">
+      <div class="step">
+        <i class="fas fa-user fa-2x mb-2"></i>
+        <h4 class="mt-4 text-left">Daftar Akun</h4>
+        <p class="text-secondary">Untuk dapat melakukan proses lelang, anda harus mendaftar terlebih dahulu. Proses pendaftaran gratis dan sangat mudah</p>
+      </div>
+    </div>
+    <div class="col-md-3 step-container">
+      <div class="step">
+        <i class="fa-solid fa-calendar-day fa-2x mb-2"></i>
+        <h4 class="mt-4 text-left">Jadwal</h4>
+        <p class="text-secondary">Penawaran terbatas, lelang hanya dibuka saat jadwal penjualan langsung tersedia. </p>
+      </div>
+    </div>
+    <div class="col-md-3 step-container">
+      <div class="step">
+        <i class="fas fa-rupiah-sign fa-2x mb-2"></i>
+        <h4 class="mt-4 text-left">Penawaran</h4>
+        <p class="text-secondary">Anda dapat langsung mengajukan penawaran pada produk apa pun yang diinginkan, ketika jadwal lelang penjualan langsung tersedia.</p>
+      </div>
+    </div>
+    <div class="col-md-3 step-container">
+      <div class="step">
+        <i class="fas fa-trophy fa-2x mb-2"></i>
+        <h4 class="mt-4 text-left">Menang</h4>
+        <p class="text-secondary">Menangkan lelang kami dengan mudah dan nikmati produk impian Anda setelah penawaran pada jadwal lelang penjualan langsung ditutup.</p>
       </div>
     </div>
   </div>
+    
+</div>
 
-  <div class="row py-5">
+
+<div class="container py-2">
+  <div class="row">
+    <div class="col-md-12 d-flex align-items-center">
+      <h2 class="section-title2">Barang Rampasan Terbaru</h2>
+      <hr class="flex-grow-1 mx-2">
+    </div>
+  </div>
+
+  <div class="row py-4">
     @if ($daftar_barang->isNotEmpty())
       @foreach ($daftar_barang as $daftar)
       {{-- dapatkan harga terakhir --}}
@@ -288,17 +326,25 @@
           {{-- <img class="bd-placeholder-img card-img-top" src="asset{{ $daftar->barang_rampasan->foto_thumbnail }}" style="object-fit: cover; width: 100%; height: 300px;"  alt="Your Alt Text"> --}}
           <img class="bd-placeholder-img card-img-top" src="http://admin.sibara.test{{ $daftar->barang_rampasan->foto_thumbnail }}" style="object-fit: cover; width: 100%; height: 300px;"  alt="Your Alt Text">
 
-          <div class="position-absolute top-0 start-0 m-3">
-            <span class="badge bg-danger" style="border-radius: 4px;">{{ $daftar->barang_rampasan->kategori->nama_kategori }}</span>
-          </div>
+          {{-- <div class="position-absolute top-0 start-0 m-3">
+            <span class="badge bg-danger" style="border-radius: 4px;">Sale!</span>
+          </div> --}}
 
           <div class="card-body" style="background-color: #F4F4F2;">
-            <div class="card-text text-center">
-              <p class="mb-0">{{ \Illuminate\Support\Str::limit($daftar->barang_rampasan->nama_barang, 72, '...') }}</p>
-              <h5 class=""><strong>Rp. {{ number_format($latestHarga->harga, 0, ',', '.') }}</strong></h5>
-              <button class="btn btn-sm btn-outline-success">Detail Barang</button>
+            <div class="card-text">
+              <h6 class="text-left">{{ \Illuminate\Support\Str::limit($daftar->barang_rampasan->nama_barang, 72, '...') }}</h6>
+              <p class="text-secondary">{{ $daftar->barang_rampasan->kategori->nama_kategori }}</p>
+              <div class="d-flex justify-content-between align-items-start">
+                <h4 class=""><strong>Rp. {{ number_format($latestHarga->harga, 0, ',', '.') }}</strong></h4>
+                <p class="text-secondary">0 <i class="fa fa-user"></i></p>
+              </div>
+              <div class="text-center">
+                <button class="btn btn-sm btn-outline-success">Detail Barang</button>
+              </div>
             </div>
           </div>
+        
+        
         </div>
       </div>
       @endforeach

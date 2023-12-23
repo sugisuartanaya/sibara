@@ -1,7 +1,10 @@
 
-body{
-  font-family: -apple-system,BlinkMacSystemFont,Roboto,"Work Sans","Segoe UI",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
-  font-weight: 400;
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+  font-family: 'Open Sans', sans-serif;
 }
 
 .logo { 
@@ -58,6 +61,14 @@ body{
     margin-bottom: 10px;
 }
 
+.section-title2 {
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 34px;
+    margin-bottom: 0px;
+}
+
 .custom-alert {
   z-index: 1; /* Sesuaikan z-index sesuai kebutuhan */
   position: fixed;
@@ -101,4 +112,42 @@ body{
   transform: translate(-50%, -50%);
   padding: 5px;
   border-radius: 50%; /* Untuk ikon berbentuk lingkaran */
+}
+
+.step-container {
+  display: flex;
+}
+
+.step {
+  position: relative;
+  margin-right: 10px;
+}
+
+.step i {
+  font-size: 35px;
+  line-height: 90px; 
+  width: 90px; 
+  height: 90px; 
+  background: linear-gradient(to right, #0d8c46, #3fb048);
+  color: white; 
+  border-radius: 50%;
+  margin-bottom: 10px; 
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.step::before {
+  content: '\f105';
+  font-family: "FontAwesome";
+  position: absolute;
+  right: 20%;
+  top: 18%;
+  transform: translateY(-50%);
+  color: rgba(0, 0, 0, 0.2);
+  font-size: 25px;
+}
+
+.step-container:last-child .step::before {
+  content: none;
 }
