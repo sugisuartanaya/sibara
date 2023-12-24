@@ -319,12 +319,12 @@
       @foreach ($daftar_barang as $daftar)
       {{-- dapatkan harga terakhir --}}
       @php
-        $latestHarga = $harga_terakhir[$daftar->id_barang];
+        $latestHarga = $harga_terakhir[$daftar->id];
       @endphp
       <div class="col-md-3 mb-4">
         <div class="card shadow-sm position-relative">
           {{-- <img class="bd-placeholder-img card-img-top" src="asset{{ $daftar->barang_rampasan->foto_thumbnail }}" style="object-fit: cover; width: 100%; height: 300px;"  alt="Your Alt Text"> --}}
-          <img class="bd-placeholder-img card-img-top" src="http://admin.sibara.test{{ $daftar->barang_rampasan->foto_thumbnail }}" style="object-fit: cover; width: 100%; height: 300px;"  alt="Your Alt Text">
+          <img class="bd-placeholder-img card-img-top" src="http://admin.sibara.test{{ $daftar->foto_thumbnail }}" style="object-fit: cover; width: 100%; height: 300px;"  alt="Your Alt Text">
 
           {{-- <div class="position-absolute top-0 start-0 m-3">
             <span class="badge bg-danger" style="border-radius: 4px;">Sale!</span>
@@ -332,8 +332,8 @@
 
           <div class="card-body" style="background-color: #F4F4F2;">
             <div class="card-text">
-              <h6 class="text-left">{{ \Illuminate\Support\Str::limit($daftar->barang_rampasan->nama_barang, 65, '...') }}</h6>
-              <p class="text-secondary">{{ $daftar->barang_rampasan->kategori->nama_kategori }}</p>
+              <h6 class="text-left">{{ \Illuminate\Support\Str::limit($daftar->nama_barang, 65, '...') }}</h6>
+              <p class="text-secondary">{{ $daftar->kategori->nama_kategori }}</p>
               <div class="d-flex justify-content-between align-items-start">
                 <h4 class=""><strong>Rp. {{ number_format($latestHarga->harga, 0, ',', '.') }}</strong></h4>
                 <p class="text-secondary">0 <i class="fa fa-user"></i></p>

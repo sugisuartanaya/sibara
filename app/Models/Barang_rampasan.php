@@ -33,5 +33,6 @@ class Barang_rampasan extends Model
         'deskripsi',
         'foto_thumbnail',
         'foto_barang',
+        'status'
     ];
 }

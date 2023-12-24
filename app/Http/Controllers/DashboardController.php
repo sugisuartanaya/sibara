@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Barang_rampasan;
 use App\Models\Daftar_barang;
 use App\Models\Harga_wajar;
 use App\Models\Jadwal;
@@ -32,15 +33,13 @@ class DashboardController extends Controller
             $status = null;
         }
 
-        $daftar_barang = Daftar_barang::with(['barang_rampasan'])
-            ->where('status', '1')
-            ->select('id_barang')
-            ->distinct()
-            ->orderBy('id_barang', 'desc')
+        $daftar_barang = Barang_rampasan::where('status', 0)
+            ->orderBy('id', 'desc')
             ->limit(8)
             ->get();
+
+        $id_barang = $daftar_barang->pluck('id')->toArray();
         
-        $id_barang = $daftar_barang->pluck('id_barang')->toArray();
         $harga = Harga_wajar::whereIn('id_barang', $id_barang)
             ->orderBy('tgl_laporan_penilaian', 'desc')  
             ->get()
@@ -48,7 +47,7 @@ class DashboardController extends Controller
             ->map(function ($group) {
                 return $group->first(); // per group
             });
-
+        
         return view('dashboard.index', [
             'title' => 'Beranda',
             'active' => 'active',

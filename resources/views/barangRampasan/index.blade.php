@@ -44,10 +44,10 @@
             </div>
             <div class="col-auto">
               <select name="urutan" class="form-select form-select-sm" aria-label="Small select example">
-                <option selected>Pilih urutan</option>
-                <option value="terbaru">Terbaru</option>
-                <option value="termurah">Harga Limit (Termurah - Termahal)</option>
-                <option value="termahal">Harga Limit (Termahal - Termurah)</option>
+                <option @if(request('urutan') == '') selected @endif>Pilih urutan</option>
+                <option value="terbaru" @if(request('urutan') == 'terbaru') selected @endif>Terbaru</option>
+                <option value="termurah" @if(request('urutan') == 'termurah') selected @endif>Harga Limit (Termurah - Termahal)</option>
+                <option value="termahal" @if(request('urutan') == 'termahal') selected @endif>Harga Limit (Termahal - Termurah)</option>
               </select>
             </div>
           </div>
@@ -85,7 +85,8 @@
           @endforeach
 
           <div>
-            {{ $daftar_barang->links('pagination::bootstrap-5') }}
+            {{ isset($request) ? $daftar_barang->appends(['urutan' => $request->urutan])->links('pagination::bootstrap-5') : $daftar_barang->links('pagination::bootstrap-5') }}
+
           </div>
 
         @else
