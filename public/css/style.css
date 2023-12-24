@@ -161,3 +161,17 @@ p, h1, h2, h3, h4, h5, h6 {
 .step-container:last-child .step::before {
   content: none;
 }
+
+.active>.page-link {
+  color: white;
+  background-color: #0d8c46;
+  border-color: #0d8c46;
+}
+.page-link{
+  color: #0d8c46;
+  background-color: white;
+}
+.page-link:hover{
+  color: #0d8c46;
+  background-color: white;
+}

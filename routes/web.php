@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BarangRampasanController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PembeliController;
@@ -29,3 +30,6 @@ Route::post('/account/register', [RegisterController::class, 'store']);
 Route::get('/account/profile/edit', [PembeliController::class, 'myProfile']);
 Route::put('/account/profile/{username}', [PembeliController::class, 'updateProfile']);
 Route::get('/update-data/{username}', [PembeliController::class, 'updateData']);
+
+Route::get('/barang', [BarangRampasanController::class, 'index']);
+Route::get('/filter-urutan', [BarangRampasanController::class, 'filterUrutan']);

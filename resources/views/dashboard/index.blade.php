@@ -332,7 +332,7 @@
 
           <div class="card-body" style="background-color: #F4F4F2;">
             <div class="card-text">
-              <h6 class="text-left">{{ \Illuminate\Support\Str::limit($daftar->barang_rampasan->nama_barang, 72, '...') }}</h6>
+              <h6 class="text-left">{{ \Illuminate\Support\Str::limit($daftar->barang_rampasan->nama_barang, 65, '...') }}</h6>
               <p class="text-secondary">{{ $daftar->barang_rampasan->kategori->nama_kategori }}</p>
               <div class="d-flex justify-content-between align-items-start">
                 <h4 class=""><strong>Rp. {{ number_format($latestHarga->harga, 0, ',', '.') }}</strong></h4>

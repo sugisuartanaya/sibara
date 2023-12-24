@@ -9,6 +9,12 @@ class Daftar_barang extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'id_barang',
+        'id_jadwal',
+        'status'
+    ];
+
     public function jadwal()
     {
         return $this->belongsTo(Jadwal::class, 'id_jadwal');

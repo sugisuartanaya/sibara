@@ -65,4 +65,10 @@ $(function() {
           });
     });
 
+    $(document).ready(function() {
+        $('#filter-urutan select').change(function() {
+            $('#filter-urutan form').submit();
+        });
+    });
+
 });
