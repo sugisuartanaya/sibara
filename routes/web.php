@@ -32,4 +32,4 @@ Route::put('/account/profile/{username}', [PembeliController::class, 'updateProf
 Route::get('/update-data/{username}', [PembeliController::class, 'updateData']);
 
 Route::get('/barang', [BarangRampasanController::class, 'index']);
-Route::get('/filter-urutan', [BarangRampasanController::class, 'filterUrutan']);
+Route::get('/filter', [BarangRampasanController::class, 'filterUrutan']);

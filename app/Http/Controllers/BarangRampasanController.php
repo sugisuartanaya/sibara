@@ -44,21 +44,26 @@ class BarangRampasanController extends Controller
         $kategori = Kategori::all();
 
         $daftar_barang = Barang_rampasan::select('barang_rampasans.*', 'harga_wajars.*')
-            ->where('barang_rampasans.status', 0)
-            ->leftJoin('harga_wajars', function($join) {
-                $join->on('barang_rampasans.id', '=', 'harga_wajars.id_barang')
-                    ->whereRaw('harga_wajars.id = (SELECT id FROM harga_wajars WHERE id_barang = barang_rampasans.id ORDER BY tgl_laporan_penilaian DESC LIMIT 1)');
-            })
-            ->when($request->urutan == 'terbaru', function ($query) {
+        ->where('barang_rampasans.status', 0)
+        ->leftJoin('harga_wajars', function($join) {
+            $join->on('barang_rampasans.id', '=', 'harga_wajars.id_barang')
+                ->whereRaw('harga_wajars.id = (SELECT id FROM harga_wajars WHERE id_barang = barang_rampasans.id ORDER BY tgl_laporan_penilaian DESC LIMIT 1)');
+        })
+        ->when($request->has('kategori'), function ($query) use ($request) {
+            return $query->whereHas('kategori', function ($q) use ($request) {
+                $q->whereIn('kategori_id', $request->kategori);
+            });
+        })
+        ->when($request->has('urutan'), function ($query) use ($request) {
+            if ($request->urutan == 'terbaru') {
                 return $query->orderBy('barang_rampasans.id', 'desc');
-            })
-            ->when($request->urutan == 'termurah', function ($query) {
+            } elseif ($request->urutan == 'termurah') {
                 return $query->orderBy('harga_wajars.harga', 'asc');
-            })
-            ->when($request->urutan == 'termahal', function ($query) {
+            } elseif ($request->urutan == 'termahal') {
                 return $query->orderBy('harga_wajars.harga', 'desc');
-            })
-            ->paginate(8);
+            }
+        })
+        ->paginate(8);
 
         return view('barangRampasan.index', [
             'title' => 'Barang',

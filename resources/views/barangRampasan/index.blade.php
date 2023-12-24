@@ -18,10 +18,11 @@
           <h6><strong class="text-uppercase">kategori</strong></h6>
         </div>
         <div class="card-body">
-          <form action="">
+          <form action="/filter" id="filter">
+            @csrf
             @foreach($daftar_kategori as $kategori)
               <div class="form-check mb-2">
-                <input class="form-check-input" type="checkbox" name="{{ $kategori->id }}" id="{{ $kategori->id }}">
+                <input class="form-check-input" type="checkbox" name="kategori[]" value="{{ $kategori->id }}" id="{{ $kategori->id }}" @if(in_array($kategori->id, request('kategori', []))) checked @endif>
                 <label class="form-check-label" for="{{ $kategori->id }}">
                   {{ $kategori->nama_kategori }}
                 </label>
@@ -30,38 +31,29 @@
             <div class="text-center mt-3">
               <button class="btn btn-sm btn-success" style="width: 100%;"><i class="fa fa-filter"></i>&nbsp;Terapkan</button>
             </div>
-          </form>
         </div>
       </div>
     </div>
     <div class="col-md-9">
-      <div id="filter-urutan">
-        <form action="/filter-urutan">
-          @csrf
-          <div class="row g-3 align-items-center">
-            <div class="col-auto">
-              <label for="inputPassword6" class="col-form-label">Urutkan: </label>
-            </div>
-            <div class="col-auto">
-              <select name="urutan" class="form-select form-select-sm" aria-label="Small select example">
-                <option @if(request('urutan') == '') selected @endif>Pilih urutan</option>
-                <option value="terbaru" @if(request('urutan') == 'terbaru') selected @endif>Terbaru</option>
-                <option value="termurah" @if(request('urutan') == 'termurah') selected @endif>Harga Limit (Termurah - Termahal)</option>
-                <option value="termahal" @if(request('urutan') == 'termahal') selected @endif>Harga Limit (Termahal - Termurah)</option>
-              </select>
-            </div>
-          </div>
-        </form>
+      <div class="row g-3 align-items-center">
+        <div class="col-auto">
+          <label for="inputPassword6" class="col-form-label">Urutkan: </label>
+        </div>
+        <div class="col-auto" id="select-urutan">
+          <select name="urutan" class="form-select form-select-sm" aria-label="Small select example">
+            <option @if(request('urutan') == '') selected @endif>Pilih urutan</option>
+            <option value="terbaru" @if(request('urutan') == 'terbaru') selected @endif>Terbaru</option>
+            <option value="termurah" @if(request('urutan') == 'termurah') selected @endif>Harga Limit (Termurah - Termahal)</option>
+            <option value="termahal" @if(request('urutan') == 'termahal') selected @endif>Harga Limit (Termahal - Termurah)</option>
+          </select>
+        </div>
       </div>
+      </form>
       
       <hr>
       <div class="row py-2">
         @if ($daftar_barang->isNotEmpty())
           @foreach ($daftar_barang as $daftar)
-          {{-- dapatkan harga terakhir --}}
-          {{-- @php
-            $latestHarga = $harga_terakhir[$daftar->id_barang];
-          @endphp --}}
           <div class="col-md-3 mb-4">
             <div class="card position-relative">
               {{-- <img class="bd-placeholder-img card-img-top" src="asset{{ $daftar->foto_thumbnail }}" style="object-fit: cover; width: 100%; height: 300px;"  alt="Your Alt Text"> --}}
@@ -90,9 +82,9 @@
           </div>
 
         @else
-          <h5 class="text-center">
-            Saat ini belum ada Barang Rampasan Negara Terdaftar
-          </h5>
+          <div class="alert alert-danger text-center" role="alert">
+            <h5>Maaf, tidak ditemukan data barang rampasan dengan kriteria yang Anda inginkan.</h5>
+          </div>
         @endif
       </div>
       
