@@ -40,8 +40,16 @@ class DashboardController extends Controller
 
         $id_barang = $daftar_barang->pluck('id')->toArray();
         
-        $harga = Harga_wajar::whereIn('id_barang', $id_barang)
+        $harga_terakhir = Harga_wajar::whereIn('id_barang', $id_barang)
             ->orderBy('tgl_laporan_penilaian', 'desc')  
+            ->get()
+            ->groupBy('id_barang')
+            ->map(function ($group) {
+                return $group->first(); // per group
+            });
+        
+        $harga_awal = Harga_wajar::whereIn('id_barang', $id_barang)
+            ->orderBy('tgl_laporan_penilaian', 'asc')  
             ->get()
             ->groupBy('id_barang')
             ->map(function ($group) {
@@ -54,7 +62,8 @@ class DashboardController extends Controller
             'jadwal' => $jadwal,
             'status' => $status,
             'daftar_barang' => $daftar_barang,
-            'harga_terakhir' => $harga
+            'harga_terakhir' => $harga_terakhir,
+            'harga_awal' => $harga_awal
         ]);
         
     }

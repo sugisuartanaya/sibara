@@ -300,6 +300,7 @@
       {{-- dapatkan harga terakhir --}}
       @php
         $latestHarga = $harga_terakhir[$daftar->id];
+        $firstHarga = $harga_awal[$daftar->id];
       @endphp
       <div class="col-md-3 mb-4">
         <div class="card shadow-sm position-relative">
@@ -310,17 +311,26 @@
             <span class="badge bg-danger" style="border-radius: 4px;">Sale!</span>
           </div> --}}
 
-          <div class="card-body" style="background-color: #F4F4F2;">
-            <div class="card-text">
-              <h6 class="text-left">{{ \Illuminate\Support\Str::limit($daftar->nama_barang, 65, '...') }}</h6>
-              <p class="text-secondary">{{ $daftar->kategori->nama_kategori }}</p>
-              <div class="d-flex justify-content-between align-items-start">
-                <h4 class=""><strong>Rp. {{ number_format($latestHarga->harga, 0, ',', '.') }}</strong></h4>
-                <p class="text-secondary">0 <i class="fa fa-user"></i></p>
-              </div>
-              <div class="text-center">
-                <button class="btn btn-sm btn-outline-success">Detail Barang</button>
-              </div>
+          <div class="card-body d-flex" style="background-color: #F4F4F2; display: flex; flex-direction: column;">
+
+            <h6 class="text-left mb-2" style="flex-shrink: 0;">{{ \Illuminate\Support\Str::limit($daftar->nama_barang, 65, '...') }}</h6>
+            <p class="text-secondary mb-2">{{ $daftar->kategori->nama_kategori }}</p>
+            
+            @if ($daftar->harga_wajar->count() > 1)
+              <p class="text-decoration-line-through text-secondary" style="margin-bottom: 0px">
+                Rp. {{ number_format($firstHarga->harga, 0, ',', '.') }}
+              </p>
+            @else
+              <div class="mb-2" style="height: 17px; flex-shrink: 0;"></div>
+            @endif
+            
+            <div class="d-flex justify-content-between align-items-start mb-2">
+              <h4 class="mb-0"><strong>Rp. {{ number_format($latestHarga->harga, 0, ',', '.') }}</strong></h4>
+              <p class="text-secondary mb-0">0 <i class="fa fa-user"></i></p>
+            </div>
+            
+            <div class="text-center mt-2">
+              <button class="btn btn-sm btn-outline-success">Detail Barang</button>
             </div>
           </div>
         

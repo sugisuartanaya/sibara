@@ -68,26 +68,27 @@
       <div class="row py-2">
         @if ($daftar_barang->isNotEmpty())
           @foreach ($daftar_barang as $daftar)
-          <div class="col-md-3 mb-4">
-            <div class="card position-relative">
-              {{-- <img class="bd-placeholder-img card-img-top" src="asset{{ $daftar->foto_thumbnail }}" style="object-fit: cover; width: 100%; height: 300px;"  alt="Your Alt Text"> --}}
-              <img class="bd-placeholder-img card-img-top" src="http://admin.sibara.test{{ $daftar->foto_thumbnail }}" style="object-fit: cover; width: 100%; height: 300px;"  alt="Your Alt Text">
+            <div class="col-md-3 mb-4">
+              <div class="card position-relative">
+                {{-- <img class="bd-placeholder-img card-img-top" src="asset{{ $daftar->foto_thumbnail }}" style="object-fit: cover; width: 100%; height: 300px;"  alt="Your Alt Text"> --}}
+                <img class="bd-placeholder-img card-img-top" src="http://admin.sibara.test{{ $daftar->foto_thumbnail }}" style="object-fit: cover; width: 100%; height: 300px;"  alt="Your Alt Text">
 
-              <div class="card-body" style="background-color: #F4F4F2;">
-                <div class="card-text">
-                  <h6 class="text-left">{{ \Illuminate\Support\Str::limit($daftar->nama_barang, 50, '...') }}</h6>
-                  <p class="text-secondary">{{ $daftar->kategori->nama_kategori }}</p>
-                  <div class="d-flex justify-content-between align-items-start">
-                    <h5 class=""><strong>Rp. {{ number_format($daftar->harga, 0, ',', '.') }}</strong></h5>
-                    <p class="text-secondary">0 <i class="fa fa-user"></i></p>
-                  </div>
-                  <div class="text-center">
-                    <button class="btn btn-sm btn-outline-success">Detail Barang</button>
+                <div class="card-body" style="background-color: #F4F4F2;">
+                  <div class="card-text">
+                    <h6 class="text-left">{{ \Illuminate\Support\Str::limit($daftar->nama_barang, 50, '...') }}</h6>
+                    <p class="text-secondary">{{ $daftar->kategori->nama_kategori }}</p>
+                    
+                    <div class="d-flex justify-content-between align-items-start">
+                      <h5 class=""><strong>Rp. {{ number_format($daftar->harga, 0, ',', '.') }}</strong></h5>
+                      <p class="text-secondary">0 <i class="fa fa-user"></i></p>
+                    </div>
+                    <div class="text-center">
+                      <button class="btn btn-sm btn-outline-success">Detail Barang</button>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
           @endforeach
 
           <div>

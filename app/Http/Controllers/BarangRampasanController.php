@@ -14,14 +14,6 @@ class BarangRampasanController extends Controller
     public function index()
     {
         $kategori = Kategori::all();
-        // $daftar_barang = Barang_rampasan::select('barang_rampasans.*', 'daftar_barangs.status', 'latest_prices.harga')
-        // ->join('daftar_barangs', 'barang_rampasans.id', '=', 'daftar_barangs.id_barang')
-        // ->leftJoin('harga_wajars as latest_prices', function ($join) {
-        //     $join->on('barang_rampasans.id', '=', 'latest_prices.id_barang')
-        //         ->whereRaw('latest_prices.tgl_laporan_penilaian = (select max(tgl_laporan_penilaian) from harga_wajars where id_barang = barang_rampasans.id)');
-        // })
-        // ->where('daftar_barangs.status', 1)
-        // ->paginate(8);
 
         $daftar_barang = Barang_rampasan::select('barang_rampasans.*', 'harga_wajars.*')
             ->where('barang_rampasans.status', 0)
@@ -30,7 +22,7 @@ class BarangRampasanController extends Controller
                     ->whereRaw('harga_wajars.id = (SELECT id FROM harga_wajars WHERE id_barang = barang_rampasans.id ORDER BY tgl_laporan_penilaian DESC LIMIT 1)');
             })
             ->paginate(8);
-
+        
         return view('barangRampasan.index', [
             'title' => 'Barang',
             'active' => 'active',
@@ -75,6 +67,15 @@ class BarangRampasanController extends Controller
 
         
     }
+
+            // $daftar_barang = Barang_rampasan::select('barang_rampasans.*', 'daftar_barangs.status', 'latest_prices.harga')
+        // ->join('daftar_barangs', 'barang_rampasans.id', '=', 'daftar_barangs.id_barang')
+        // ->leftJoin('harga_wajars as latest_prices', function ($join) {
+        //     $join->on('barang_rampasans.id', '=', 'latest_prices.id_barang')
+        //         ->whereRaw('latest_prices.tgl_laporan_penilaian = (select max(tgl_laporan_penilaian) from harga_wajars where id_barang = barang_rampasans.id)');
+        // })
+        // ->where('daftar_barangs.status', 1)
+        // ->paginate(8);
 
     
     public function create()
