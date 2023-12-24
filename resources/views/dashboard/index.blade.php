@@ -241,26 +241,6 @@
       </div>
     </div>
 
-
-    {{-- <div class="col-md-4">
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title text-center text-success">
-            <h4>Waktu Server</h4>
-          </div> 
-        </div>
-        <div class="card-body">
-          <div class="card-text text-center">
-            <h5>
-              <i class="fa fa-clock-o"></i>
-              <span id="currentDate"></span>
-            </h5>
-            <p id="currentTime"></p>
-          </div>
-        </div>
-      </div>
-    </div> --}}
-
   </div>
 
 </div>

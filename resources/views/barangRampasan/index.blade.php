@@ -33,6 +33,20 @@
             </div>
         </div>
       </div>
+
+      <div class="card mt-3">
+        <div class="card-header">
+          <h6><strong class="text-uppercase">waktu server</strong></h6>
+        </div>
+        <div class="card-body text-center">
+          <h5>
+            <i class="fa fa-clock-o"></i>
+            <span id="currentDate"></span>
+          </h5>
+          <p id="currentTime"></p>
+        </div>
+      </div>
+      
     </div>
     <div class="col-md-9">
       <div class="row g-3 align-items-center">
@@ -82,8 +96,10 @@
           </div>
 
         @else
-          <div class="alert alert-danger text-center" role="alert">
-            <h5>Maaf, tidak ditemukan data barang rampasan dengan kriteria yang Anda inginkan.</h5>
+          <div class="col-md-12">
+            <div class="alert alert-danger text-center" role="alert">
+              <h5>Maaf, tidak ditemukan data barang rampasan dengan kriteria yang Anda inginkan.</h5>
+            </div>
           </div>
         @endif
       </div>
