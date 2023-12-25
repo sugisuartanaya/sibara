@@ -86,13 +86,31 @@ class BarangRampasanController extends Controller
         $harga = Harga_wajar::where('id_barang', $id)->latest('tgl_laporan_penilaian')->first();
         $jadwal_terkait = Daftar_barang::where('id_barang', $id)->first()?->jadwal;
 
+        if($jadwal_terkait){
+            $jadwal_terkait->start_date = Carbon::parse($jadwal_terkait->start_date);
+            $jadwal_terkait->end_date = Carbon::parse($jadwal_terkait->end_date);
+            
+            $today = Carbon::now();
+    
+            if ($today->lt($jadwal_terkait->start_date)) {
+                $status = 'coming_soon';
+            } elseif ($today->gte($jadwal_terkait->start_date) && $today->lte($jadwal_terkait->end_date)) {
+                $status = 'range_jadwal';
+            } elseif ($today->gt($jadwal_terkait->end_date)) {
+                $status = 'past_event';
+            } 
+        } else {
+            $status = null;
+        }
+
         return view('barangRampasan.show', [
             'title' => 'Barang',
             'active' => 'active',
             'data_barang' => $barang,
             'foto_barang' => $fotoBarangArray,
             'harga' => $harga,
-            'jadwal' => optional($jadwal_terkait)->end_date,
+            'status' => $status,
+            'jadwal' => optional($jadwal_terkait),
         ]);
     }
 

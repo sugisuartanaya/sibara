@@ -17,7 +17,38 @@
 
   <div class="row">
     <div class="col-md-3">
-      <div class="card py-2">
+
+      @if ($status == 'range_jadwal')
+        <div class="card mb-3">
+          <div class="card-header">
+            <h6><strong class="text-uppercase">jadwal lelang</strong></h6>
+          </div>
+          <div class="card-body">
+            <p class="mb-1 text-secondary">Hari</p>
+            <h6>{{ $jadwal->start_date->format('l') }} - {{ $jadwal->end_date->format('l') }}</h6>
+            <p class="mb-1 text-secondary">Tanggal</p>
+            <h6>{{ $jadwal->start_date->format('j M Y') }} - {{ $jadwal->end_date->format('j M Y') }}</h6>
+            <p class="mb-1 text-secondary">Waktu</p>
+            <h6>{{ $jadwal->start_date->format('H:i') }} - {{ $jadwal->end_date->format('H:i') }} WITA</h6>
+          </div>
+        </div>
+      @elseif ($status == 'coming_soon')
+        <div class="card mb-3">
+          <div class="card-header">
+            <h6><strong class="text-uppercase">jadwal lelang mendatang</strong></h6>
+          </div>
+          <div class="card-body">
+            <p class="mb-1 text-secondary">Hari</p>
+            <h6>{{ $jadwal->start_date->format('l') }} - {{ $jadwal->end_date->format('l') }}</h6>
+            <p class="mb-1 text-secondary">Tanggal</p>
+            <h6>{{ $jadwal->start_date->format('j M Y') }} - {{ $jadwal->end_date->format('j M Y') }}</h6>
+            <p class="mb-1 text-secondary">Waktu</p>
+            <h6>{{ $jadwal->start_date->format('H:i') }} - {{ $jadwal->end_date->format('H:i') }} WITA</h6>
+          </div>
+        </div>
+      @endif
+
+      <div class="card">
         <div class="card-header">
           <h6><strong class="text-uppercase">waktu server</strong></h6>
         </div>
@@ -29,6 +60,7 @@
           <p id="currentTime"></p>
         </div>
       </div>
+
     </div>
 
     <div class="col-md-5">
@@ -80,8 +112,8 @@
 
       <p>Kategori: {{ $data_barang->kategori->nama_kategori }}</p>
       
-      @if($jadwal)
-        <p id="end_date" dataEndDate= {{ \Carbon\Carbon::parse($jadwal)->toISOstring() }}></p>
+      @if($status == 'range_jadwal')
+        <p id="end_date" dataEndDate= {{ $jadwal->end_date }}></p>
         <div class="badge-container">
           <p class="text-secondary" style="margin-top: 5px; margin-bottom: 0px; ">Berakhir dalam: <strong id="countdown" class="text-danger"></strong>
           </p>
