@@ -329,6 +329,7 @@
                   @endphp
                 @endif
                 {{-- ... --}}
+                
                 &nbsp;<span class="text-danger" style="font-weight: bold;">{{ number_format($persentase_pengurangan) }}% </span>
               </div>
             @else

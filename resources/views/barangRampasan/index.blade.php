@@ -18,11 +18,13 @@
           <h6><strong class="text-uppercase">kategori</strong></h6>
         </div>
         <div class="card-body">
-          <form action="/filter" id="filter">
+          <form action="/filter" id="filter" method="GET">
             @csrf
+            <input type="hidden" name="search" value="{{ isset($request) ? $request->input('search') : '' }}">
             @foreach($daftar_kategori as $kategori)
               <div class="form-check mb-2">
-                <input class="form-check-input" type="checkbox" name="kategori[]" value="{{ $kategori->id }}" id="{{ $kategori->id }}" @if(in_array($kategori->id, request('kategori', []))) checked @endif>
+                <input class="form-check-input" type="checkbox" name="kategori[]" value="{{ $kategori->id }}" id="{{ $kategori->id }}" 
+                @if(in_array($kategori->id, request('kategori', []))) checked @endif>
                 <label class="form-check-label" for="{{ $kategori->id }}">
                   {{ $kategori->nama_kategori }}
                 </label>
@@ -66,8 +68,15 @@
       
       <hr>
       <div class="row py-2">
+        
         @if ($daftar_barang->isNotEmpty())
-         
+          @if(isset($request) ? $request->input('search') : '')
+            <div class="col-md-12">
+              <div class="alert alert-success" role="alert">
+                Hasil pencarian dengan keyword <strong>{{ $request->input('search') }}</strong>
+              </div>
+            </div>
+          @endif
           @foreach ($daftar_barang as $daftar)
             <div class="col-md-3 mb-4">
               <div class="card position-relative">
@@ -90,6 +99,7 @@
                               @endphp
                             @endif
                           {{-- ... --}}
+                          
                           &nbsp;<span class="text-danger" style="font-weight: bold;">{{ number_format($persentase_pengurangan) }}% </span>
                       </div>
                     @else
@@ -110,8 +120,9 @@
           @endforeach
 
           <div>
-            {{ isset($request) ? $daftar_barang->appends(['urutan' => $request->urutan])->links('pagination::bootstrap-5') : $daftar_barang->links('pagination::bootstrap-5') }}
-
+            {{ isset($request) 
+            ? $daftar_barang->appends(['urutan' => $request->urutan, 'kategori' => session('selected_kategori', [])])
+            ->links('pagination::bootstrap-5') : $daftar_barang->links('pagination::bootstrap-5') }}
           </div>
 
         @else

@@ -53,12 +53,16 @@
             </div>
           </div>
           <div class="col-md-6 d-flex align-items-center">
-            <div class="input-group">
-              <input type="search" class="form-control" placeholder="Pencarian..." aria-label="Search">
-              <button type="submit" class="btn btn-outline-secondary">
-                  <i class="fa fa-search"></i>
-              </button>
-            </div>
+            <form action="/filter" class="w-100" method="GET">
+            @csrf
+              <div class="input-group">
+                <input type="search" name="search" class="form-control" placeholder="Pencarian..." aria-label="Search" 
+                value="{{ isset($request) ? $request->input('search') : '' }}">
+                <button type="submit" class="btn btn-outline-secondary">
+                    <i class="fa fa-search"></i>
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>

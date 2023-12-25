@@ -35,10 +35,11 @@ class BarangRampasanController extends Controller
 
     }
 
-    public function filterUrutan(Request $request)
+    public function filter(Request $request)
     {
         $kategori = Kategori::all();
-
+        $keyword = $request->input('search');
+        
         $daftar_barang = Barang_rampasan::select(
             'barang_rampasans.*', 
             'harga_wajars.harga'
@@ -52,6 +53,9 @@ class BarangRampasanController extends Controller
             return $query->whereHas('kategori', function ($q) use ($request) {
                 $q->whereIn('kategori_id', $request->kategori);
             });
+        })
+        ->when($keyword, function ($query, $keyword) {
+            return $query->where('barang_rampasans.nama_barang', 'like', '%' . $keyword . '%');
         })
         ->when($request->has('urutan'), function ($query) use ($request) {
             if ($request->urutan == 'terbaru') {
@@ -71,11 +75,9 @@ class BarangRampasanController extends Controller
             'daftar_kategori' => $kategori,
             'request' => $request
         ]);
-
-        
     }
 
-            // $daftar_barang = Barang_rampasan::select('barang_rampasans.*', 'daftar_barangs.status', 'latest_prices.harga')
+        // $daftar_barang = Barang_rampasan::select('barang_rampasans.*', 'daftar_barangs.status', 'latest_prices.harga')
         // ->join('daftar_barangs', 'barang_rampasans.id', '=', 'daftar_barangs.id_barang')
         // ->leftJoin('harga_wajars as latest_prices', function ($join) {
         //     $join->on('barang_rampasans.id', '=', 'latest_prices.id_barang')
