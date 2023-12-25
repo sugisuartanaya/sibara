@@ -58,22 +58,62 @@
       @endif
 
       <h3><strong>Rp. {{ number_format($data_barang->harga_wajar->last()->harga, 0, ',', '.') }}</strong></h4>
-      <hr>
-      <h5>Deskripsi: </h5>
-      <p style="font-size: 11pt">{{ $data_barang->deskripsi }}</p>
-      @if($status == 'range_jadwal')
-        <h5>Pelaksanaan Lelang:</h5>
-        <p style="font-size: 11pt">{{ $jadwal->start_date->format('j F Y \j\a\m H:i') }} s/d {{ $jadwal->end_date->format('j F Y \j\a\m H:i') }} WITA</p>
-      @elseif($status == 'coming_soon')
-        <h5>Pelaksanaan Lelang Mendatang:</h5>
-        <p style="font-size: 11pt">{{ $jadwal->start_date->format('j F Y \j\a\m H:i') }} s/d {{ $jadwal->end_date->format('j F Y \j\a\m H:i') }} WITA</p>
-      @else
-        <h5>Pelaksanaan Lelang:</h5>
-        <p style="font-size: 11pt">Belum terdapat jadwal</p>
-      @endif
-      <h5 class="mb-2 align-self-center">Bagikan:&nbsp; </h5> 
-      <button class="btn btn-sm btn-primary mb-3"><i class="fa-brands fa-facebook"></i>&nbsp;Facebook</button>&nbsp;
-      <button class="btn btn-sm btn-success mb-3"><i class="fa-brands fa-whatsapp"></i>&nbsp;WhatsApp</button>
+      <hr class="mb-1">
+
+      <ul class="nav nav-underline" id="myTabs">
+        <li class="nav-item navigasi">
+          <a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#informasi">Informasi</a>
+        </li>
+        <li class="nav-item navigasi">
+          <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#penawar">Penawar</a>
+        </li>
+      </ul>
+
+      <div class="tab-content">
+        <div class="tab-pane fade show active mt-3" id="informasi">
+          <h5>Deskripsi: </h5>
+          <p style="font-size: 11pt">{{ $data_barang->deskripsi }}</p>
+          @if($status == 'range_jadwal')
+            <h5>Pelaksanaan Lelang:</h5>
+            <p style="font-size: 11pt">{{ $jadwal->start_date->format('j F Y \j\a\m H:i') }} s/d {{ $jadwal->end_date->format('j F Y \j\a\m H:i') }} WITA</p>
+          @elseif($status == 'coming_soon')
+            <h5>Pelaksanaan Lelang Mendatang:</h5>
+            <p style="font-size: 11pt">{{ $jadwal->start_date->format('j F Y \j\a\m H:i') }} s/d {{ $jadwal->end_date->format('j F Y \j\a\m H:i') }} WITA</p>
+          @else
+            <h5>Pelaksanaan Lelang:</h5>
+            <p style="font-size: 11pt">Belum terdapat jadwal</p>
+          @endif
+          <h5 class="mb-2 align-self-center">Bagikan:&nbsp; </h5> 
+          <button class="btn btn-sm btn-primary mb-3"><i class="fa-brands fa-facebook"></i>&nbsp;Facebook</button>&nbsp;
+          <button class="btn btn-sm btn-success mb-3"><i class="fa-brands fa-whatsapp"></i>&nbsp;WhatsApp</button>
+        </div>
+
+        <div class="tab-pane fade mt-3" id="penawar">
+          <h5>Urutan Penawar Tertinggi: </h5>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">No</th>
+                <th scope="col">Nama Penawar</th>
+                <th scope="col">Harga</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>Gede Eka Dharma</td>
+                <td>Rp. 1.000.000</td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td>Ulfa Yuniyantari</td>
+                <td>Rp. 900.000</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
     </div>
 
     <div class="col-md-3">
