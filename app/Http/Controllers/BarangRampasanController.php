@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Barang_rampasan;
+use Carbon\Carbon;
+use App\Models\Jadwal;
 use App\Models\Kategori;
 use App\Models\Harga_wajar;
 use Illuminate\Http\Request;
 use App\Models\Daftar_barang;
+use App\Models\Barang_rampasan;
 
 class BarangRampasanController extends Controller
 {
@@ -81,16 +83,16 @@ class BarangRampasanController extends Controller
     {
         $barang = Barang_rampasan::find($id);
         $fotoBarangArray = json_decode($barang->foto_barang, true);
-        $harga = Harga_wajar::where('id_barang', $id)
-            ->orderBy('tgl_laporan_penilaian', 'desc')    
-            ->first();
+        $harga = Harga_wajar::where('id_barang', $id)->latest('tgl_laporan_penilaian')->first();
+        $jadwal_terkait = Daftar_barang::where('id_barang', $id)->first()?->jadwal;
 
         return view('barangRampasan.show', [
             'title' => 'Barang',
             'active' => 'active',
             'data_barang' => $barang,
             'foto_barang' => $fotoBarangArray,
-            'harga' => $harga
+            'harga' => $harga,
+            'jadwal' => optional($jadwal_terkait)->end_date,
         ]);
     }
 

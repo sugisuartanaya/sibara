@@ -51,7 +51,6 @@ $(function() {
 
     $(document).ready(function() {
         var endDate = document.getElementById("end_date").getAttribute("dataEndDate");
-
         var myCountDown = new ysCountDown(endDate, function (remaining, finished) {
             console.log(myCountDown);
             if (finished) {

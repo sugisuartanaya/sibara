@@ -80,6 +80,15 @@
 
       <p>Kategori: {{ $data_barang->kategori->nama_kategori }}</p>
       
+      @if($jadwal)
+        <p id="end_date" dataEndDate= {{ \Carbon\Carbon::parse($jadwal)->toISOstring() }}></p>
+        <div class="badge-container">
+          <p class="text-secondary" style="margin-top: 5px; margin-bottom: 0px; ">Berakhir dalam: <strong id="countdown" class="text-danger"></strong>
+          </p>
+        </div>
+        <br>
+      @endif
+      
       @auth
         <a href="#"><button class="btn btn-success w-100"><i class="fa fa-plus"></i>&nbsp;Ajukan Tawaran</button></a>
       @else

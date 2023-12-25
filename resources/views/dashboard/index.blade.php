@@ -133,7 +133,6 @@
 
           @elseif ($status == 'range_jadwal')
             <p id="end_date" dataEndDate= {{ $jadwal->end_date->toIso8601String() }}></p>
-
             <div class="badge-container">
               <h4 class="text-center">
                 <strong>Lelang Penjualan Langsung Barang Rampasan Negara</strong>
