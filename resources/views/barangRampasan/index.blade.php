@@ -130,7 +130,7 @@
           <div>
             {{ isset($request) ? $daftar_barang->appends([
               'urutan' => $request->urutan, 
-              'kategori' => session('selected_kategori', []),
+              'kategori' => request('kategori', []),
               'search' => $request->input('search')])->links('pagination::bootstrap-5') : $daftar_barang->links('pagination::bootstrap-5') }}
           </div>
 
