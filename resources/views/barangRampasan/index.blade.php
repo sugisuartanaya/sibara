@@ -51,7 +51,7 @@
       
     </div>
     <div class="col-md-9">
-      <div class="row g-3 align-items-center">
+      <div class="row align-items-center">
         <div class="col-auto">
           <label for="inputPassword6" class="col-form-label">Urutkan: </label>
         </div>
@@ -65,7 +65,6 @@
         </div>
       </div>
       </form>
-      
       <hr>
       <div class="row py-2">
         
@@ -73,7 +72,7 @@
           @if(isset($request) ? $request->input('search') : '')
             <div class="col-md-12">
               <div class="alert alert-success" role="alert">
-                Hasil pencarian dengan keyword <strong>{{ $request->input('search') }}</strong>
+                Hasil pencarian dengan kata kunci <strong>{{ $request->input('search') }}</strong>
               </div>
             </div>
           @endif
@@ -87,6 +86,11 @@
                   <div class="card-text">
                     <h6 class="text-left">{{ \Illuminate\Support\Str::limit($daftar->nama_barang, 50, '...') }}</h6>
                     <p class="text-secondary">{{ $daftar->kategori->nama_kategori }}</p>
+                    <p>Daftar Barang:</p>
+                    @foreach($daftar->daftar_barang as $daftarBarang)
+                        <p>ID Daftar Barang: {{ $daftarBarang->id }}</p>
+                        {{-- Display other Daftar_barang fields as needed --}}
+                    @endforeach
                     @if ($daftar->harga_wajar->count()>1)
                       <div class="d-flex align-item-center">
                         <p class="text-decoration-line-through text-secondary" style="margin-bottom: 0px">
@@ -120,9 +124,10 @@
           @endforeach
 
           <div>
-            {{ isset($request) 
-            ? $daftar_barang->appends(['urutan' => $request->urutan, 'kategori' => session('selected_kategori', [])])
-            ->links('pagination::bootstrap-5') : $daftar_barang->links('pagination::bootstrap-5') }}
+            {{ isset($request) ? $daftar_barang->appends([
+              'urutan' => $request->urutan, 
+              'kategori' => session('selected_kategori', []),
+              'search' => $request->input('search')])->links('pagination::bootstrap-5') : $daftar_barang->links('pagination::bootstrap-5') }}
           </div>
 
         @else
