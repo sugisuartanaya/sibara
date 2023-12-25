@@ -84,16 +84,13 @@
 
                 <div class="card-body" style="background-color: #F4F4F2;">
                   <div class="card-text">
-                    <h6 class="text-left">{{ \Illuminate\Support\Str::limit($daftar->nama_barang, 50, '...') }}</h6>
-                    <p class="text-secondary">{{ $daftar->kategori->nama_kategori }}</p>
-                    <p>Daftar Barang:</p>
-                    @foreach($daftar->daftar_barang as $daftarBarang)
-                        <p>ID Daftar Barang: {{ $daftarBarang->id }}</p>
-                        {{-- Display other Daftar_barang fields as needed --}}
-                    @endforeach
+                    <h6 class="text-left" style="height: 40px; overflow: hidden;">
+                      {{ \Illuminate\Support\Str::limit($daftar->nama_barang, 33, '...') }}
+                    </h6>
+                    <p class="text-secondary" style="margin-bottom: 1px; margin-top: 0px">{{ $daftar->kategori->nama_kategori }}</p>
                     @if ($daftar->harga_wajar->count()>1)
                       <div class="d-flex align-item-center">
-                        <p class="text-decoration-line-through text-secondary" style="margin-bottom: 0px">
+                        <p class="text-decoration-line-through text-secondary" style="margin-bottom: 0px; font-size: 10pt">
                           Rp. {{ number_format($daftar->harga_wajar->first()->harga, 0, ',', '.') }}</p>
   
                           {{-- Menghitung persentase pengurangan --}}
@@ -104,7 +101,8 @@
                             @endif
                           {{-- ... --}}
                           
-                          &nbsp;<span class="text-danger" style="font-weight: bold;">{{ number_format($persentase_pengurangan) }}% </span>
+                          &nbsp;<span class="text-danger" style="margin-bottom: 0px; font-weight: bold; font-size: 10pt">
+                            {{ number_format($persentase_pengurangan) }}% </span>
                       </div>
                     @else
                       <div class="mb-2" style="height: 17px; flex-shrink: 0;"></div>
