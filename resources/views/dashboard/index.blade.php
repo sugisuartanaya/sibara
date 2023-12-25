@@ -304,15 +304,15 @@
       <div class="col-md-3 mb-4">
         <div class="card shadow-sm position-relative">
           {{-- <img class="bd-placeholder-img card-img-top" src="asset{{ $daftar->barang_rampasan->foto_thumbnail }}" style="object-fit: cover; width: 100%; height: 300px;"  alt="Your Alt Text"> --}}
-          <img class="bd-placeholder-img card-img-top" src="http://admin.sibara.test{{ $daftar->foto_thumbnail }}" style="object-fit: cover; width: 100%; height: 300px;"  alt="Your Alt Text">
+          <a href="/detail/{{ $daftar->id }}"><img class="bd-placeholder-img card-img-top" src="http://admin.sibara.test{{ $daftar->foto_thumbnail }}" style="object-fit: cover; width: 100%; height: 300px;"  alt="Your Alt Text"></a>
 
           {{-- <div class="position-absolute top-0 start-0 m-3">
             <span class="badge bg-danger" style="border-radius: 4px;">Sale!</span>
           </div> --}}
 
           <div class="card-body d-flex" style="background-color: #F4F4F2; display: flex; flex-direction: column;">
-
-            <h6 class="text-left mb-2" style="flex-shrink: 0;">{{ \Illuminate\Support\Str::limit($daftar->nama_barang, 65, '...') }}</h6>
+            <a href="/detail/{{ $daftar->id }}" class="text-decoration-none text-dark"><h6 class="text-left mb-2" style="flex-shrink: 0;">
+              {{ \Illuminate\Support\Str::limit($daftar->nama_barang, 65, '...') }}</a></h6>
             <p class="text-secondary mb-2">{{ $daftar->kategori->nama_kategori }}</p>
             
             @if ($daftar->harga_wajar->count() > 1)
@@ -329,7 +329,7 @@
                 @endif
                 {{-- ... --}}
                 
-                &nbsp;<span class="text-danger" style="font-weight: bold;">{{ number_format($persentase_pengurangan) }}% </span>
+                &nbsp;<span class="badge text-bg-danger" style="margin-bottom: 0px; font-weight: bold; display: flex; align-items: center; justify-content: center;">{{ number_format($persentase_pengurangan) }}% </span>
               </div>
             @else
               <div class="mb-2" style="height: 17px; flex-shrink: 0;"></div>
@@ -341,7 +341,7 @@
             </div>
             
             <div class="text-center mt-2">
-              <button class="btn btn-sm btn-outline-success">Detail Barang</button>
+              <a href="/detail/{{ $daftar->id }}"><button class="btn btn-sm btn-outline-success">Detail Barang</button></a>
             </div>
           </div>
         
