@@ -5,6 +5,12 @@
 
 <div class="container py-4">
   <div class="row">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/" class="text-decoration-none text-secondary">Beranda</a></li>
+        <li class="breadcrumb-item" aria-current="page">Barang Rampasan</li>
+      </ol>
+    </nav>
     <div class="col-md-12 d-flex align-items-center">
       <h2 class="section-title2">Barang Rampasan Negara</h2>
       <hr class="flex-grow-1 mx-2">
@@ -112,7 +118,7 @@
                       <p class="text-secondary">0 <i class="fa fa-user"></i></p>
                     </div>
                     <div class="text-center">
-                      <button class="btn btn-sm btn-outline-success">Detail Barang</button>
+                      <a href="/detail/{{ $daftar->id }}"><button class="btn btn-sm btn-outline-success">Detail Barang</button></a>
                     </div>
                   </div>
                 </div>

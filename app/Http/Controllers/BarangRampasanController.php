@@ -77,6 +77,23 @@ class BarangRampasanController extends Controller
         ]);
     }
 
+    public function show($id)
+    {
+        $barang = Barang_rampasan::find($id);
+        $fotoBarangArray = json_decode($barang->foto_barang, true);
+        $harga = Harga_wajar::where('id_barang', $id)
+            ->orderBy('tgl_laporan_penilaian', 'desc')    
+            ->first();
+
+        return view('barangRampasan.show', [
+            'title' => 'Barang',
+            'active' => 'active',
+            'data_barang' => $barang,
+            'foto_barang' => $fotoBarangArray,
+            'harga' => $harga
+        ]);
+    }
+
         // $daftar_barang = Barang_rampasan::select('barang_rampasans.*', 'daftar_barangs.status', 'latest_prices.harga')
         // ->join('daftar_barangs', 'barang_rampasans.id', '=', 'daftar_barangs.id_barang')
         // ->leftJoin('harga_wajars as latest_prices', function ($join) {
@@ -99,10 +116,7 @@ class BarangRampasanController extends Controller
     }
 
     
-    public function show($id)
-    {
-        //
-    }
+    
 
     
     public function edit($id)

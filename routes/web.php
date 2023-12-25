@@ -33,3 +33,5 @@ Route::get('/update-data/{username}', [PembeliController::class, 'updateData']);
 
 Route::get('/barang', [BarangRampasanController::class, 'index']);
 Route::get('/filter', [BarangRampasanController::class, 'filter']);
+
+Route::get('/detail/{id}', [BarangRampasanController::class, 'show']);

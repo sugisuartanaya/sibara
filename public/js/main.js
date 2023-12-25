@@ -71,4 +71,53 @@ $(function() {
         });
     });
 
+    //active class preview barang
+	$(document).ready(function(){
+		$('#thumbnailCarousel .thumbnail').click(function(){
+            $('#thumbnailCarousel .thumbnail').removeClass('active');
+            $(this).addClass('active');
+		});
+	});
+
+	//zoom hover thumbnail
+	$(document).ready(function() {
+        var magnifyingGlass = $('.magnifying-glass');
+
+        $('#produkCarousel .carousel-inner').hover(
+            function() {
+                magnifyingGlass.show();
+            },
+            function() {
+                magnifyingGlass.hide();
+                resetImageSize();
+            }
+        ).mousemove(function(e) {
+            var parentOffset = $(this).offset();
+            var x = e.pageX - parentOffset.left;
+            var y = e.pageY - parentOffset.top;
+
+            var scale = 1.5; // Sesuaikan faktor zoom sesuai keinginan
+            var transformValue = 'scale(' + scale + ')';
+            
+            magnifyingGlass.css({
+                left: x - magnifyingGlass.width() / 2,
+                top: y - magnifyingGlass.height() / 2,
+                transform: transformValue,
+                'transform-origin': x + 'px ' + y + 'px'
+            });
+
+            $('#produkCarousel .carousel-item.active img').css({
+                transform: transformValue,
+                'transform-origin': x + 'px ' + y + 'px'
+            });
+        });
+
+        function resetImageSize() {
+            $('#produkCarousel .carousel-item.active img').css({
+                transform: 'scale(1)',
+                'transform-origin': 'center center'
+            });
+        }
+	});
+
 });

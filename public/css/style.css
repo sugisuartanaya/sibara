@@ -180,3 +180,44 @@ p, h1, h2, h3, h4, h5, h6 {
   background-color: #0d8c46;
   border-color: #0d8c46;
  }
+
+ #produkCarousel {
+  /* lebar maksimum  */
+  max-width: 627px; 
+  /* Pusatkan Carousel di tengah */
+  margin: auto;   
+}
+.carousel-inner:hover .carousel-item img {
+transition: transform 0.2s ease-in-out;
+transform: scale(1.2); /* Sesuaikan faktor zoom sesuai keinginan */
+}
+#produkCarousel .carousel-item:hover img {
+cursor: pointer;
+}
+.magnifying-glass {
+width: 100px; 
+height: 100px;
+background-size: contain;
+position: absolute;
+display: none;
+pointer-events: none; 
+}
+
+.image-preview {
+display: flex;
+justify-content: center;
+margin-top: 20px;
+}
+.thumbnail {
+width: 100px; 
+height: 75px; 
+margin: 0 10px;
+cursor: pointer;
+transition: transform 0.2s ease-in-out;
+}
+.thumbnail.active {
+border: 2px solid #66bb6a; 
+}
+.thumbnail:hover {
+transform: scale(1.2);
+}
