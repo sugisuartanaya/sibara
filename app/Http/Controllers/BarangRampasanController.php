@@ -15,7 +15,10 @@ class BarangRampasanController extends Controller
     {
         $kategori = Kategori::all();
 
-        $daftar_barang = Barang_rampasan::select('barang_rampasans.*', 'harga_wajars.*')
+        $daftar_barang = Barang_rampasan::select(
+            'barang_rampasans.*',
+            'harga_wajars.harga'
+            )
             ->where('barang_rampasans.status', 0)
             ->leftJoin('harga_wajars', function($join) {
                 $join->on('barang_rampasans.id', '=', 'harga_wajars.id_barang')
@@ -29,13 +32,17 @@ class BarangRampasanController extends Controller
             'daftar_barang' => $daftar_barang,
             'daftar_kategori' => $kategori,
         ]);
+
     }
 
     public function filterUrutan(Request $request)
     {
         $kategori = Kategori::all();
 
-        $daftar_barang = Barang_rampasan::select('barang_rampasans.*', 'harga_wajars.*')
+        $daftar_barang = Barang_rampasan::select(
+            'barang_rampasans.*', 
+            'harga_wajars.harga'
+            )
         ->where('barang_rampasans.status', 0)
         ->leftJoin('harga_wajars', function($join) {
             $join->on('barang_rampasans.id', '=', 'harga_wajars.id_barang')

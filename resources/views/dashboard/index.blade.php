@@ -317,9 +317,20 @@
             <p class="text-secondary mb-2">{{ $daftar->kategori->nama_kategori }}</p>
             
             @if ($daftar->harga_wajar->count() > 1)
-              <p class="text-decoration-line-through text-secondary" style="margin-bottom: 0px">
-                Rp. {{ number_format($firstHarga->harga, 0, ',', '.') }}
-              </p>
+              <div class="d-flex align-item-center">
+                <p class="text-decoration-line-through text-secondary" style="margin-bottom: 0px">
+                  Rp. {{ number_format($firstHarga->harga, 0, ',', '.') }}
+                </p>
+
+                {{-- Menghitung persentase pengurangan --}}
+                @if ($firstHarga->harga && $latestHarga->harga)
+                  @php
+                    $persentase_pengurangan = (($firstHarga->harga - $latestHarga->harga) / $firstHarga->harga) * 100;
+                  @endphp
+                @endif
+                {{-- ... --}}
+                &nbsp;<span class="text-danger" style="font-weight: bold;">{{ number_format($persentase_pengurangan) }}% </span>
+              </div>
             @else
               <div class="mb-2" style="height: 17px; flex-shrink: 0;"></div>
             @endif

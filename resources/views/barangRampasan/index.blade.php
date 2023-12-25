@@ -67,6 +67,7 @@
       <hr>
       <div class="row py-2">
         @if ($daftar_barang->isNotEmpty())
+         
           @foreach ($daftar_barang as $daftar)
             <div class="col-md-3 mb-4">
               <div class="card position-relative">
@@ -77,7 +78,23 @@
                   <div class="card-text">
                     <h6 class="text-left">{{ \Illuminate\Support\Str::limit($daftar->nama_barang, 50, '...') }}</h6>
                     <p class="text-secondary">{{ $daftar->kategori->nama_kategori }}</p>
-                    
+                    @if ($daftar->harga_wajar->count()>1)
+                      <div class="d-flex align-item-center">
+                        <p class="text-decoration-line-through text-secondary" style="margin-bottom: 0px">
+                          Rp. {{ number_format($daftar->harga_wajar->first()->harga, 0, ',', '.') }}</p>
+  
+                          {{-- Menghitung persentase pengurangan --}}
+                            @if ($daftar->harga_wajar->first()->harga && $daftar->harga)
+                              @php
+                                $persentase_pengurangan = (($daftar->harga_wajar->first()->harga - $daftar->harga) / $daftar->harga_wajar->first()->harga) * 100;
+                              @endphp
+                            @endif
+                          {{-- ... --}}
+                          &nbsp;<span class="text-danger" style="font-weight: bold;">{{ number_format($persentase_pengurangan) }}% </span>
+                      </div>
+                    @else
+                      <div class="mb-2" style="height: 17px; flex-shrink: 0;"></div>
+                    @endif
                     <div class="d-flex justify-content-between align-items-start">
                       <h5 class=""><strong>Rp. {{ number_format($daftar->harga, 0, ',', '.') }}</strong></h5>
                       <p class="text-secondary">0 <i class="fa fa-user"></i></p>
@@ -89,6 +106,7 @@
                 </div>
               </div>
             </div>
+            
           @endforeach
 
           <div>
