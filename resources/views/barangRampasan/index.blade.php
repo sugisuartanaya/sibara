@@ -41,19 +41,6 @@
             </div>
         </div>
       </div>
-
-      <div class="card mt-3">
-        <div class="card-header">
-          <h6><strong class="text-uppercase">waktu server</strong></h6>
-        </div>
-        <div class="card-body text-center">
-          <h5>
-            <i class="fa fa-clock-o"></i>
-            <span id="currentDate"></span>
-          </h5>
-          <p id="currentTime"></p>
-        </div>
-      </div>
       
     </div>
     <div class="col-md-9">
@@ -86,13 +73,13 @@
             <div class="col-md-3 mb-4">
               <div class="card position-relative">
                 {{-- <img class="bd-placeholder-img card-img-top" src="asset{{ $daftar->foto_thumbnail }}" style="object-fit: cover; width: 100%; height: 300px;"  alt="Your Alt Text"> --}}
-                <img class="bd-placeholder-img card-img-top" src="http://admin.sibara.test{{ $daftar->foto_thumbnail }}" style="object-fit: cover; width: 100%; height: 300px;"  alt="Your Alt Text">
+                <a href="/detail/{{ $daftar->id }}"><img class="bd-placeholder-img card-img-top" src="http://admin.sibara.test{{ $daftar->foto_thumbnail }}" style="object-fit: cover; width: 100%; height: 300px;"  alt="Your Alt Text"></a>
 
                 <div class="card-body" style="background-color: #F4F4F2;">
                   <div class="card-text">
-                    <h6 class="text-left" style="height: 40px; overflow: hidden;">
+                    <a href="/detail/{{ $daftar->id }}" class="text-decoration-none text-dark"><h6 class="text-left" style="height: 40px; overflow: hidden;">
                       {{ \Illuminate\Support\Str::limit($daftar->nama_barang, 33, '...') }}
-                    </h6>
+                    </h6></a>
                     <p class="text-secondary" style="margin-bottom: 1px; margin-top: 0px">{{ $daftar->kategori->nama_kategori }}</p>
                     @if ($daftar->harga_wajar->count()>1)
                       <div class="d-flex align-item-center">

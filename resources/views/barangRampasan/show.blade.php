@@ -16,53 +16,6 @@
   </div>
 
   <div class="row">
-    <div class="col-md-3">
-
-      @if ($status == 'range_jadwal')
-        <div class="card mb-3">
-          <div class="card-header">
-            <h6><strong class="text-uppercase">jadwal lelang</strong></h6>
-          </div>
-          <div class="card-body">
-            <p class="mb-1 text-secondary">Hari</p>
-            <h6>{{ $jadwal->start_date->format('l') }} - {{ $jadwal->end_date->format('l') }}</h6>
-            <p class="mb-1 text-secondary">Tanggal</p>
-            <h6>{{ $jadwal->start_date->format('j M Y') }} - {{ $jadwal->end_date->format('j M Y') }}</h6>
-            <p class="mb-1 text-secondary">Waktu</p>
-            <h6>{{ $jadwal->start_date->format('H:i') }} - {{ $jadwal->end_date->format('H:i') }} WITA</h6>
-          </div>
-        </div>
-      @elseif ($status == 'coming_soon')
-        <div class="card mb-3">
-          <div class="card-header">
-            <h6><strong class="text-uppercase">jadwal lelang mendatang</strong></h6>
-          </div>
-          <div class="card-body">
-            <p class="mb-1 text-secondary">Hari</p>
-            <h6>{{ $jadwal->start_date->format('l') }} - {{ $jadwal->end_date->format('l') }}</h6>
-            <p class="mb-1 text-secondary">Tanggal</p>
-            <h6>{{ $jadwal->start_date->format('j M Y') }} - {{ $jadwal->end_date->format('j M Y') }}</h6>
-            <p class="mb-1 text-secondary">Waktu</p>
-            <h6>{{ $jadwal->start_date->format('H:i') }} - {{ $jadwal->end_date->format('H:i') }} WITA</h6>
-          </div>
-        </div>
-      @endif
-
-      <div class="card">
-        <div class="card-header">
-          <h6><strong class="text-uppercase">waktu server</strong></h6>
-        </div>
-        <div class="card-body text-center">
-          <h5>
-            <i class="fa fa-clock-o"></i>
-            <span id="currentDate"></span>
-          </h5>
-          <p id="currentTime"></p>
-        </div>
-      </div>
-
-    </div>
-
     <div class="col-md-5">
       <div id="produkCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="magnifying-glass"></div>
@@ -85,53 +38,124 @@
 
     <div class="col-md-4">
 
-      <h4>{{ $data_barang->nama_barang}}</h4>
+      <h5 style="font-weight: bold">{{ $data_barang->nama_barang}}</h4>
 
       @if ($data_barang->harga_wajar->count() > 1)
         <div class="d-flex align-item-center">
           <p class="text-decoration-line-through text-secondary" style="margin-bottom: 0px;">
-            Rp. {{ number_format($data_barang->harga_wajar->first()->harga, 0, ',', '.') }}</p>
+            Rp. {{ number_format($data_barang->harga_wajar->first()->harga, 0, ',', '.') }}</p>&nbsp;
 
-            {{-- Menghitung persentase pengurangan --}}
+          {{-- Menghitung persentase pengurangan --}}
               @php
-                $persentase_pengurangan = (($data_barang->harga_wajar->first()->harga - $data_barang->harga_wajar->last()->harga) 
-                / $data_barang->harga_wajar->first()->harga) * 100;
-              @endphp
-            {{-- ... --}}
-            
-            &nbsp;<span class="text-danger" style="margin-bottom: 0px; font-weight: bold;">
-              {{ number_format($persentase_pengurangan) }}% </span>
+              $persentase_pengurangan = (($data_barang->harga_wajar->first()->harga - $data_barang->harga_wajar->last()->harga) 
+              / $data_barang->harga_wajar->first()->harga) * 100;
+            @endphp
+          {{-- ... --}}
+
+          <span class="badge text-bg-danger" style="margin-bottom: 0px; font-weight: bold; display: flex; align-items: center; justify-content: center;">
+            {{ number_format($persentase_pengurangan) }}% </span>
         </div>
       @endif
 
-      <h4><strong>Rp. {{ number_format($data_barang->harga_wajar->last()->harga, 0, ',', '.') }}</strong></h4>
+      <h3><strong>Rp. {{ number_format($data_barang->harga_wajar->last()->harga, 0, ',', '.') }}</strong></h4>
       <hr>
-
       <h5>Deskripsi: </h5>
-      <p>{{ $data_barang->deskripsi }}</p>
-
-      <p>Kategori: {{ $data_barang->kategori->nama_kategori }}</p>
-      
+      <p style="font-size: 11pt">{{ $data_barang->deskripsi }}</p>
       @if($status == 'range_jadwal')
-        <p id="end_date" dataEndDate= {{ $jadwal->end_date }}></p>
+        <h5>Pelaksanaan Lelang:</h5>
+        <p style="font-size: 11pt">{{ $jadwal->start_date->format('j F Y \j\a\m H:i') }} s/d {{ $jadwal->end_date->format('j F Y \j\a\m H:i') }} WITA</p>
+      @elseif($status == 'coming_soon')
+        <h5>Pelaksanaan Lelang Mendatang:</h5>
+        <p style="font-size: 11pt">{{ $jadwal->start_date->format('j F Y \j\a\m H:i') }} s/d {{ $jadwal->end_date->format('j F Y \j\a\m H:i') }} WITA</p>
+      @else
+        <h5>Pelaksanaan Lelang:</h5>
+        <p style="font-size: 11pt">Belum terdapat jadwal</p>
+      @endif
+      <h5 class="mb-2 align-self-center">Bagikan:&nbsp; </h5> 
+      <button class="btn btn-sm btn-primary mb-3"><i class="fa-brands fa-facebook"></i>&nbsp;Facebook</button>&nbsp;
+      <button class="btn btn-sm btn-success mb-3"><i class="fa-brands fa-whatsapp"></i>&nbsp;WhatsApp</button>
+    </div>
+
+    <div class="col-md-3">
+      @if($status == 'coming_soon')
+        <div class="card">
+          <div class="card-body">
+            <h5 style="font-weight: bold; margin-bottom: 2px">Tawar Sekarang</h5>
+            <p class="text-secondary">Tawaran Minimum Rp. {{ number_format($data_barang->harga_wajar->last()->harga, 0, ',', '.') }}</p>
+            <form action="#" method="get">
+              <div class="col-auto">
+                <input type="text" class="form-control mb-2" id="inputPassword2">
+                <button type="submit" class="btn btn-success mb-2 w-100" disabled><i class="fa fa-plus"></i> &nbsp;Ajukan Tawaran</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="card mt-3">
+          <div class="card-body">
+            <h5 style="font-weight: bold; margin-bottom: 2px">Waktu Server</h5>
+            <p class="text-secondary mb-0">
+              <i class="fa fa-clock-o"></i>
+              <span id="currentDate"></span>
+            </p>
+            <p class="text-secondary mb-0" id="currentTime"></p>
+          </div>
+        </div>
+      @elseif($status == 'range_jadwal')
         <div class="badge-container">
-          <p class="text-secondary" style="margin-top: 5px; margin-bottom: 0px; ">Berakhir dalam: <strong id="countdown" class="text-danger"></strong>
+          <p class="text-secondary mt-0" style="margin-top: 5px; margin-bottom: 0px; ">Berakhir dalam: <strong id="countdown" class="text-danger"></strong>
           </p>
         </div>
-        <br>
-      @endif
-      
-      @auth
-        <a href="#"><button class="btn btn-success w-100"><i class="fa fa-plus"></i>&nbsp;Ajukan Tawaran</button></a>
+        <p id="end_date" dataEndDate= {{ $jadwal->end_date }}></p>
+
+        <div class="card mt-3">
+          <div class="card-body">
+            <h5 style="font-weight: bold; margin-bottom: 2px">Tawar Sekarang</h5>
+            <p class="text-secondary">Tawaran Minimum Rp. {{ number_format($data_barang->harga_wajar->last()->harga, 0, ',', '.') }}</p>
+            @auth
+              <form action="#" method="get">
+                <div class="col-auto">
+                  <input type="text" class="form-control mb-2" id="inputPassword2">
+                  <button type="submit" class="btn btn-success mb-2 w-100"><i class="fa fa-plus"></i> &nbsp;Ajukan Tawaran</button>
+                </div>
+              </form>
+            @else
+              <form action="/account/login" class="row"  method="get">
+                <div class="col-auto">
+                  <input type="text" class="form-control" id="inputPassword2">
+                </div>
+                <div class="col-auto">
+                  <button type="submit" class="btn btn-success mb-3">Ajukan Tawaran</button>
+                </div>
+              </form>
+            @endauth
+          </div>
+        </div>
+        <div class="card mt-3">
+          <div class="card-body">
+            <h5 style="font-weight: bold; margin-bottom: 2px">Waktu Server</h5>
+            <p class="text-secondary mb-0">
+              <i class="fa fa-clock-o"></i>
+              <span id="currentDate"></span>
+            </p>
+            <p class="text-secondary mb-0" id="currentTime"></p>
+          </div>
+        </div>
       @else
-        <form action="/account/login" method="get">
-          <button class="btn btn-success w-100"><i class="fa fa-plus"></i> &nbsp;Ajukan Tawaran</button>
-        </form>
-      @endauth
-      
+        <div class="card">
+          <div class="card-body">
+            <h5 style="font-weight: bold; margin-bottom: 2px">Waktu Server</h5>
+            <p class="text-secondary mb-0">
+              <i class="fa fa-clock-o"></i>
+              <span id="currentDate"></span>
+            </p>
+            <p class="text-secondary mb-0" id="currentTime"></p>
+          </div>
+        </div>
+      @endif
     </div>
     
   </div>
+  
 </div>
 
 @endsection

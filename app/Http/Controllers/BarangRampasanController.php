@@ -84,7 +84,7 @@ class BarangRampasanController extends Controller
         $barang = Barang_rampasan::find($id);
         $fotoBarangArray = json_decode($barang->foto_barang, true);
         $harga = Harga_wajar::where('id_barang', $id)->latest('tgl_laporan_penilaian')->first();
-        $jadwal_terkait = Daftar_barang::where('id_barang', $id)->first()?->jadwal;
+        $jadwal_terkait = Daftar_barang::where('id_barang', $id)->latest('id')->first()?->jadwal;
 
         if($jadwal_terkait){
             $jadwal_terkait->start_date = Carbon::parse($jadwal_terkait->start_date);
