@@ -119,4 +119,23 @@ $(function() {
         }
 	});
 
+    $(document).ready(function() {
+        $("#penawaran").on("input", function() {
+            formatAngka();
+        });
+    
+        function formatAngka() {
+            var inputElem = $("#penawaran");
+            
+            // Menghapus karakter selain angka
+            var nilaiInput = inputElem.val().replace(/\D/g, '');
+    
+            // Memisahkan ribuan dengan tanda titik
+            var nilaiFormatted = !isNaN(nilaiInput) && nilaiInput !== '' ? parseFloat(nilaiInput).toLocaleString('id-ID') : '';
+    
+            // Memasukkan nilai yang diformat kembali ke dalam input
+            inputElem.val(nilaiFormatted);
+        }
+    });
+
 });
