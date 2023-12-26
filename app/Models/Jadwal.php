@@ -9,8 +9,8 @@ class Jadwal extends Model
 {
     use HasFactory;
 
-    // public function daftar_barang()
-    // {
-    //     return $this->hasMany(Daftar_barang::class, 'id_jadwal');
-    // }
+    public function daftar_barang()
+    {
+        return $this->hasMany(Daftar_barang::class, 'id_jadwal');
+    }
 }

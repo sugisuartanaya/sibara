@@ -29,4 +29,8 @@ class Pembeli extends Model
     public function verifikasi(){
         return $this->hasMany(Verifikasi::class, 'id_pembeli');
     }
+
+    public function penawaran(){
+        return $this->hasMany(Penawaran::class, 'id_pembeli');
+    }
 }

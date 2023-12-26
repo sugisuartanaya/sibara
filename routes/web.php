@@ -6,6 +6,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PembeliController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PenawaranController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,3 +36,5 @@ Route::get('/barang', [BarangRampasanController::class, 'index']);
 Route::get('/filter', [BarangRampasanController::class, 'filter']);
 
 Route::get('/detail/{id}', [BarangRampasanController::class, 'show']);
+
+Route::post('/penawaran/{id}', [PenawaranController::class, 'store']);

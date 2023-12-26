@@ -15,6 +15,13 @@
     </div>
   </div>
 
+  @if(session('message'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      {{ session('message') }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  @endif
+
   <div class="row">
     <div class="col-md-5">
       <div id="produkCarousel" class="carousel slide" data-bs-ride="carousel">
@@ -168,11 +175,12 @@
             <h5 style="font-weight: bold; margin-bottom: 2px">Tawar Sekarang</h5>
             <p class="text-secondary">Tawaran Minimum Rp. {{ number_format($data_barang->harga_wajar->last()->harga, 0, ',', '.') }}</p>
             @auth
-              <form action="#" method="get">
+              <form action="/penawaran/{{ $data_barang->id }}" method="post">
+                @csrf
                 <div class="col-auto">
                   <div class="input-group mb-3">
                     <span class="input-group-text">Rp.</span>
-                    <input type="text" class="form-control" id="penawaran">
+                    <input type="text" class="form-control" id="penawaran" name="harga_bid" required>
                   </div>
                   <button type="submit" class="btn btn-success mb-2 w-100"><i class="fa fa-plus"></i> &nbsp;Ajukan Tawaran</button>
                 </div>
