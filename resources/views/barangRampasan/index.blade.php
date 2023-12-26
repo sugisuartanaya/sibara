@@ -41,6 +41,29 @@
             </div>
         </div>
       </div>
+
+      <div class="card mt-3">
+        <div class="card-header">
+          <h6><strong class="text-uppercase">Rentang Harga</strong></h6>
+        </div>
+        <div class="card-body">
+          <div class="col-auto">
+            <div class="input-group mb-3">
+              <span class="input-group-text">Rp.</span>
+              <input type="text" class="form-control" name="minimum" id="minimum" placeholder="Harga Minimum" 
+              value="{{ isset($request) ? $request->input('minimum') : '' }}">
+            </div>
+            <div class="input-group mb-3">
+              <span class="input-group-text">Rp.</span>
+              <input type="text" class="form-control" name="maximum" id="maximum" placeholder="Harga Maximum" 
+              value="{{ isset($request) ? $request->input('maximum') : '' }}">
+            </div>
+          </div>
+          <div class="text-center mt-3">
+            <button class="btn btn-sm btn-success" style="width: 100%;"><i class="fa fa-filter"></i>&nbsp;Terapkan</button>
+          </div>
+        </div>
+      </div>
       
     </div>
     <div class="col-md-9">
@@ -117,7 +140,9 @@
             {{ isset($request) ? $daftar_barang->appends([
               'urutan' => $request->urutan, 
               'kategori' => request('kategori', []),
-              'search' => $request->input('search')])->links('pagination::bootstrap-5') : $daftar_barang->links('pagination::bootstrap-5') }}
+              'search' => $request->input('search'),
+              'minimum' => $request->input('minimum'),
+              'maximum' => $request->input('maximum')])->links('pagination::bootstrap-5') : $daftar_barang->links('pagination::bootstrap-5') }}
           </div>
 
         @else

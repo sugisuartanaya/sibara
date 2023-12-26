@@ -41,6 +41,12 @@ class BarangRampasanController extends Controller
     {
         $kategori = Kategori::all();
         $keyword = $request->input('search');
+
+        $minimum = str_replace('.', '', $request->input('minimum'));
+        $maximum = str_replace('.', '', $request->input('maximum'));
+        //ubah string ke int
+        $minimumNumeric = intval($minimum);
+        $maximumNumeric = intval($maximum);
         
         $daftar_barang = Barang_rampasan::select(
             'barang_rampasans.*', 
@@ -67,6 +73,9 @@ class BarangRampasanController extends Controller
             } elseif ($request->urutan == 'termahal') {
                 return $query->orderBy('harga_wajars.harga', 'desc');
             }
+        })
+        ->when($request->filled(['minimum', 'maximum']), function ($query) use ($minimumNumeric, $maximumNumeric) {
+            $query->whereBetween('harga_wajars.harga', [$minimumNumeric, $maximumNumeric]);
         })
         ->paginate(8);
 

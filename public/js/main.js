@@ -138,6 +138,26 @@ $(function() {
     });
 
     $(document).ready(function() {
+        $("#minimum").on("input", function() {
+            formatAngka($("#minimum"));
+        });
+    
+        $("#maximum").on("input", function() {
+            formatAngka($("#maximum"));
+        });
+    
+        function formatAngka(inputElem) {
+            // hapus karakter selain angka
+            var nilaiInput = inputElem.val().replace(/\D/g, '');
+    
+            // split angka dengan titik
+            var nilaiFormatted = !isNaN(nilaiInput) && nilaiInput !== '' ? parseFloat(nilaiInput).toLocaleString('id-ID') : '';
+    
+            inputElem.val(nilaiFormatted);
+        }
+    });
+
+    $(document).ready(function() {
         $('#facebook-share-btn').click(function() {
             var itemId = $(this).data('item-id');
             var itemName = $(this).data('item-name');
