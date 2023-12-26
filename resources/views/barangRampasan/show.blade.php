@@ -113,27 +113,31 @@
 
         <div class="tab-pane fade mt-3" id="penawar">
           <h5>Urutan Penawar Tertinggi: </h5>
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">No</th>
-                <th scope="col">Nama Penawar</th>
-                <th scope="col">Harga</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Gede Eka Dharma</td>
-                <td>Rp. 1.000.000</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Ulfa Yuniyantari</td>
-                <td>Rp. 900.000</td>
-              </tr>
-            </tbody>
-          </table>
+          @if($data_penawar->isNotEmpty())
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">No</th>
+                  <th scope="col">Nama Penawar</th>
+                  <th scope="col">Harga</th>
+                  <th scope="col">Waktu</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach ($data_penawar as $index => $penawaran)
+                  <tr>
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ $penawaran->pembeli->nama_pembeli }}</td>
+                    <td>Rp. {{ number_format($penawaran->harga_bid, 0, ',', '.') }}</td>
+                    <td>{{ \Carbon\Carbon::parse($penawaran->tanggal)->format('j M Y \j\a\m H:i') }}</td>
+                  </tr>
+                @endforeach
+              </tbody>
+            </table>
+          @else
+            <p style="font-size: 11pt">Belum terdapat penawar</p>
+          @endif
+          {{ $data_penawar->links('pagination::bootstrap-5') }}
         </div>
       </div>
 

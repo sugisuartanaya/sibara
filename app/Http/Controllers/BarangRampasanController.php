@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Jadwal;
 use App\Models\Kategori;
+use App\Models\Penawaran;
 use App\Models\Harga_wajar;
 use Illuminate\Http\Request;
 use App\Models\Daftar_barang;
@@ -112,6 +113,10 @@ class BarangRampasanController extends Controller
             $status = null;
         }
 
+        $penawaran = Penawaran::where('id_barang', $id)
+            ->orderBy('harga_bid', 'desc')
+            ->paginate(3);
+
         return view('barangRampasan.show', [
             'title' => 'Barang',
             'active' => 'active',
@@ -120,6 +125,7 @@ class BarangRampasanController extends Controller
             'harga' => $harga,
             'status' => $status,
             'jadwal' => optional($jadwal_terkait),
+            'data_penawar' => $penawaran,
         ]);
     }
 
