@@ -37,4 +37,4 @@ Route::get('/filter', [BarangRampasanController::class, 'filter']);
 
 Route::get('/detail/{id}', [BarangRampasanController::class, 'show']);
 
-Route::post('/penawaran/{id}', [PenawaranController::class, 'store']);
+Route::post('/penawaran', [PenawaranController::class, 'store']);

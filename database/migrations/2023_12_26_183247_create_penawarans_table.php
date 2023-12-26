@@ -18,7 +18,8 @@ return new class extends Migration
             $table->foreignId('id_pembeli');
             $table->foreignId('id_barang');
             $table->integer('harga_bid');
-            $table->date('tanggal');
+            $table->dateTime('tanggal');
+            $table->timestamps();
         });
     }
 
