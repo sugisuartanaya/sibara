@@ -64,15 +64,15 @@
         </div>
       @endif
 
-      <h3><strong>Rp. {{ number_format($data_barang->harga_wajar->last()->harga, 0, ',', '.') }}</strong></h4>
+      <h3><strong>Rp. {{ number_format($data_barang->harga_wajar->last()->harga, 0, ',', '.') }}</strong></h3>
       <hr class="mb-1">
 
       <h5>Deskripsi: </h5>
       <p style="font-size: 11pt">{{ $data_barang->deskripsi }}</p>
 
       @if($data_penawar->isNotEmpty())
-        <h5>Urutan Penawar Tertinggi: </h5>
-        <table class="table">
+        <h5>Penawar Tertinggi: </h5>
+        <table class="table table-borderless">
           <thead>
             <tr>
               <th scope="col">No</th>
@@ -83,7 +83,7 @@
           </thead>
           <tbody>
             @foreach ($data_penawar as $index => $penawaran)
-              <tr>
+              <tr class="{{ $loop->first && $data_penawar->currentPage() == 1 ? 'table-active' : '' }}">
                 <td>{{ ($data_penawar->currentPage() - 1) * $data_penawar->perPage() + $loop->iteration }}</td>
                 <td>{{ $penawaran->pembeli->nama_pembeli }}</td>
                 <td>Rp. {{ number_format($penawaran->harga_bid, 0, ',', '.') }}</td>
@@ -104,13 +104,14 @@
       @if($status == 'coming_soon')
         <div class="card">
           <div class="card-body">
-            <h5 style="font-weight: bold; margin-bottom: 2px">Tawar Sekarang</h5>
+            <h5 style="font-weight: bold; margin-bottom: 2px">Tawar Harga</h5>
             <p class="text-secondary">Tawaran Minimum Rp. {{ number_format($data_barang->harga_wajar->last()->harga, 0, ',', '.') }}</p>
             <form action="#" method="get">
-              <div class="col-auto">
-                <input type="text" class="form-control mb-2" id="inputPassword2">
-                <button type="submit" class="btn btn-success mb-2 w-100" disabled><i class="fa fa-plus"></i> &nbsp;Ajukan Tawaran</button>
+              <div class="input-group mb-3">
+                <span class="input-group-text">Rp.</span>
+                <input type="text" id="penawaran" class="form-control">
               </div>
+              <button type="submit" class="btn btn-success mb-2 w-100" disabled><i class="fa fa-plus"></i> &nbsp;Ajukan Tawaran</button>
             </form>
           </div>
         </div>
@@ -139,7 +140,7 @@
           <p class="text-secondary mt-0" style="margin-top: 5px; margin-bottom: 0px; ">Berakhir dalam: <strong id="countdown" class="text-danger"></strong>
           </p>
         </div>
-        <p id="end_date" dataEndDate= {{ $jadwal->end_date }}></p>
+        <p id="end_date" dataEndDate= {{ $jadwal->end_date->toIso8601String() }}></p>
 
         <div class="card mt-3" id="hide_countdown">
           <div class="card-body">
@@ -200,12 +201,6 @@
 
       @else
         <div class="card">
-          <div class="card-body">
-            <h5 style="font-weight: bold; margin-bottom: 2px">Pelaksanaan Lelang:</h5>
-            <p class="text-secondary mb-0" style="font-size: 11pt">Belum terdapat jadwal</p>
-          </div>
-        </div>
-        <div class="card mt-3">
           <div class="card-body">
             <h5 style="font-weight: bold; margin-bottom: 2px">Waktu Server</h5>
             <p class="text-secondary mb-0">
