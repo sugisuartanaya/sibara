@@ -178,12 +178,13 @@
                 </div>
               </form>
             @else
-              <form action="/account/login" class="row"  method="get">
+              <form action="/account/login" method="get">
                 <div class="col-auto">
-                  <input type="text" class="form-control" id="inputPassword2">
-                </div>
-                <div class="col-auto">
-                  <button type="submit" class="btn btn-success mb-3">Ajukan Tawaran</button>
+                  <div class="input-group mb-3">
+                    <span class="input-group-text">Rp.</span>
+                    <input type="text" class="form-control" id="penawaran">
+                  </div>
+                  <button type="submit" class="btn btn-success mb-2 w-100"><i class="fa fa-plus"></i> &nbsp;Ajukan Tawaran</button>
                 </div>
               </form>
             @endauth
