@@ -127,14 +127,36 @@ $(function() {
         function formatAngka() {
             var inputElem = $("#penawaran");
             
-            // Menghapus karakter selain angka
+            // hapus karakter selain angka
             var nilaiInput = inputElem.val().replace(/\D/g, '');
     
-            // Memisahkan ribuan dengan tanda titik
+            // split angka dengan titik
             var nilaiFormatted = !isNaN(nilaiInput) && nilaiInput !== '' ? parseFloat(nilaiInput).toLocaleString('id-ID') : '';
     
-            // Memasukkan nilai yang diformat kembali ke dalam input
             inputElem.val(nilaiFormatted);
+        }
+    });
+
+    $(document).ready(function() {
+        $('#facebook-share-btn').click(function() {
+            var itemId = $(this).data('item-id');
+            var itemName = $(this).data('item-name');
+            var itemDescription = $(this).data('item-description');
+            var itemImage = $(this).data('item-image');
+
+            var urlToShare = window.location.origin + '/detail/' + itemId;
+            shareOnFacebook(urlToShare, itemName, itemDescription, itemImage);
+
+            console.log(itemImage);
+        });
+
+        function shareOnFacebook(url, name, description, image) {
+            var facebookUrl = 'https://www.facebook.com/sharer/sharer.php';
+            facebookUrl += '?u=' + encodeURIComponent(url);
+            facebookUrl += '&quote=' + encodeURIComponent(description);
+            facebookUrl += '&picture=' + encodeURIComponent(image);
+
+            window.open(facebookUrl, 'facebook-share-dialog', 'width=626,height=436');
         }
     });
 

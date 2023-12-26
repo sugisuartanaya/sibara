@@ -83,9 +83,25 @@
             <h5>Pelaksanaan Lelang:</h5>
             <p style="font-size: 11pt">Belum terdapat jadwal</p>
           @endif
+
           <h5 class="mb-2 align-self-center">Bagikan:&nbsp; </h5> 
-          <button class="btn btn-sm btn-primary mb-3"><i class="fa-brands fa-facebook"></i>&nbsp;Facebook</button>&nbsp;
-          <button class="btn btn-sm btn-success mb-3"><i class="fa-brands fa-whatsapp"></i>&nbsp;WhatsApp</button>
+          @php
+            $itemId = urlencode($data_barang->id);
+            $itemName = urlencode($data_barang->nama_barang);
+            $itemDescription = urlencode($data_barang->deskripsi);
+            $itemImage = url("http://admin.sibara.test{$data_barang->foto_thumbnail}");
+          @endphp
+          <button class="btn btn-sm btn-primary mb-3" id="facebook-share-btn" 
+            data-item-id="{{ $itemId }}" 
+            data-item-name="{{ $itemName }}" 
+            data-item-description="{{ $itemDescription }}" 
+            data-item-image="{{ $itemImage }}">
+            <i class="fa-brands fa-facebook"></i>&nbsp;Facebook
+          </button>&nbsp;
+
+          <a href="https://api.whatsapp.com/send?text=Lelang%20{{ $data_barang->nama_barang }}%20%7C%20Sibara%20http%3A%2F%2Fsibara.test%2Fdetail%2F{{ $data_barang->id }}" class="btn btn-sm btn-success mb-3">
+            <i class="fab fa-whatsapp"></i>&nbsp;WhatsApp
+          </a>
         </div>
 
         <div class="tab-pane fade mt-3" id="penawar">
