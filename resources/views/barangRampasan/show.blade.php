@@ -67,79 +67,36 @@
       <h3><strong>Rp. {{ number_format($data_barang->harga_wajar->last()->harga, 0, ',', '.') }}</strong></h4>
       <hr class="mb-1">
 
-      <ul class="nav nav-underline" id="myTabs">
-        <li class="nav-item navigasi">
-          <a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#informasi">Informasi</a>
-        </li>
-        <li class="nav-item navigasi">
-          <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#penawar">Penawar</a>
-        </li>
-      </ul>
+      <h5>Deskripsi: </h5>
+      <p style="font-size: 11pt">{{ $data_barang->deskripsi }}</p>
 
-      <div class="tab-content">
-        <div class="tab-pane fade show active mt-3" id="informasi">
-          <h5>Deskripsi: </h5>
-          <p style="font-size: 11pt">{{ $data_barang->deskripsi }}</p>
-          @if($status == 'range_jadwal')
-            <h5>Pelaksanaan Lelang:</h5>
-            <p style="font-size: 11pt">{{ $jadwal->start_date->format('j F Y \j\a\m H:i') }} s/d {{ $jadwal->end_date->format('j F Y \j\a\m H:i') }} WITA</p>
-          @elseif($status == 'coming_soon')
-            <h5>Pelaksanaan Lelang Mendatang:</h5>
-            <p style="font-size: 11pt">{{ $jadwal->start_date->format('j F Y \j\a\m H:i') }} s/d {{ $jadwal->end_date->format('j F Y \j\a\m H:i') }} WITA</p>
-          @else
-            <h5>Pelaksanaan Lelang:</h5>
-            <p style="font-size: 11pt">Belum terdapat jadwal</p>
-          @endif
-
-          <h5 class="mb-2 align-self-center">Bagikan:&nbsp; </h5> 
-          @php
-            $itemId = urlencode($data_barang->id);
-            $itemName = urlencode($data_barang->nama_barang);
-            $itemDescription = urlencode($data_barang->deskripsi);
-            $itemImage = url("http://admin.sibara.test{$data_barang->foto_thumbnail}");
-          @endphp
-          <button class="btn btn-sm btn-primary mb-3" id="facebook-share-btn" 
-            data-item-id="{{ $itemId }}" 
-            data-item-name="{{ $itemName }}" 
-            data-item-description="{{ $itemDescription }}" 
-            data-item-image="{{ $itemImage }}">
-            <i class="fa-brands fa-facebook"></i>&nbsp;Facebook
-          </button>&nbsp;
-
-          <a href="https://api.whatsapp.com/send?text=Lelang%20{{ $data_barang->nama_barang }}%20%7C%20Sibara%20http%3A%2F%2Fsibara.test%2Fdetail%2F{{ $data_barang->id }}" class="btn btn-sm btn-success mb-3">
-            <i class="fab fa-whatsapp"></i>&nbsp;WhatsApp
-          </a>
-        </div>
-
-        <div class="tab-pane fade mt-3" id="penawar">
-          <h5>Urutan Penawar Tertinggi: </h5>
-          @if($data_penawar->isNotEmpty())
-            <table class="table">
-              <thead>
-                <tr>
-                  <th scope="col">No</th>
-                  <th scope="col">Nama Penawar</th>
-                  <th scope="col">Harga</th>
-                  <th scope="col">Waktu</th>
-                </tr>
-              </thead>
-              <tbody>
-                @foreach ($data_penawar as $index => $penawaran)
-                  <tr>
-                    <td>{{ $index + 1 }}</td>
-                    <td>{{ $penawaran->pembeli->nama_pembeli }}</td>
-                    <td>Rp. {{ number_format($penawaran->harga_bid, 0, ',', '.') }}</td>
-                    <td>{{ \Carbon\Carbon::parse($penawaran->tanggal)->format('j M Y \j\a\m H:i') }}</td>
-                  </tr>
-                @endforeach
-              </tbody>
-            </table>
-          @else
-            <p style="font-size: 11pt">Belum terdapat penawar</p>
-          @endif
-          {{ $data_penawar->links('pagination::bootstrap-5') }}
-        </div>
-      </div>
+      @if($data_penawar->isNotEmpty())
+        <h5>Urutan Penawar Tertinggi: </h5>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">No</th>
+              <th scope="col">Nama Penawar</th>
+              <th scope="col">Harga</th>
+              <th scope="col">Waktu</th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach ($data_penawar as $index => $penawaran)
+              <tr>
+                <td>{{ ($data_penawar->currentPage() - 1) * $data_penawar->perPage() + $loop->iteration }}</td>
+                <td>{{ $penawaran->pembeli->nama_pembeli }}</td>
+                <td>Rp. {{ number_format($penawaran->harga_bid, 0, ',', '.') }}</td>
+                <td>{{ \Carbon\Carbon::parse($penawaran->tanggal)->format('j M Y \j\a\m H:i') }}</td>
+              </tr>
+            @endforeach
+          </tbody>
+        </table>
+      @else
+        <h5>Urutan Penawar Tertinggi: </h5>
+        <p style="font-size: 11pt">Belum terdapat penawar</p>
+      @endif
+      {{ $data_penawar->links('pagination::bootstrap-5') }}
 
     </div>
 
@@ -159,6 +116,15 @@
         </div>
         <div class="card mt-3">
           <div class="card-body">
+            <h5 style="font-weight: bold; margin-bottom: 2px">Pelaksanaan Lelang Mendatang:</h5>
+            <p class="text-secondary mb-0" style="font-size: 11pt">
+              {{ $jadwal->start_date->format('j F Y \j\a\m H:i') }}  s/d </p>
+            <p class="text-secondary mb-0" style="font-size: 11pt">
+              {{ $jadwal->end_date->format('j F Y \j\a\m H:i') }} WITA</p>
+          </div>
+        </div>
+        <div class="card mt-3">
+          <div class="card-body">
             <h5 style="font-weight: bold; margin-bottom: 2px">Waktu Server</h5>
             <p class="text-secondary mb-0">
               <i class="fa fa-clock-o"></i>
@@ -167,6 +133,7 @@
             <p class="text-secondary mb-0" id="currentTime"></p>
           </div>
         </div>
+        
       @elseif($status == 'range_jadwal')
         <div class="badge-container">
           <p class="text-secondary mt-0" style="margin-top: 5px; margin-bottom: 0px; ">Berakhir dalam: <strong id="countdown" class="text-danger"></strong>
@@ -174,7 +141,7 @@
         </div>
         <p id="end_date" dataEndDate= {{ $jadwal->end_date }}></p>
 
-        <div class="card mt-3">
+        <div class="card mt-3" id="hide_countdown">
           <div class="card-body">
             <h5 style="font-weight: bold; margin-bottom: 2px">Tawar Sekarang</h5>
             <p class="text-secondary">Tawaran Minimum Rp. {{ number_format($data_barang->harga_wajar->last()->harga, 0, ',', '.') }}</p>
@@ -213,16 +180,14 @@
         </div>
         <div class="card mt-3">
           <div class="card-body">
-            <h5 style="font-weight: bold; margin-bottom: 2px">Waktu Server</h5>
-            <p class="text-secondary mb-0">
-              <i class="fa fa-clock-o"></i>
-              <span id="currentDate"></span>
-            </p>
-            <p class="text-secondary mb-0" id="currentTime"></p>
+            <h5 style="font-weight: bold; margin-bottom: 2px">Pelaksanaan Lelang:</h5>
+            <p class="text-secondary mb-0" style="font-size: 11pt">
+              {{ $jadwal->start_date->format('j F Y \j\a\m H:i') }}  s/d </p>
+            <p class="text-secondary mb-0" style="font-size: 11pt">
+              {{ $jadwal->end_date->format('j F Y \j\a\m H:i') }} WITA</p>
           </div>
         </div>
-      @else
-        <div class="card">
+        <div class="card mt-3">
           <div class="card-body">
             <h5 style="font-weight: bold; margin-bottom: 2px">Waktu Server</h5>
             <p class="text-secondary mb-0">
@@ -232,7 +197,46 @@
             <p class="text-secondary mb-0" id="currentTime"></p>
           </div>
         </div>
+
+      @else
+        <div class="card">
+          <div class="card-body">
+            <h5 style="font-weight: bold; margin-bottom: 2px">Pelaksanaan Lelang:</h5>
+            <p class="text-secondary mb-0" style="font-size: 11pt">Belum terdapat jadwal</p>
+          </div>
+        </div>
+        <div class="card mt-3">
+          <div class="card-body">
+            <h5 style="font-weight: bold; margin-bottom: 2px">Waktu Server</h5>
+            <p class="text-secondary mb-0">
+              <i class="fa fa-clock-o"></i>
+              <span id="currentDate"></span>
+            </p>
+            <p class="text-secondary mb-0" id="currentTime"></p>
+          </div>
+        </div>
+        
+        
       @endif
+
+      <h5 class="mb-2 mt-3 align-self-center">Bagikan:&nbsp; </h5> 
+      @php
+        $itemId = urlencode($data_barang->id);
+        $itemName = urlencode($data_barang->nama_barang);
+        $itemDescription = urlencode($data_barang->deskripsi);
+        $itemImage = url("http://admin.sibara.test{$data_barang->foto_thumbnail}");
+      @endphp
+      <button class="btn btn-sm btn-primary mb-3" id="facebook-share-btn" 
+        data-item-id="{{ $itemId }}" 
+        data-item-name="{{ $itemName }}" 
+        data-item-description="{{ $itemDescription }}" 
+        data-item-image="{{ $itemImage }}">
+        <i class="fa-brands fa-facebook"></i>&nbsp;Facebook
+      </button>&nbsp;
+
+      <a href="https://api.whatsapp.com/send?text=Lelang%20{{ $data_barang->nama_barang }}%20%7C%20Sibara%20http%3A%2F%2Fsibara.test%2Fdetail%2F{{ $data_barang->id }}" class="btn btn-sm btn-success mb-3">
+        <i class="fab fa-whatsapp"></i>&nbsp;WhatsApp
+      </a>
     </div>
     
   </div>
