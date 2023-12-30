@@ -23,6 +23,8 @@ class BarangRampasanController extends Controller
             'harga_wajars.harga'
             )
             ->where('barang_rampasans.status', 0)
+            ->wherehas('izin')
+            ->wherehas('harga_wajar')
             ->leftJoin('harga_wajars', function($join) {
                 $join->on('barang_rampasans.id', '=', 'harga_wajars.id_barang')
                     ->whereRaw('harga_wajars.id = (SELECT id FROM harga_wajars WHERE id_barang = barang_rampasans.id ORDER BY tgl_laporan_penilaian DESC LIMIT 1)');
@@ -54,6 +56,8 @@ class BarangRampasanController extends Controller
             'harga_wajars.harga'
             )
         ->where('barang_rampasans.status', 0)
+        ->whereHas('izin')
+        ->whereHas('harga_wajar')
         ->leftJoin('harga_wajars', function($join) {
             $join->on('barang_rampasans.id', '=', 'harga_wajars.id_barang')
                 ->whereRaw('harga_wajars.id = (SELECT id FROM harga_wajars WHERE id_barang = barang_rampasans.id ORDER BY tgl_laporan_penilaian DESC LIMIT 1)');
