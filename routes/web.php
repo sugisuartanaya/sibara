@@ -39,5 +39,6 @@ Route::get('/filter', [BarangRampasanController::class, 'filter']);
 Route::get('/detail/{id}', [BarangRampasanController::class, 'show']);
 
 Route::post('/penawaran', [PenawaranController::class, 'store']);
+Route::put('/penawaran/{id}', [PenawaranController::class, 'update']);
 
 Route::get('/jadwal', [JadwalController::class, 'index']);

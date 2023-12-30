@@ -180,4 +180,35 @@ $(function() {
         }
     });
 
+    $(document).ready(function () {
+        // Tambahkan kelas animasi saat halaman dimuat
+        $('.animated-element').addClass('animated');
+    });
+
+    $(document).ready(function() {
+        var buttonUpdate = $('#buttonUpdate');
+        var cancelUpdate = $('#cancelUpdate');
+        var formUpdate = $('#formUpdate');
+
+        buttonUpdate.click(function() {
+            showForm();
+        });
+
+        cancelUpdate.click(function() {
+            hideForm();
+        });
+
+        function showForm() {
+            formUpdate.show();
+            buttonUpdate.hide();
+            cancelUpdate.show();
+        }
+
+        function hideForm() {
+            formUpdate.hide();
+            buttonUpdate.show();
+            cancelUpdate.hide();
+        }
+    });
+
 });

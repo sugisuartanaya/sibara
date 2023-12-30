@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Jadwal;
+use App\Models\Pembeli;
 use App\Models\Kategori;
 use App\Models\Penawaran;
 use App\Models\Harga_wajar;
@@ -116,10 +117,16 @@ class BarangRampasanController extends Controller
         } else {
             $status = null;
         }
+        $user = auth()->id();
+        $pembeli = Pembeli::where('user_id', $user)->first();
+        if ($pembeli) {
+            $penawaran = Penawaran::where('id_barang', $id)
+                ->where('id_pembeli', $pembeli->id)
+                ->first();
+        } else {
+            $penawaran = null;
+        }
 
-        $penawaran = Penawaran::where('id_barang', $id)
-            ->orderBy('harga_bid', 'desc')
-            ->paginate(3);
 
         return view('barangRampasan.show', [
             'title' => 'Barang',
@@ -129,49 +136,8 @@ class BarangRampasanController extends Controller
             'harga' => $harga,
             'status' => $status,
             'jadwal' => optional($jadwal_terkait),
-            'data_penawar' => $penawaran,
+            'tawaran' => $penawaran,
         ]);
     }
-
-        // $daftar_barang = Barang_rampasan::select('barang_rampasans.*', 'daftar_barangs.status', 'latest_prices.harga')
-        // ->join('daftar_barangs', 'barang_rampasans.id', '=', 'daftar_barangs.id_barang')
-        // ->leftJoin('harga_wajars as latest_prices', function ($join) {
-        //     $join->on('barang_rampasans.id', '=', 'latest_prices.id_barang')
-        //         ->whereRaw('latest_prices.tgl_laporan_penilaian = (select max(tgl_laporan_penilaian) from harga_wajars where id_barang = barang_rampasans.id)');
-        // })
-        // ->where('daftar_barangs.status', 1)
-        // ->paginate(8);
-
     
-    public function create()
-    {
-        //
-    }
-
-    
-    public function store(Request $request)
-    {
-        //
-    }
-
-    
-    
-
-    
-    public function edit($id)
-    {
-        //
-    }
-
-    
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    
-    public function destroy($id)
-    {
-        //
-    }
 }

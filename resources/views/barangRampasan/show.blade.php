@@ -67,10 +67,13 @@
       <h3><strong>Rp. {{ number_format($data_barang->harga_wajar->last()->harga, 0, ',', '.') }}</strong></h3>
       <hr class="mb-1">
 
+      <h5>Penawaran: </h5>
+      <p style="font-size: 11pt; font-weight: bold">Closed Bidding</p>
+      
       <h5>Deskripsi: </h5>
       <p style="font-size: 11pt">{{ $data_barang->deskripsi }}</p>
 
-      @if($data_penawar->isNotEmpty())
+      {{-- @if($data_penawar->isNotEmpty())
         <h5>Penawar Tertinggi: </h5>
         <table class="table table-borderless">
           <thead>
@@ -95,8 +98,28 @@
       @else
         <h5>Urutan Penawar Tertinggi: </h5>
         <p style="font-size: 11pt">Belum terdapat penawar</p>
-      @endif
-      {{ $data_penawar->links('pagination::bootstrap-5') }}
+      @endif --}}
+
+      {{-- {{ $data_penawar->links('pagination::bootstrap-5') }} --}}
+
+      <h5 class="mb-2 mt-3 align-self-center">Bagikan:&nbsp; </h5> 
+      @php
+        $itemId = urlencode($data_barang->id);
+        $itemName = urlencode($data_barang->nama_barang);
+        $itemDescription = urlencode($data_barang->deskripsi);
+        $itemImage = url("http://admin.sibara.test{$data_barang->foto_thumbnail}");
+      @endphp
+      <button class="btn btn-sm btn-primary mb-3" id="facebook-share-btn" 
+        data-item-id="{{ $itemId }}" 
+        data-item-name="{{ $itemName }}" 
+        data-item-description="{{ $itemDescription }}" 
+        data-item-image="{{ $itemImage }}">
+        <i class="fa-brands fa-facebook"></i>&nbsp;Facebook
+      </button>&nbsp;
+
+      <a href="https://api.whatsapp.com/send?text=Lelang%20{{ $data_barang->nama_barang }}%20%7C%20Sibara%20http%3A%2F%2Fsibara.test%2Fdetail%2F{{ $data_barang->id }}" class="btn btn-sm btn-success mb-3">
+        <i class="fab fa-whatsapp"></i>&nbsp;WhatsApp
+      </a>
 
     </div>
 
@@ -145,39 +168,67 @@
         <div id="hide_countdown">
           <div class="card mt-3">
             <div class="card-body">
-              <h5 style="font-weight: bold; margin-bottom: 2px">Tawar Sekarang</h5>
-              <p class="text-secondary">Tawaran Minimum Rp. {{ number_format($data_barang->harga_wajar->last()->harga, 0, ',', '.') }}</p>
-              @auth
-                <form action="/penawaran" method="post">
+              @if ($tawaran)
+                <h5 style="font-weight: bold; margin-bottom: 2px">Tawaran Masuk</h5>
+                <p class="text-secondary">Tawaran Anda Rp. {{ number_format($tawaran->harga_bid, 0, ',', '.') }}</p>
+                <button id="buttonUpdate" class="btn btn-sm btn-warning">Ubah tawaran?</button>
+                <button id="cancelUpdate" class="btn btn-sm btn-danger" style="display: none; margin-bottom: 10px">
+                  <i class="fa-solid fa-xmark"></i>&nbsp;Batal
+                </button>
+                <form action="/penawaran/{{ $tawaran->id }}" method="post" id="formUpdate" style="display: none;">
                   @csrf
+                  @method('PUT')
                   <div class="col-auto">
                     <div class="input-group mb-3">
                       <span class="input-group-text">Rp.</span>
+                      <input type="hidden" class="form-control" name="current_price" value="{{ $data_barang->harga_wajar->last()->harga }}">
                       <input type="text" id="penawaran" name="harga_bid" class="form-control 
-                        @error('harga_bid') is-invalid @enderror" value="{{ old('harga_bid') }}">
+                        @error('harga_bid') is-invalid @enderror" value="{{ number_format($tawaran->harga_bid, 0, ',', '.') }}">
                         @error('harga_bid')
                           <div class="invalid-feedback">
                             {{ $message }}
                           </div>
                         @enderror
-                      <input type="hidden" class="form-control" id="penawaran" name="id_barang" value="{{ $data_barang->id }}">
-                      <input type="hidden" class="form-control" id="penawaran" name="current_price" value="{{ $data_barang->harga_wajar->last()->harga }}">
-                      <input type="hidden" class="form-control" id="penawaran" name="id_pembeli" value="{{ auth()->user()->pembeli->id }}">
                     </div>
-                    <button type="submit" class="btn btn-success mb-2 w-100"><i class="fa fa-plus"></i> &nbsp;Ajukan Tawaran</button>
+                    <button type="submit" class="btn btn-warning mb-2 w-100"><i class="fa fa-pencil"></i> &nbsp;Ubah Tawaran</button>
                   </div>
                 </form>
               @else
-                <form action="/account/login" method="get">
-                  <div class="col-auto">
-                    <div class="input-group mb-3">
-                      <span class="input-group-text">Rp.</span>
-                      <input type="text" class="form-control" id="penawaran">
+                <h5 style="font-weight: bold; margin-bottom: 2px">Tawar Sekarang</h5>
+                <p class="text-secondary">Tawaran Minimum Rp. {{ number_format($data_barang->harga_wajar->last()->harga, 0, ',', '.') }}</p>
+                @auth
+                  <form action="/penawaran" method="post">
+                    @csrf
+                    <div class="col-auto">
+                      <div class="input-group mb-3">
+                        <span class="input-group-text">Rp.</span>
+                        <input type="text" id="penawaran" name="harga_bid" class="form-control 
+                          @error('harga_bid') is-invalid @enderror" value="{{ old('harga_bid') }}">
+                          @error('harga_bid')
+                            <div class="invalid-feedback">
+                              {{ $message }}
+                            </div>
+                          @enderror
+                        <input type="hidden" class="form-control" id="penawaran" name="id_barang" value="{{ $data_barang->id }}">
+                        <input type="hidden" class="form-control" id="penawaran" name="current_price" value="{{ $data_barang->harga_wajar->last()->harga }}">
+                        <input type="hidden" class="form-control" id="penawaran" name="id_pembeli" value="{{ auth()->user()->pembeli->id }}">
+                      </div>
+                      <button type="submit" class="btn btn-success mb-2 w-100"><i class="fa fa-plus"></i> &nbsp;Ajukan Tawaran</button>
                     </div>
-                    <button type="submit" class="btn btn-success mb-2 w-100"><i class="fa fa-plus"></i> &nbsp;Ajukan Tawaran</button>
-                  </div>
-                </form>
-              @endauth
+                  </form>
+                @else
+                  <form action="/account/login" method="get">
+                    <div class="col-auto">
+                      <div class="input-group mb-3">
+                        <span class="input-group-text">Rp.</span>
+                        <input type="text" class="form-control" id="penawaran">
+                      </div>
+                      <button type="submit" class="btn btn-success mb-2 w-100"><i class="fa fa-plus"></i> &nbsp;Ajukan Tawaran</button>
+                    </div>
+                  </form>
+                @endauth
+              @endif
+              
             </div>
           </div>
           <div class="card mt-3">
@@ -217,24 +268,7 @@
         
       @endif
 
-      <h5 class="mb-2 mt-3 align-self-center">Bagikan:&nbsp; </h5> 
-      @php
-        $itemId = urlencode($data_barang->id);
-        $itemName = urlencode($data_barang->nama_barang);
-        $itemDescription = urlencode($data_barang->deskripsi);
-        $itemImage = url("http://admin.sibara.test{$data_barang->foto_thumbnail}");
-      @endphp
-      <button class="btn btn-sm btn-primary mb-3" id="facebook-share-btn" 
-        data-item-id="{{ $itemId }}" 
-        data-item-name="{{ $itemName }}" 
-        data-item-description="{{ $itemDescription }}" 
-        data-item-image="{{ $itemImage }}">
-        <i class="fa-brands fa-facebook"></i>&nbsp;Facebook
-      </button>&nbsp;
-
-      <a href="https://api.whatsapp.com/send?text=Lelang%20{{ $data_barang->nama_barang }}%20%7C%20Sibara%20http%3A%2F%2Fsibara.test%2Fdetail%2F{{ $data_barang->id }}" class="btn btn-sm btn-success mb-3">
-        <i class="fab fa-whatsapp"></i>&nbsp;WhatsApp
-      </a>
+      
     </div>
     
   </div>

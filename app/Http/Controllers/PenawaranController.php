@@ -38,48 +38,31 @@ class PenawaranController extends Controller
         return back()->with('message', 'Berhasil melakukan penawaran');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function update(Request $request, $id)
     {
-        //
+        $penawaran = Penawaran::find($id);
+
+        $today = Carbon::now();
+
+        $bid = str_replace('.', '', $request->input('harga_bid'));
+        $harga_bid = intval($bid);
+        
+        Validator::make(
+            ['harga_bid' => $harga_bid],
+            ['harga_bid' => 'required|numeric|min:' . $request->input('current_price') . '|max:999999999'],
+            [
+                'harga_bid.min' => 'Harga harus lebih besar dari ' . $request->input('current_price'),
+                'harga_bid.max' => 'Harga tidak boleh lebih dari 999999999',
+                'harga_bid.required' => 'Anda belum memasukkan harga',
+                'harga_bid.numeric' => 'Harga harus berupa angka',
+            ]
+        )->validate();
+
+        $penawaran->harga_bid = $harga_bid;
+        $penawaran->tanggal = $today;
+        $penawaran->save();
+        return back()->with('message', 'Berhasil ubah penawaran');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }
