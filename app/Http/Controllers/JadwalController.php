@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Jadwal;
 use App\Models\Barang_rampasan;
+use App\Models\Daftar_barang;
 use App\Models\Harga_wajar;
 use Illuminate\Http\Request;
 
@@ -31,67 +32,16 @@ class JadwalController extends Controller
             $status = null;
         }
 
-        $daftar_barang = Barang_rampasan::where('status', 0)
-            ->orderBy('id', 'desc')
-            ->limit(8)
-            ->get();
-
-        $id_barang = $daftar_barang->pluck('id')->toArray();
-        
-        $harga_terakhir = Harga_wajar::whereIn('id_barang', $id_barang)
-            ->orderBy('tgl_laporan_penilaian', 'desc')  
-            ->get()
-            ->groupBy('id_barang')
-            ->map(function ($group) {
-                return $group->first(); // per group
-            });
-        
-        $harga_awal = Harga_wajar::whereIn('id_barang', $id_barang)
-            ->orderBy('tgl_laporan_penilaian', 'asc')  
-            ->get()
-            ->groupBy('id_barang')
-            ->map(function ($group) {
-                return $group->first(); // per group
-            });
+        $barang = Daftar_barang::where('id_jadwal', $jadwal->id)
+        ->paginate(8);
             
         return view('jadwal.index',[
             'title' => 'Jadwal',
             'active' => 'active',
             'jadwal' => $jadwal,
             'status' => $status,
-            'daftar_barang' => $daftar_barang,
-            'harga_terakhir' => $harga_terakhir,
-            'harga_awal' => $harga_awal
+            'daftar_barang' => $barang
         ]);
     }
 
-    public function create()
-    {
-        //
-    }
-
-    public function store(Request $request)
-    {
-        //
-    }
-
-    public function show($id)
-    {
-        //
-    }
-
-    public function edit($id)
-    {
-        //
-    }
-
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    public function destroy($id)
-    {
-        //
-    }
 }

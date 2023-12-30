@@ -142,52 +142,55 @@
         </div>
         <p id="end_date" dataEndDate= {{ $jadwal->end_date->toIso8601String() }}></p>
 
-        <div class="card mt-3" id="hide_countdown">
-          <div class="card-body">
-            <h5 style="font-weight: bold; margin-bottom: 2px">Tawar Sekarang</h5>
-            <p class="text-secondary">Tawaran Minimum Rp. {{ number_format($data_barang->harga_wajar->last()->harga, 0, ',', '.') }}</p>
-            @auth
-              <form action="/penawaran" method="post">
-                @csrf
-                <div class="col-auto">
-                  <div class="input-group mb-3">
-                    <span class="input-group-text">Rp.</span>
-                    <input type="text" id="penawaran" name="harga_bid" class="form-control 
-                      @error('harga_bid') is-invalid @enderror" value="{{ old('harga_bid') }}">
-                      @error('harga_bid')
-                        <div class="invalid-feedback">
-                          {{ $message }}
-                        </div>
-                      @enderror
-                    <input type="hidden" class="form-control" id="penawaran" name="id_barang" value="{{ $data_barang->id }}">
-                    <input type="hidden" class="form-control" id="penawaran" name="current_price" value="{{ $data_barang->harga_wajar->last()->harga }}">
-                    <input type="hidden" class="form-control" id="penawaran" name="id_pembeli" value="{{ auth()->user()->pembeli->id }}">
+        <div id="hide_countdown">
+          <div class="card mt-3">
+            <div class="card-body">
+              <h5 style="font-weight: bold; margin-bottom: 2px">Tawar Sekarang</h5>
+              <p class="text-secondary">Tawaran Minimum Rp. {{ number_format($data_barang->harga_wajar->last()->harga, 0, ',', '.') }}</p>
+              @auth
+                <form action="/penawaran" method="post">
+                  @csrf
+                  <div class="col-auto">
+                    <div class="input-group mb-3">
+                      <span class="input-group-text">Rp.</span>
+                      <input type="text" id="penawaran" name="harga_bid" class="form-control 
+                        @error('harga_bid') is-invalid @enderror" value="{{ old('harga_bid') }}">
+                        @error('harga_bid')
+                          <div class="invalid-feedback">
+                            {{ $message }}
+                          </div>
+                        @enderror
+                      <input type="hidden" class="form-control" id="penawaran" name="id_barang" value="{{ $data_barang->id }}">
+                      <input type="hidden" class="form-control" id="penawaran" name="current_price" value="{{ $data_barang->harga_wajar->last()->harga }}">
+                      <input type="hidden" class="form-control" id="penawaran" name="id_pembeli" value="{{ auth()->user()->pembeli->id }}">
+                    </div>
+                    <button type="submit" class="btn btn-success mb-2 w-100"><i class="fa fa-plus"></i> &nbsp;Ajukan Tawaran</button>
                   </div>
-                  <button type="submit" class="btn btn-success mb-2 w-100"><i class="fa fa-plus"></i> &nbsp;Ajukan Tawaran</button>
-                </div>
-              </form>
-            @else
-              <form action="/account/login" method="get">
-                <div class="col-auto">
-                  <div class="input-group mb-3">
-                    <span class="input-group-text">Rp.</span>
-                    <input type="text" class="form-control" id="penawaran">
+                </form>
+              @else
+                <form action="/account/login" method="get">
+                  <div class="col-auto">
+                    <div class="input-group mb-3">
+                      <span class="input-group-text">Rp.</span>
+                      <input type="text" class="form-control" id="penawaran">
+                    </div>
+                    <button type="submit" class="btn btn-success mb-2 w-100"><i class="fa fa-plus"></i> &nbsp;Ajukan Tawaran</button>
                   </div>
-                  <button type="submit" class="btn btn-success mb-2 w-100"><i class="fa fa-plus"></i> &nbsp;Ajukan Tawaran</button>
-                </div>
-              </form>
-            @endauth
+                </form>
+              @endauth
+            </div>
+          </div>
+          <div class="card mt-3">
+            <div class="card-body">
+              <h5 style="font-weight: bold; margin-bottom: 2px">Pelaksanaan Lelang:</h5>
+              <p class="text-secondary mb-0" style="font-size: 11pt">
+                {{ $jadwal->start_date->format('j F Y \j\a\m H:i') }}  s/d </p>
+              <p class="text-secondary mb-0" style="font-size: 11pt">
+                {{ $jadwal->end_date->format('j F Y \j\a\m H:i') }} WITA</p>
+            </div>
           </div>
         </div>
-        <div class="card mt-3">
-          <div class="card-body">
-            <h5 style="font-weight: bold; margin-bottom: 2px">Pelaksanaan Lelang:</h5>
-            <p class="text-secondary mb-0" style="font-size: 11pt">
-              {{ $jadwal->start_date->format('j F Y \j\a\m H:i') }}  s/d </p>
-            <p class="text-secondary mb-0" style="font-size: 11pt">
-              {{ $jadwal->end_date->format('j F Y \j\a\m H:i') }} WITA</p>
-          </div>
-        </div>
+
         <div class="card mt-3">
           <div class="card-body">
             <h5 style="font-weight: bold; margin-bottom: 2px">Waktu Server</h5>
