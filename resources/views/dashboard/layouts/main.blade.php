@@ -18,7 +18,7 @@
           <ul class="nav me-auto">
               <li class="nav-item"><a href="/" class="nav-link px-2 {{ ($title === "Beranda") ? 'active' : '' }}" aria-current="page">Beranda</a></li>
               <li class="nav-item"><a href="/barang" class="nav-link px-2 {{ ($title === "Barang") ? 'active' : '' }}">Barang Rampasan</a></li>
-              <li class="nav-item"><a href="#" class="nav-link px-2 {{ ($title === "Jadwal") ? 'active' : '' }}">Jadwal</a></li>
+              <li class="nav-item"><a href="/jadwal" class="nav-link px-2 {{ ($title === "Jadwal") ? 'active' : '' }}">Jadwal</a></li>
               <li class="nav-item"><a href="#" class="nav-link px-2 {{ ($title === "Pengumuman") ? 'active' : '' }}">Pengumuman</a></li>
           </ul>
           <ul class="nav">

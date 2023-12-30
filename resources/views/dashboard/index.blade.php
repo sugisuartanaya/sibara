@@ -140,7 +140,7 @@
                 </p>
                 <strong>
                   <p style="margin-top: 0px">
-                    <a href="#" class="text-success" style="text-decoration: none; font-size: 15pt">Lihat Daftar Barang</a>
+                    <a href="/jadwal" class="text-success" style="text-decoration: none; font-size: 15pt">Lihat Daftar Barang</a>
                   </p>
                 </strong>
               </h4>
