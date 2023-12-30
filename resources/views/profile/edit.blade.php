@@ -30,7 +30,7 @@
         <div class="card background-card"></div>
         <div class="card mt-1">
           <div class="card-body">
-            <h5><strong>Pembelian</strong></h5>
+            <h5><strong>Penawaran Lelang</strong></h5>
 
             <ul class="nav nav-underline" id="myTabs">
               <li class="nav-item navigasi">
@@ -43,50 +43,38 @@
 
             <div class="tab-content">
               <div class="tab-pane fade show active" id="current">
-                <h4 class="py-2">Pembelian Terbaru Anda</h4>
+                <h4 class="py-2">Penawaran Terbaru Anda</h4>
                 <table class="table">
                   <thead>
                     <tr>
                       <th scope="col">No</th>
-                      <th scope="col">Tgl Lelang</th>
-                      <th scope="col">Nama Barang</th>
-                      <th scope="col">Harga Tertinggi</th>
+                      <th scope="col">Tgl Penawaran</th>
+                      <th scope="col" class="w-50 text-break">Nama Barang</th>
+                      <th scope="col">Penawaran</th>
                       <th scope="col">Status</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>23-12-2023</td>
-                      <td>Satu unit Spm Honda Beat DK 3467 ABL, STNKnya</td>
-                      <td>Rp. 1.000.000</td>
-                      <td>@mdo</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">2</th>
-                      <td>23-12-2023</td>
-                      <td>1 (satu) spm Honda Scoopy No.Pol DK 2285 FBY</td>
-                      <td>Rp. 1.000.000</td>
-                      <td>@fat</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">3</th>
-                      <td>23-12-2023</td>
-                      <td>1 (satu) buah HP Android Oppo warna hitam</td>
-                      <td>Rp. 1.000.000</td>
-                      <td>@twitter</td>
-                    </tr>
+                    @foreach ($jumlahPenawaran as $index => $penawaran)
+                      <tr>
+                        <th scope="row">{{ $index + 1 }}</th>
+                        <td>{{ $penawaran->tanggal }}</td>
+                        <td class="w-50 text-break">{{ $penawaran->barang_rampasan->nama_barang }}</td>
+                        <td>Rp. {{ number_format($penawaran->harga_bid, 0, ',', '.') }}</td>
+                        <td>-</td>
+                      </tr>
+                    @endforeach
                   </tbody>
                 </table>
               </div>
 
               <div class="tab-pane fade" id="history">
-                <h4 class="py-2">Riwayat Pembelian Anda</h4>
+                <h4 class="py-2">Riwayat Penawaran Anda</h4>
                 <table class="table">
                   <thead>
                     <tr>
                       <th scope="col">No</th>
-                      <th scope="col">Tgl Lelang</th>
+                      <th scope="col">Tgl Penawaran</th>
                       <th scope="col">Nama Barang</th>
                       <th scope="col">Harga Pengajuan Tertinggi</th>
                       <th scope="col">Status</th>

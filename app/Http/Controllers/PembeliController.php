@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Pembeli;
 use App\Models\Verifikasi;
@@ -19,6 +20,9 @@ class PembeliController extends Controller
     public function myProfile()
     {
         $jumlahPenawaran = DashboardController::jumlahPenawaran();
+        $jumlahPenawaran->each(function ($penawaran) {
+            $penawaran->tanggal = Carbon::parse($penawaran->tanggal)->format('j M Y \j\a\m H:i');
+        });
 
         return view('profile.edit',[
             'title' => 'Profile',
