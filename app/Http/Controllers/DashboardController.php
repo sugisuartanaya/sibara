@@ -34,6 +34,8 @@ class DashboardController extends Controller
         }
 
         $daftar_barang = Barang_rampasan::where('status', 0)
+            ->whereHas('harga_wajar')
+            ->whereHas('izin')
             ->orderBy('id', 'desc')
             ->limit(8)
             ->get();
@@ -68,38 +70,4 @@ class DashboardController extends Controller
         
     }
 
-    public function create()
-    {
-        //
-    }
-
-    
-    public function store(Request $request)
-    {
-        //
-    }
-
-    
-    public function show($id)
-    {
-        //
-    }
-
-   
-    public function edit($id)
-    {
-        //
-    }
-
-    
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    
-    public function destroy($id)
-    {
-        //
-    }
 }

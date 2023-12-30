@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Izin;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Barang_rampasan extends Model
 {
@@ -27,6 +28,10 @@ class Barang_rampasan extends Model
     public function penawaran()
     {
         return $this->hasMany(Penawaran::class, 'id_barang');
+    }
+
+    public function izin(){
+        return $this->hasOne(Izin::class, 'id_barang');
     }
 
     protected $fillable = [
