@@ -23,6 +23,28 @@
           </ul>
           <ul class="nav">
             @auth
+              @if ($jumlahPenawaran->isNotEmpty())
+                <li class="nav-item special-nav-item">
+                  <a href="#" class="nav-link position-relative">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span style="position: absolute; top: 0px; left: 80%; transform: translateX(-50%);" class="badge rounded-pill bg-danger">
+                      {{ $jumlahPenawaran->count() }}
+                    </span>
+                  </a>
+                  <div class="dropdown-content">
+                    <div class="card">
+                      <ul class="list-group list-group-flush">
+                        <li class="list-group-item" style="font-weight: bold">Penawaran anda:</li>
+                        @foreach($jumlahPenawaran as $penawaran)
+                          <a href="/detail/{{ $penawaran->id_barang }}" class="text-decoration-none text-dark"><li class="list-group-item" style="font-size: 10pt">{{ $penawaran->barang_rampasan->nama_barang }}</li></a>
+                        @endforeach
+                      </ul>
+                    </div>
+                  </div>
+                </li>
+              @else
+                <li class="nav-item"><a href="#" class="nav-link px-2"><i class="fa-solid fa-cart-shopping"></i></a></li>
+              @endif
               <li class="nav-item dropdown">
                 <a href="#" class="nav-link px-2 dropdown-toggle {{ ($title === "Profile") ? 'active' : '' }}" role="button" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">&nbsp;Selamat Datang, {{ auth()->user()->pembeli->nama_pembeli }}</a>
                 <ul class="dropdown-menu dropdown-menu-end">

@@ -4,15 +4,18 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Jadwal;
-use App\Models\Barang_rampasan;
-use App\Models\Daftar_barang;
 use App\Models\Harga_wajar;
 use Illuminate\Http\Request;
+use App\Models\Daftar_barang;
+use App\Models\Barang_rampasan;
+use App\Http\Controllers\DashboardController;
 
 class JadwalController extends Controller
 {
     public function index()
     {
+        $jumlahPenawaran = DashboardController::jumlahPenawaran();
+        
         $jadwal = Jadwal::latest('id')->first();
 
         if($jadwal){
@@ -40,7 +43,8 @@ class JadwalController extends Controller
             'active' => 'active',
             'jadwal' => $jadwal,
             'status' => $status,
-            'daftar_barang' => $barang
+            'daftar_barang' => $barang,
+            'jumlahPenawaran' => $jumlahPenawaran
         ]);
     }
 

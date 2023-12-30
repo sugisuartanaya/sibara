@@ -18,9 +18,12 @@ class PembeliController extends Controller
 
     public function myProfile()
     {
+        $jumlahPenawaran = DashboardController::jumlahPenawaran();
+
         return view('profile.edit',[
             'title' => 'Profile',
             'active' => 'active',
+            'jumlahPenawaran' => $jumlahPenawaran
         ]);
     }
 

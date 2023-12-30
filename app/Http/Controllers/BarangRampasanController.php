@@ -11,12 +11,15 @@ use App\Models\Harga_wajar;
 use Illuminate\Http\Request;
 use App\Models\Daftar_barang;
 use App\Models\Barang_rampasan;
+use App\Http\Controllers\DashboardController;
 
 class BarangRampasanController extends Controller
 {
     
     public function index()
     {
+        $jumlahPenawaran = DashboardController::jumlahPenawaran();
+        
         $kategori = Kategori::all();
 
         $daftar_barang = Barang_rampasan::select(
@@ -37,12 +40,15 @@ class BarangRampasanController extends Controller
             'active' => 'active',
             'daftar_barang' => $daftar_barang,
             'daftar_kategori' => $kategori,
+            'jumlahPenawaran' => $jumlahPenawaran
         ]);
 
     }
 
     public function filter(Request $request)
     {
+        $jumlahPenawaran = DashboardController::jumlahPenawaran();
+
         $kategori = Kategori::all();
         $keyword = $request->input('search');
 
@@ -90,12 +96,15 @@ class BarangRampasanController extends Controller
             'active' => 'active',
             'daftar_barang' => $daftar_barang,
             'daftar_kategori' => $kategori,
-            'request' => $request
+            'request' => $request,
+            'jumlahPenawaran' => $jumlahPenawaran
         ]);
     }
 
     public function show($id)
     {
+        $jumlahPenawaran = DashboardController::jumlahPenawaran();
+        
         $barang = Barang_rampasan::find($id);
         $fotoBarangArray = json_decode($barang->foto_barang, true);
         $harga = Harga_wajar::where('id_barang', $id)->latest('tgl_laporan_penilaian')->first();
@@ -117,6 +126,7 @@ class BarangRampasanController extends Controller
         } else {
             $status = null;
         }
+        
         $user = auth()->id();
         $pembeli = Pembeli::where('user_id', $user)->first();
         if ($pembeli) {
@@ -127,7 +137,6 @@ class BarangRampasanController extends Controller
             $penawaran = null;
         }
 
-
         return view('barangRampasan.show', [
             'title' => 'Barang',
             'active' => 'active',
@@ -137,6 +146,7 @@ class BarangRampasanController extends Controller
             'status' => $status,
             'jadwal' => optional($jadwal_terkait),
             'tawaran' => $penawaran,
+            'jumlahPenawaran' => $jumlahPenawaran
         ]);
     }
     

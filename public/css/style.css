@@ -234,3 +234,23 @@ transform: scale(1.2);
 .animated {
   animation: fadeIn 1s ease-in-out;
 }
+
+
+.special-nav-item .dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Style untuk menampilkan dropdown saat elemen dihover */
+.special-nav-item:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-content .card {
+  max-width: 300px; /* Sesuaikan dengan lebar yang diinginkan */
+  /* Tambahkan properti lain sesuai kebutuhan */
+}

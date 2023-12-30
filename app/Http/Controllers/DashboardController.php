@@ -2,18 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Barang_rampasan;
-use App\Models\Daftar_barang;
-use App\Models\Harga_wajar;
-use App\Models\Jadwal;
-use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Models\Jadwal;
+use App\Models\Pembeli;
+use App\Models\Penawaran;
+use App\Models\Harga_wajar;
+use Illuminate\Http\Request;
+use App\Models\Daftar_barang;
+use App\Models\Barang_rampasan;
 
 class DashboardController extends Controller
 {
    
     public function index()
     {
+        $jumlahPenawaran = DashboardController::jumlahPenawaran();
+
         $jadwal = Jadwal::latest('id')->first();
 
         if($jadwal){
@@ -57,7 +61,7 @@ class DashboardController extends Controller
             ->map(function ($group) {
                 return $group->first(); // per group
             });
-        
+
         return view('dashboard.index', [
             'title' => 'Beranda',
             'active' => 'active',
@@ -65,9 +69,27 @@ class DashboardController extends Controller
             'status' => $status,
             'daftar_barang' => $daftar_barang,
             'harga_terakhir' => $harga_terakhir,
-            'harga_awal' => $harga_awal
+            'harga_awal' => $harga_awal,
+            'jumlahPenawaran' => $jumlahPenawaran
         ]);
         
+    }
+
+    public static function jumlahPenawaran()
+    {
+        $user = auth()->id();
+        $pembeli = Pembeli::where('user_id', $user)->first();
+        if ($pembeli) {
+            $jumlahPenawaran = Penawaran::where('id_pembeli', $pembeli->id)
+                ->whereHas('barang_rampasan', function ($query) {
+                    $query->where('status', 0);
+                })
+                ->get();
+        } else {
+            $jumlahPenawaran = null;
+        }
+
+        return $jumlahPenawaran;
     }
 
 }
