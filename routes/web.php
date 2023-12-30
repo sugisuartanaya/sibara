@@ -8,6 +8,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\PenawaranController;
+use App\Http\Controllers\PengumumanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +30,7 @@ Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/account/register', [RegisterController::class, 'index']);
 Route::post('/account/register', [RegisterController::class, 'store']);
 
-Route::get('/account/profile/edit', [PembeliController::class, 'myProfile']);
+Route::get('/account/profile', [PembeliController::class, 'myProfile']);
 Route::put('/account/profile/{username}', [PembeliController::class, 'updateProfile']);
 Route::get('/update-data/{username}', [PembeliController::class, 'updateData']);
 
@@ -42,3 +43,5 @@ Route::post('/penawaran', [PenawaranController::class, 'store']);
 Route::put('/penawaran/{id}', [PenawaranController::class, 'update']);
 
 Route::get('/jadwal', [JadwalController::class, 'index']);
+
+Route::get('/pengumuman', [PengumumanController::class, 'index']);

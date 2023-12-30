@@ -79,14 +79,21 @@ class DashboardController extends Controller
     {
         $user = auth()->id();
         $pembeli = Pembeli::where('user_id', $user)->first();
-        if ($pembeli) {
+
+        $jadwal = Jadwal::latest('id')->first();
+        $status = null;
+        $jumlahPenawaran = null;
+
+        if ($jadwal && Carbon::now()->lte($jadwal->end_date)) {
+            $status = 'available';
+        }
+
+        if ($status === 'available' && $pembeli) {
             $jumlahPenawaran = Penawaran::where('id_pembeli', $pembeli->id)
                 ->whereHas('barang_rampasan', function ($query) {
                     $query->where('status', 0);
                 })
                 ->get();
-        } else {
-            $jumlahPenawaran = null;
         }
 
         return $jumlahPenawaran;

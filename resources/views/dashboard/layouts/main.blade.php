@@ -19,29 +19,36 @@
               <li class="nav-item"><a href="/" class="nav-link px-2 {{ ($title === "Beranda") ? 'active' : '' }}" aria-current="page">Beranda</a></li>
               <li class="nav-item"><a href="/barang" class="nav-link px-2 {{ ($title === "Barang") ? 'active' : '' }}">Barang Rampasan</a></li>
               <li class="nav-item"><a href="/jadwal" class="nav-link px-2 {{ ($title === "Jadwal") ? 'active' : '' }}">Jadwal</a></li>
-              <li class="nav-item"><a href="#" class="nav-link px-2 {{ ($title === "Pengumuman") ? 'active' : '' }}">Pengumuman</a></li>
+              <li class="nav-item"><a href="/pengumuman" class="nav-link px-2 {{ ($title === "Pengumuman") ? 'active' : '' }}">Pengumuman</a></li>
           </ul>
           <ul class="nav">
             @auth
-              @if ($jumlahPenawaran->isNotEmpty())
-                <li class="nav-item special-nav-item">
-                  <a href="#" class="nav-link position-relative">
-                    <i class="fa-solid fa-cart-shopping"></i>
-                    <span style="position: absolute; top: 0px; left: 80%; transform: translateX(-50%);" class="badge rounded-pill bg-danger">
-                      {{ $jumlahPenawaran->count() }}
-                    </span>
-                  </a>
-                  <div class="dropdown-content">
-                    <div class="card">
-                      <ul class="list-group list-group-flush">
-                        <li class="list-group-item" style="font-weight: bold">Penawaran anda:</li>
-                        @foreach($jumlahPenawaran as $penawaran)
-                          <a href="/detail/{{ $penawaran->id_barang }}" class="text-decoration-none text-dark"><li class="list-group-item" style="font-size: 10pt">{{ $penawaran->barang_rampasan->nama_barang }}</li></a>
-                        @endforeach
-                      </ul>
+              @if ($jumlahPenawaran)
+                @if($jumlahPenawaran->isNotEmpty())
+                  <li class="nav-item special-nav-item">
+                    <a href="#" class="nav-link position-relative">
+                      <i class="fa-solid fa-cart-shopping"></i>
+                      <span style="position: absolute; top: 0px; left: 80%; transform: translateX(-50%);" class="badge rounded-pill bg-danger">
+                        {{ $jumlahPenawaran->count() }}
+                      </span>
+                    </a>
+                    <div class="dropdown-content">
+                      <div class="card">
+                        <ul class="list-group list-group-flush">
+                          <li class="list-group-item" style="font-weight: bold">Penawaran anda:</li>
+                          @foreach($jumlahPenawaran as $penawaran)
+                            <a href="/detail/{{ $penawaran->id_barang }}" class="text-decoration-none text-dark"><li class="list-group-item" style="font-size: 10pt">{{ $penawaran->barang_rampasan->nama_barang }}</li></a>
+                          @endforeach
+                        </ul>
+                      </div>
                     </div>
-                  </div>
-                </li>
+                  </li>
+                @else
+                  <li class="nav-item">
+                    <a href="#" class="nav-link position-relative">
+                      <i class="fa-solid fa-cart-shopping"></i>
+                    </a>
+                @endif
               @else
                 <li class="nav-item"><a href="#" class="nav-link px-2"><i class="fa-solid fa-cart-shopping"></i></a></li>
               @endif
@@ -49,7 +56,7 @@
                 <a href="#" class="nav-link px-2 dropdown-toggle {{ ($title === "Profile") ? 'active' : '' }}" role="button" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">&nbsp;Selamat Datang, {{ auth()->user()->pembeli->nama_pembeli }}</a>
                 <ul class="dropdown-menu dropdown-menu-end">
                     {{-- Konten Dropdown --}}
-                    <li><a class="dropdown-item" href="/account/profile/edit"><i class="fa fa-user"></i>&nbsp;My Profile</a></li>
+                    <li><a class="dropdown-item" href="/account/profile"><i class="fa fa-user"></i>&nbsp;My Profile</a></li>
                     <li><a class="dropdown-item" href="/logout"><i class="fa fa-sign-out"></i>&nbsp;Logout</a></li>
                 </ul>
               </li>
