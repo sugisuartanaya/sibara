@@ -30,7 +30,7 @@ Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/account/register', [RegisterController::class, 'index']);
 Route::post('/account/register', [RegisterController::class, 'store']);
 
-Route::get('/account/profile', [PembeliController::class, 'myProfile']);
+Route::get('/account/profile', [PembeliController::class, 'myProfile'])->name('myprofile');
 Route::put('/account/profile/{username}', [PembeliController::class, 'updateProfile']);
 Route::get('/update-data/{username}', [PembeliController::class, 'updateData']);
 

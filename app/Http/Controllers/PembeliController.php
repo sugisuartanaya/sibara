@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Jadwal;
 use App\Models\Pembeli;
+use App\Models\Penawaran;
 use App\Models\Verifikasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -20,14 +22,37 @@ class PembeliController extends Controller
     public function myProfile()
     {
         $jumlahPenawaran = DashboardController::jumlahPenawaran();
-        $jumlahPenawaran->each(function ($penawaran) {
-            $penawaran->tanggal = Carbon::parse($penawaran->tanggal)->format('j M Y \j\a\m H:i');
-        });
+        if($jumlahPenawaran){
+            $jumlahPenawaran->each(function ($penawaran) {
+                $penawaran->tanggal = Carbon::parse($penawaran->tanggal)->format('j M Y \j\a\m H:i');
+            });
+        }
 
-        return view('profile.edit',[
+        $user = auth()->id();
+        $pembeli = Pembeli::where('user_id', $user)->first();
+
+        if ($pembeli) {
+            $history = Penawaran::where('id_pembeli', $pembeli->id)
+                ->whereHas('barang_rampasan', function ($query) {
+                    $query->where('status', 0);
+                })
+                ->orderBy('tanggal', 'desc')
+                ->paginate(5);
+        } else {
+            $history = null;
+        }
+
+        if($history){
+            $history->each(function ($riwayat) {
+                $riwayat->tanggal = Carbon::parse($riwayat->tanggal)->format('j M Y \j\a\m H:i');
+            });
+        }
+
+        return view('profile.show',[
             'title' => 'Profile',
             'active' => 'active',
-            'jumlahPenawaran' => $jumlahPenawaran
+            'jumlahPenawaran' => $jumlahPenawaran,
+            'history' => $history
         ]);
     }
 

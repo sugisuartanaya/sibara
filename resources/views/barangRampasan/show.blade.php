@@ -17,7 +17,10 @@
 
   @if(session('message'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
-      {{ session('message') }}
+      {{ session('message')['text'] }}
+        @if(session('message')['url'])
+          <a href="{{ session('message')['url'] }}">Lihat semua penawaran</a>
+        @endif
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
   @endif

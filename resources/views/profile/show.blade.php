@@ -55,15 +55,17 @@
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach ($jumlahPenawaran as $index => $penawaran)
-                      <tr>
-                        <th scope="row">{{ $index + 1 }}</th>
-                        <td>{{ $penawaran->tanggal }}</td>
-                        <td class="w-50 text-break">{{ $penawaran->barang_rampasan->nama_barang }}</td>
-                        <td>Rp. {{ number_format($penawaran->harga_bid, 0, ',', '.') }}</td>
-                        <td>-</td>
-                      </tr>
-                    @endforeach
+                    @if($jumlahPenawaran)
+                      @foreach ($jumlahPenawaran as $index => $penawaran)
+                        <tr>
+                          <th scope="row">{{ $index + 1 }}</th>
+                          <td>{{ $penawaran->tanggal }}</td>
+                          <td class="w-50 text-break">{{ $penawaran->barang_rampasan->nama_barang }}</td>
+                          <td>Rp. {{ number_format($penawaran->harga_bid, 0, ',', '.') }}</td>
+                          <td>-</td>
+                        </tr>
+                      @endforeach
+                    @endif
                   </tbody>
                 </table>
               </div>
@@ -73,37 +75,28 @@
                 <table class="table">
                   <thead>
                     <tr>
-                      <th scope="col">No</th>
                       <th scope="col">Tgl Penawaran</th>
-                      <th scope="col">Nama Barang</th>
-                      <th scope="col">Harga Pengajuan Tertinggi</th>
+                      <th scope="col" class="w-50 text-break">Nama Barang</th>
+                      <th scope="col">Penawaran</th>
                       <th scope="col">Status</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>23-12-2023</td>
-                      <td>Satu unit Spm Honda Beat DK 3467 ABL, STNKnya</td>
-                      <td>Rp. 1.000.000</td>
-                      <td>@mdo</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">2</th>
-                      <td>23-12-2023</td>
-                      <td>1 (satu) spm Honda Scoopy No.Pol DK 2285 FBY</td>
-                      <td>Rp. 1.000.000</td>
-                      <td>@fat</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">3</th>
-                      <td>23-12-2023</td>
-                      <td>1 (satu) buah HP Android Oppo warna hitam</td>
-                      <td>Rp. 1.000.000</td>
-                      <td>@twitter</td>
-                    </tr>
+                    @if($history)
+                      @foreach ($history as $index => $riwayat)
+                        <tr>
+                          <td>{{ $riwayat->tanggal }}</td>
+                          <td class="w-50 text-break">{{ $riwayat->barang_rampasan->nama_barang }}</td>
+                          <td>Rp. {{ number_format($riwayat->harga_bid, 0, ',', '.') }}</td>
+                          <td>-</td>
+                        </tr>
+                      @endforeach
+                    @endif
                   </tbody>
                 </table>
+                <div>
+                  {{ $history->links('pagination::bootstrap-5') }}
+                </div>
               </div>
             </div>
 

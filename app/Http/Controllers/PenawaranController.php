@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Penawaran;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 
 class PenawaranController extends Controller
@@ -35,7 +36,10 @@ class PenawaranController extends Controller
             'tanggal' => $today,
         ]);
 
-        return back()->with('message', 'Berhasil melakukan penawaran');
+        return back()->with('message', [
+            'text' => 'Berhasil melakukan penawaran.',
+            'url' => URL::route('myprofile') 
+        ]);
     }
 
     
