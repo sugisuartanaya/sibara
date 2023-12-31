@@ -147,63 +147,65 @@
       </div>
     </div>
 
-    <div class="col-md-12 d-flex align-items-center">
-      <h2 class="section-title2">Daftar Barang Lelang</h2>
-      <hr class="flex-grow-1 mx-2">
-    </div>
-    @if ($daftar_barang->isNotEmpty())
-      @foreach ($daftar_barang as $daftar)
-        <div class="col-md-3 py-3">
-          <div class="card">
-            <a href="/detail/{{ $daftar->barang_rampasan->id }}"><img class="bd-placeholder-img card-img-top" src="http://admin.sibara.test{{ $daftar->barang_rampasan->foto_thumbnail }}" style="object-fit: cover; width: 100%; height: 300px;"  alt="Your Alt Text"></a>
-            <div class="card-body d-flex" style="background-color: #f8f9fa; display: flex; flex-direction: column;">
-              <a href="/detail/{{ $daftar->barang_rampasan->id }}" class="text-decoration-none text-dark">
-                <h6 class="text-left mb-2" style="flex-shrink: 0;">
-                {{ \Illuminate\Support\Str::limit($daftar->barang_rampasan->nama_barang, 65, '...') }}</h6></a>
-              <p class="text-secondary mb-2">{{ $daftar->barang_rampasan->kategori->nama_kategori }}</p>
+    @if ($status == 'range_jadwal' || $status == 'coming_soon')
+      <div class="col-md-12 d-flex align-items-center">
+        <h2 class="section-title2">Daftar Barang Lelang</h2>
+        <hr class="flex-grow-1 mx-2">
+      </div>
+      @if ($daftar_barang->isNotEmpty())
+        @foreach ($daftar_barang as $daftar)
+          <div class="col-md-3 py-3">
+            <div class="card">
+              <a href="/detail/{{ $daftar->barang_rampasan->id }}"><img class="bd-placeholder-img card-img-top" src="http://admin.sibara.test{{ $daftar->barang_rampasan->foto_thumbnail }}" style="object-fit: cover; width: 100%; height: 300px;"  alt="Your Alt Text"></a>
+              <div class="card-body d-flex" style="background-color: #f8f9fa; display: flex; flex-direction: column;">
+                <a href="/detail/{{ $daftar->barang_rampasan->id }}" class="text-decoration-none text-dark">
+                  <h6 class="text-left mb-2" style="flex-shrink: 0;">
+                  {{ \Illuminate\Support\Str::limit($daftar->barang_rampasan->nama_barang, 65, '...') }}</h6></a>
+                <p class="text-secondary mb-2">{{ $daftar->barang_rampasan->kategori->nama_kategori }}</p>
 
-              @if ($daftar->barang_rampasan->harga_wajar->count() > 1)
-                <div class="d-flex align-item-center">
-                  <p class="text-decoration-line-through text-secondary" style="margin-bottom: 0px">
-                    Rp. {{ number_format($daftar->barang_rampasan->harga_wajar->first()->harga, 0, ',', '.') }}
-                  </p>
+                @if ($daftar->barang_rampasan->harga_wajar->count() > 1)
+                  <div class="d-flex align-item-center">
+                    <p class="text-decoration-line-through text-secondary" style="margin-bottom: 0px">
+                      Rp. {{ number_format($daftar->barang_rampasan->harga_wajar->first()->harga, 0, ',', '.') }}
+                    </p>
 
-                  {{-- Menghitung persentase pengurangan --}}
-                  @php
-                    $firstHarga = $daftar->barang_rampasan->harga_wajar->first()->harga;
-                    $lastHarga = $daftar->barang_rampasan->harga_wajar->last()->harga;
+                    {{-- Menghitung persentase pengurangan --}}
+                    @php
+                      $firstHarga = $daftar->barang_rampasan->harga_wajar->first()->harga;
+                      $lastHarga = $daftar->barang_rampasan->harga_wajar->last()->harga;
 
-                    $persentase_pengurangan = (($firstHarga - $lastHarga) / $firstHarga) * 100;
-                  @endphp
-                  {{-- ... --}}
-                  
-                  &nbsp;<span class="badge text-bg-danger" style="margin-bottom: 0px; font-weight: bold; display: flex; align-items: center; justify-content: center;">{{ number_format($persentase_pengurangan) }}% </span>
+                      $persentase_pengurangan = (($firstHarga - $lastHarga) / $firstHarga) * 100;
+                    @endphp
+                    {{-- ... --}}
+                    
+                    &nbsp;<span class="badge text-bg-danger" style="margin-bottom: 0px; font-weight: bold; display: flex; align-items: center; justify-content: center;">{{ number_format($persentase_pengurangan) }}% </span>
+                  </div>
+                @else
+                  <div class="mb-2" style="height: 17px; flex-shrink: 0;"></div>
+                @endif
+
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                  <h4 class="mb-0"><strong>Rp. {{ number_format($daftar->barang_rampasan->harga_wajar->last()->harga, 0, ',', '.') }}</strong></h4>
+                  <p class="text-secondary mb-0">0 <i class="fa fa-user"></i></p>
                 </div>
-              @else
-                <div class="mb-2" style="height: 17px; flex-shrink: 0;"></div>
-              @endif
 
-              <div class="d-flex justify-content-between align-items-start mb-2">
-                <h4 class="mb-0"><strong>Rp. {{ number_format($daftar->barang_rampasan->harga_wajar->last()->harga, 0, ',', '.') }}</strong></h4>
-                <p class="text-secondary mb-0">0 <i class="fa fa-user"></i></p>
+                <div class="text-center mt-2">
+                  <a href="/detail/{{ $daftar->barang_rampasan->id }}"><button class="btn btn-sm btn-outline-success">Detail Barang</button></a>
+                </div>
+
               </div>
-
-              <div class="text-center mt-2">
-                <a href="/detail/{{ $daftar->barang_rampasan->id }}"><button class="btn btn-sm btn-outline-success">Detail Barang</button></a>
-              </div>
-
             </div>
           </div>
-        </div>
-      @endforeach 
+        @endforeach 
 
-      <div>
-        {{ $daftar_barang->links('pagination::bootstrap-5') }}
-      </div>
-      
-    @else
-      Tidak ada barang lelang
+        <div>
+          {{ $daftar_barang->links('pagination::bootstrap-5') }}
+        </div>
+
+      @endif
+
     @endif
+    
   </div>
 </div>
 

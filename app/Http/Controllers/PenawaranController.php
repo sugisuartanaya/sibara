@@ -32,6 +32,7 @@ class PenawaranController extends Controller
         Penawaran::create([
             'id_barang' => $request->input('id_barang'),
             'id_pembeli' => $request->input('id_pembeli'),
+            'id_jadwal' => $request->input('id_jadwal'),
             'harga_bid' => $harga_bid,
             'tanggal' => $today,
         ]);

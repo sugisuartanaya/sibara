@@ -14,7 +14,7 @@ class JadwalController extends Controller
 {
     public function index()
     {
-        $jumlahPenawaran = DashboardController::jumlahPenawaran();
+        $statusPenawaran = DashboardController::statusPenawaran();
         
         $jadwal = Jadwal::latest('id')->first();
 
@@ -44,7 +44,7 @@ class JadwalController extends Controller
             'jadwal' => $jadwal,
             'status' => $status,
             'daftar_barang' => $barang,
-            'jumlahPenawaran' => $jumlahPenawaran
+            'statusPenawaran' => $statusPenawaran
         ]);
     }
 

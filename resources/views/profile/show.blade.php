@@ -55,8 +55,8 @@
                     </tr>
                   </thead>
                   <tbody>
-                    @if($jumlahPenawaran)
-                      @foreach ($jumlahPenawaran as $index => $penawaran)
+                    @if($penawaranAvailable)
+                      @foreach ($penawaranAvailable as $index => $penawaran)
                         <tr>
                           <th scope="row">{{ $index + 1 }}</th>
                           <td>{{ $penawaran->tanggal }}</td>
@@ -82,8 +82,8 @@
                     </tr>
                   </thead>
                   <tbody>
-                    @if($history)
-                      @foreach ($history as $index => $riwayat)
+                    @if($penawaranExpired)
+                      @foreach ($penawaranExpired as $index => $riwayat)
                         <tr>
                           <td>{{ $riwayat->tanggal }}</td>
                           <td class="w-50 text-break">{{ $riwayat->barang_rampasan->nama_barang }}</td>
@@ -94,9 +94,11 @@
                     @endif
                   </tbody>
                 </table>
-                <div>
-                  {{ $history->links('pagination::bootstrap-5') }}
-                </div>
+                {{-- <div>
+                  @if ($penawaranExpired)
+                    {{ $penawaranExpired->links('pagination::bootstrap-5') }}
+                  @endif
+                </div> --}}
               </div>
             </div>
 

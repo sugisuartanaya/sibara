@@ -13,6 +13,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('id_pembeli');
             $table->foreignId('id_barang');
+            $table->foreignId('id_jadwal');
             $table->integer('harga_bid');
             $table->dateTime('tanggal');
         });

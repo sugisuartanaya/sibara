@@ -215,6 +215,7 @@
                         <input type="hidden" class="form-control" id="penawaran" name="id_barang" value="{{ $data_barang->id }}">
                         <input type="hidden" class="form-control" id="penawaran" name="current_price" value="{{ $data_barang->harga_wajar->last()->harga }}">
                         <input type="hidden" class="form-control" id="penawaran" name="id_pembeli" value="{{ auth()->user()->pembeli->id }}">
+                        <input type="hidden" class="form-control" id="penawaran" name="id_jadwal" value="{{ $jadwal->id }}">
                       </div>
                       <button type="submit" class="btn btn-success mb-2 w-100"><i class="fa fa-plus"></i> &nbsp;Ajukan Tawaran</button>
                     </div>

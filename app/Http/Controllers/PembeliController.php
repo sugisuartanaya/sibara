@@ -21,38 +21,27 @@ class PembeliController extends Controller
 
     public function myProfile()
     {
-        $jumlahPenawaran = DashboardController::jumlahPenawaran();
-        if($jumlahPenawaran){
-            $jumlahPenawaran->each(function ($penawaran) {
+        $statusPenawaran = DashboardController::statusPenawaran();
+        $penawaranAvailable = $statusPenawaran['penawaranAvailable'];
+        $penawaranExpired = $statusPenawaran['penawaranExpired'];
+        
+        if($penawaranExpired){
+            $penawaranExpired->each(function ($penawaran) {
                 $penawaran->tanggal = Carbon::parse($penawaran->tanggal)->format('j M Y \j\a\m H:i');
             });
         }
-
-        $user = auth()->id();
-        $pembeli = Pembeli::where('user_id', $user)->first();
-
-        if ($pembeli) {
-            $history = Penawaran::where('id_pembeli', $pembeli->id)
-                ->whereHas('barang_rampasan', function ($query) {
-                    $query->where('status', 0);
-                })
-                ->orderBy('tanggal', 'desc')
-                ->paginate(5);
-        } else {
-            $history = null;
-        }
-
-        if($history){
-            $history->each(function ($riwayat) {
-                $riwayat->tanggal = Carbon::parse($riwayat->tanggal)->format('j M Y \j\a\m H:i');
+        if($penawaranAvailable){
+            $penawaranAvailable->each(function ($penawaran) {
+                $penawaran->tanggal = Carbon::parse($penawaran->tanggal)->format('j M Y \j\a\m H:i');
             });
         }
 
         return view('profile.show',[
             'title' => 'Profile',
             'active' => 'active',
-            'jumlahPenawaran' => $jumlahPenawaran,
-            'history' => $history
+            'statusPenawaran' => $statusPenawaran,
+            'penawaranExpired' => $penawaranExpired,
+            'penawaranAvailable' => $penawaranAvailable,
         ]);
     }
 

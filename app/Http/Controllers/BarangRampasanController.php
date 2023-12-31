@@ -18,7 +18,7 @@ class BarangRampasanController extends Controller
     
     public function index()
     {
-        $jumlahPenawaran = DashboardController::jumlahPenawaran();
+        $statusPenawaran = DashboardController::statusPenawaran();
         
         $kategori = Kategori::all();
 
@@ -40,14 +40,14 @@ class BarangRampasanController extends Controller
             'active' => 'active',
             'daftar_barang' => $daftar_barang,
             'daftar_kategori' => $kategori,
-            'jumlahPenawaran' => $jumlahPenawaran
+            'statusPenawaran' => $statusPenawaran
         ]);
 
     }
 
     public function filter(Request $request)
     {
-        $jumlahPenawaran = DashboardController::jumlahPenawaran();
+        $statusPenawaran = DashboardController::statusPenawaran();
 
         $kategori = Kategori::all();
         $keyword = $request->input('search');
@@ -97,13 +97,13 @@ class BarangRampasanController extends Controller
             'daftar_barang' => $daftar_barang,
             'daftar_kategori' => $kategori,
             'request' => $request,
-            'jumlahPenawaran' => $jumlahPenawaran
+            'statusPenawaran' => $statusPenawaran
         ]);
     }
 
     public function show($id)
     {
-        $jumlahPenawaran = DashboardController::jumlahPenawaran();
+        $statusPenawaran = DashboardController::statusPenawaran();
         
         $barang = Barang_rampasan::find($id);
         $fotoBarangArray = json_decode($barang->foto_barang, true);
@@ -146,7 +146,7 @@ class BarangRampasanController extends Controller
             'status' => $status,
             'jadwal' => optional($jadwal_terkait),
             'tawaran' => $penawaran,
-            'jumlahPenawaran' => $jumlahPenawaran
+            'statusPenawaran' => $statusPenawaran
         ]);
     }
     
