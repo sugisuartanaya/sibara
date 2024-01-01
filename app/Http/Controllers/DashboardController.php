@@ -78,28 +78,35 @@ class DashboardController extends Controller
     {
         $user = auth()->id();
         $pembeli = Pembeli::where('user_id', $user)->first();
-        $jadwal = Jadwal::latest('id')->first();
 
-        $available = Penawaran::with('jadwal') 
-            ->where('id_pembeli', $pembeli->id)
-            ->where('id_jadwal', $jadwal->id)
-            ->whereHas('jadwal', function ($query) {
-                $query->where('status', 'available');
-            })
-            ->get();
+        // Check if $pembeli is not null before proceeding
+        if ($pembeli) {
+            $jadwal = Jadwal::latest('id')->first();
 
-        $expired = Penawaran::with('jadwal') 
-            ->where('id_pembeli', $pembeli->id)
-            ->where('id_jadwal', $jadwal->id)
-            ->whereHas('jadwal', function ($query) {
-                $query->where('status', 'expired');
-            })
-            ->get();
+            // Check if $jadwal is not null before proceeding
+            if ($jadwal) {
+                $available = Penawaran::with('jadwal') 
+                    ->where('id_pembeli', $pembeli->id)
+                    ->where('id_jadwal', $jadwal->id)
+                    ->whereHas('jadwal', function ($query) {
+                        $query->where('status', 'available');
+                    })
+                    ->get();
 
-        $penawaranAvailable = $available->isEmpty() ? null : $available;
-        $penawaranExpired = $expired->isEmpty() ? null : $expired;
+                $expired = Penawaran::with('jadwal') 
+                    ->where('id_pembeli', $pembeli->id)
+                    ->where('id_jadwal', $jadwal->id)
+                    ->whereHas('jadwal', function ($query) {
+                        $query->where('status', 'expired');
+                    })
+                    ->get();
 
-        return ['penawaranAvailable' => $penawaranAvailable, 'penawaranExpired' => $penawaranExpired];
+                $penawaranAvailable = $available->isEmpty() ? null : $available;
+                $penawaranExpired = $expired->isEmpty() ? null : $expired;
+
+                return ['penawaranAvailable' => $penawaranAvailable, 'penawaranExpired' => $penawaranExpired];
+            }
+        }
 
     }
 
