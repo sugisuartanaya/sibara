@@ -26,10 +26,11 @@
               @php
                 $penawaranAvailable = $statusPenawaran['penawaranAvailable'];
               @endphp
+              {{-- cart icon --}}
               @if ($penawaranAvailable)
                 @if($penawaranAvailable->isNotEmpty())
                   <li class="nav-item special-nav-item">
-                    <a href="#" class="nav-link position-relative">
+                    <a href="" class="nav-link position-relative">
                       <i class="fa-solid fa-cart-shopping"></i>
                       <span style="position: absolute; top: 0px; left: 80%; transform: translateX(-50%);" class="badge rounded-pill bg-danger">
                         {{ $penawaranAvailable->count() }}
@@ -48,13 +49,31 @@
                   </li>
                 @else
                   <li class="nav-item">
-                    <a href="#" class="nav-link position-relative">
+                    <a href="" class="nav-link position-relative">
                       <i class="fa-solid fa-cart-shopping"></i>
                     </a>
                 @endif
               @else
-                <li class="nav-item"><a href="#" class="nav-link px-2"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                <li class="nav-item"><a href="" class="nav-link px-2"><i class="fa-solid fa-cart-shopping"></i></a></li>
               @endif
+
+              {{-- notification icon --}}
+              <li class="nav-item special-nav-item">
+                <a href="" class="nav-link position-relative">
+                  <i class="fa-solid fa-bell"></i>
+                  <span style="position: absolute; top: 0px; left: 80%; transform: translateX(-50%);" class="badge rounded-pill bg-danger">
+                    2
+                  </span>
+                </a>
+                <div class="dropdown-content">
+                  <div class="card">
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item" style="font-weight: bold">Pemberitahuan:</li>
+                    </ul>
+                  </div>
+                </div>
+              </li>
+              
               <li class="nav-item dropdown">
                 <a href="#" class="nav-link px-2 dropdown-toggle {{ ($title === "Profile") ? 'active' : '' }}" role="button" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">&nbsp;Selamat Datang, {{ auth()->user()->pembeli->nama_pembeli }}</a>
                 <ul class="dropdown-menu dropdown-menu-end">
