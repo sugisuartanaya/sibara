@@ -67,7 +67,10 @@ class PenawaranController extends Controller
         $penawaran->harga_bid = $harga_bid;
         $penawaran->tanggal = $today;
         $penawaran->save();
-        return back()->with('message', 'Berhasil ubah penawaran');
+        return back()->with('message', [
+            'text' => 'Berhasil ubah penawaran.',
+            'url' => URL::route('myprofile') 
+        ]);
     }
 
 }
