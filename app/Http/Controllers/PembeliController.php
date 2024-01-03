@@ -22,8 +22,8 @@ class PembeliController extends Controller
     public function myProfile()
     {
         $statusPenawaran = DashboardController::statusPenawaran();
-        $penawaranAvailable = $statusPenawaran['penawaranAvailable'];
-        $penawaranExpired = $statusPenawaran['penawaranExpired'];
+        $penawaranAvailable = isset($statusPenawaran['penawaranAvailable']) ? $statusPenawaran['penawaranAvailable'] : null;
+        $penawaranExpired = isset($statusPenawaran['penawaranExpired']) ? $statusPenawaran['penawaranExpired'] : null;
         
         if($penawaranExpired){
             $penawaranExpired->each(function ($penawaran) {
