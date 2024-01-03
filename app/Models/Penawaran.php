@@ -34,7 +34,4 @@ class Penawaran extends Model
         'status'
     ];
 
-    protected $casts = [
-        'status' => 'boolean',
-    ];
 }

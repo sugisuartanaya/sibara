@@ -88,7 +88,15 @@
                           <td>{{ $riwayat->tanggal }}</td>
                           <td class="w-50 text-break">{{ $riwayat->barang_rampasan->nama_barang }}</td>
                           <td>Rp. {{ number_format($riwayat->harga_bid, 0, ',', '.') }}</td>
-                          <td>-</td>
+                          @if($riwayat->status == 'menang')
+                            <td><span class="badge text-bg-success">{{ $riwayat->status }}</span></td>
+                          @elseif($riwayat->status == 'pending')
+                            <td><span class="badge text-bg-success">{{ $riwayat->status }}</span></td>
+                          @elseif($riwayat->status == 'kalah')
+                            <td><span class="badge text-bg-warning">{{ $riwayat->status }}</span></td>
+                          @elseif($riwayat->status == 'wanprestasi')
+                            <td><span class="badge text-bg-danger">{{ $riwayat->status }}</span></td>
+                          @endif
                         </tr>
                       @endforeach
                     @endif
