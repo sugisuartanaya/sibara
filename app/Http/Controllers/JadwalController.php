@@ -30,14 +30,15 @@ class JadwalController extends Controller
                 $status = 'range_jadwal';
             } elseif ($today->gt($jadwal->end_date)) {
                 $status = 'past_event';
-            } 
+            }
+            
+            $barang = Daftar_barang::where('id_jadwal', $jadwal->id)
+            ->paginate(8);
         } else {
             $status = null;
+            $barang = null;
         }
 
-        $barang = Daftar_barang::where('id_jadwal', $jadwal->id)
-        ->paginate(8);
-            
         return view('jadwal.index',[
             'title' => 'Jadwal',
             'active' => 'active',
