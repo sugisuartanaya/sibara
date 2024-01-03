@@ -24,7 +24,7 @@
           <ul class="nav">
             @auth
               @php
-                $penawaranAvailable = $statusPenawaran['penawaranAvailable'];
+                $penawaranAvailable = isset($statusPenawaran['penawaranAvailable']) ? $statusPenawaran['penawaranAvailable'] : null;
               @endphp
               {{-- cart icon --}}
               @if ($penawaranAvailable)

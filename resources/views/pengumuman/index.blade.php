@@ -25,39 +25,43 @@
       <p class="mt-0 mb-2">{{ \Carbon\Carbon::parse($jadwal->tgl_sprint)->format('d F Y') }}</p>
       <p style="font-weight: bold; margin-bottom: 0px">Pelaksanaan Lelang Penjualan Langsung: </p>
       <p class="mt-0 mb-2">{{ \Carbon\Carbon::parse($jadwal->start_date)->format('d F Y') }} s/d {{ \Carbon\Carbon::parse($jadwal->end_date)->format('d F Y') }}, jam {{ \Carbon\Carbon::parse($jadwal->start_date)->format('H.i') }} - {{ \Carbon\Carbon::parse($jadwal->end_date)->format('H.i') }} WITA</p>
-    @else
-      Saat ini tidak ada Jadwal Lelang  Penjualan Langsung
-    @endif
+
+      <div class="col-md-12 mt-3">
+        <table class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <td>No.</td>
+              <td>Nama Barang Lelang</td>
+              <td>Nama Pemenang</td>
+              <td>Harga Penawaran</td>
+              <td>Tanggal Penawaran</td>
+            </tr>
+          </thead>
+          <tbody>
+            @if($daftar_barang)
+              @foreach($daftar_barang as $index => $barang)
+              <tr>
+                <td>{{ $index + 1 }}</td>
+                <td>{{ $barang->nama_barang }}</td>
+                  @if(isset($penawarTertinggi[$barang->id]))
+                    <td>{{ $penawarTertinggi[$barang->id]->pembeli->nama_pembeli }}</td>
+                    <td>Rp. {{ number_format($penawarTertinggi[$barang->id]->harga_bid, 0, ',', '.') }}</td>
+                    <td>{{ \Carbon\Carbon::parse($penawarTertinggi[$barang->id]->tanggal)->format('d M Y, \J\a\m H:i') }}</td>
+                  @else
+                    <td>-</td>
+                    <td>-</td>
+                  @endif
+              </tr>
+              @endforeach
+            @endif
+          </tbody>
+        </table>
+      </div>
     
-    <div class="col-md-12 mt-3">
-      <table class="table table-bordered table-striped">
-        <thead>
-          <tr>
-            <td>No.</td>
-            <td>Nama Barang Lelang</td>
-            <td>Nama Pemenang</td>
-            <td>Harga Penawaran</td>
-            <td>Tanggal Penawaran</td>
-          </tr>
-        </thead>
-        <tbody>
-          @foreach($daftar_barang as $index => $barang)
-          <tr>
-            <td>{{ $index + 1 }}</td>
-            <td>{{ $barang->nama_barang }}</td>
-              @if(isset($penawarTertinggi[$barang->id]))
-                <td>{{ $penawarTertinggi[$barang->id]->pembeli->nama_pembeli }}</td>
-                <td>Rp. {{ number_format($penawarTertinggi[$barang->id]->harga_bid, 0, ',', '.') }}</td>
-                <td>{{ \Carbon\Carbon::parse($penawarTertinggi[$barang->id]->tanggal)->format('d M Y, \J\a\m H:i') }}</td>
-              @else
-                <td>-</td>
-                <td>-</td>
-              @endif
-          </tr>
-          @endforeach
-        </tbody>
-      </table>
-    </div>
+    @else
+      <h5>Saat ini belum ada Jadawal Penjualan Langsung Barang Rampasan Negara</h5>
+      <p>Nantikan jadwal selanjutnya</p>
+    @endif
     
   </div>
 

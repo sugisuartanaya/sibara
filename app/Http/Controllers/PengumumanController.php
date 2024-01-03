@@ -17,15 +17,16 @@ class PengumumanController extends Controller
         $jadwal = Jadwal::latest('id')
                     ->where('status', 'expired')
                     ->first();
-        $id_jadwal = $jadwal->id;
+        if($jadwal){
+            $id_jadwal = $jadwal->id;
 
-        $barangs = Barang_rampasan::whereHas('daftar_barang', function ($query) use ($id_jadwal) {
-            $query->where('id_jadwal', $id_jadwal);
-        })->get();
+            $barangs = Barang_rampasan::whereHas('daftar_barang', function ($query) use ($id_jadwal) {
+                $query->where('id_jadwal', $id_jadwal);
+            })->get();
 
-        $bidderTertinggi = [];
+            $bidderTertinggi = [];
 
-        foreach ($barangs as $barang) {
+            foreach ($barangs as $barang) {
             $penawarTertinggi = Penawaran::where('id_jadwal', $id_jadwal)
                 ->where('id_barang', $barang->id)
                 ->orderBy('harga_bid', 'desc')
@@ -34,8 +35,12 @@ class PengumumanController extends Controller
                 if ($penawarTertinggi) {
                     $bidderTertinggi[$barang->id] = $penawarTertinggi;
                 }
+            }
+        } else {
+            $bidderTertinggi = null;
+            $barangs = null;
         }
-
+        
         // dd($bidderTertinggi);
 
         return view('pengumuman.index', [

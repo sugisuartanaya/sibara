@@ -105,7 +105,7 @@ class DashboardController extends Controller
                 $penawaranExpired = $expired->isEmpty() ? null : $expired;
 
                 return ['penawaranAvailable' => $penawaranAvailable, 'penawaranExpired' => $penawaranExpired];
-            }
+            } 
         }
 
     }
