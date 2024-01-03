@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('id_jadwal');
             $table->integer('harga_bid');
             $table->dateTime('tanggal');
-            $table->boolean('status')->default('0');
+            $table->enum('status', ['pending', 'wanprestasi', 'kalah', 'menang'])->default('pending');
         });
         
     }
