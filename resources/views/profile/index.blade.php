@@ -63,13 +63,21 @@
             <strong>My Profile</strong>
           </div>
           
+          
+          @php
+            $penawaranAvailable = isset($statusPenawaran['penawaranAvailable']) ? $statusPenawaran['penawaranAvailable'] : null;
+          @endphp
+
+
           <ul class="list-group list-group-flush">
             <a href="/account/profile" class="text-decoration-none"><li class="list-group-item d-flex justify-content-between align-items-center text-success">
               <strong>Informasi Pribadi</strong>
             </li></a>
             <a href="/account/penawaran" class="text-decoration-none"><li class="list-group-item d-flex justify-content-between align-items-center">
               Penawaran Anda
-              <span class="badge bg-success rounded-pill">2</span>
+              @if ($penawaranAvailable)
+                <span class="badge bg-success rounded-pill">{{ $penawaranAvailable->count() }}</span>
+              @endif
             </li></a>
             <li class="list-group-item d-flex justify-content-between align-items-center">
               Transaksi Penawaran

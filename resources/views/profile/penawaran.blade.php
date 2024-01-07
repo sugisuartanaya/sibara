@@ -18,7 +18,9 @@
             </li></a>
             <a href="/account/penawaran" class="text-decoration-none"><li class="list-group-item d-flex justify-content-between align-items-center text-success">
               <strong>Penawaran Anda</strong>
-              <span class="badge bg-success rounded-pill">2</span>
+              @if ($penawaranAvailable)
+                <span class="badge bg-success rounded-pill">{{ $penawaranAvailable->count() }}</span>
+              @endif
             </li></a>
             <li class="list-group-item d-flex justify-content-between align-items-center">
               Transaksi Penawaran
@@ -50,7 +52,6 @@
                 <table class="table">
                   <thead>
                     <tr>
-                      <th scope="col">No</th>
                       <th scope="col">Tgl Penawaran</th>
                       <th scope="col" class="w-50 text-break">Nama Barang</th>
                       <th scope="col">Penawaran</th>
@@ -61,11 +62,10 @@
                     @if($penawaranAvailable)
                       @foreach ($penawaranAvailable as $index => $penawaran)
                         <tr>
-                          <th scope="row">{{ $index + 1 }}</th>
                           <td>{{ $penawaran->tanggal }}</td>
                           <td class="w-50 text-break">{{ $penawaran->barang_rampasan->nama_barang }}</td>
                           <td>Rp. {{ number_format($penawaran->harga_bid, 0, ',', '.') }}</td>
-                          <td>-</td>
+                          <td><span class="badge text-bg-primary">{{ $penawaran->status }}</span></td>
                         </tr>
                       @endforeach
                     @endif
@@ -94,7 +94,7 @@
                           @if($riwayat->status == 'menang')
                             <td><span class="badge text-bg-success">{{ $riwayat->status }}</span></td>
                           @elseif($riwayat->status == 'pending')
-                            <td><span class="badge text-bg-success">{{ $riwayat->status }}</span></td>
+                            <td><span class="badge text-bg-primary">{{ $riwayat->status }}</span></td>
                           @elseif($riwayat->status == 'kalah')
                             <td><span class="badge text-bg-warning">{{ $riwayat->status }}</span></td>
                           @elseif($riwayat->status == 'wanprestasi')
@@ -105,11 +105,11 @@
                     @endif
                   </tbody>
                 </table>
-                {{-- <div>
+                <div>
                   @if ($penawaranExpired)
                     {{ $penawaranExpired->links('pagination::bootstrap-5') }}
                   @endif
-                </div> --}}
+                </div>
               </div>
             </div>
 
