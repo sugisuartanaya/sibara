@@ -39,7 +39,7 @@ class PenawaranController extends Controller
 
         return back()->with('message', [
             'text' => 'Berhasil melakukan penawaran.',
-            'url' => URL::route('myprofile') 
+            'url' => URL::route('showPenawaran') 
         ]);
     }
 
@@ -69,7 +69,7 @@ class PenawaranController extends Controller
         $penawaran->save();
         return back()->with('message', [
             'text' => 'Berhasil ubah penawaran.',
-            'url' => URL::route('myprofile') 
+            'url' => URL::route('showPenawaran') 
         ]);
     }
 
