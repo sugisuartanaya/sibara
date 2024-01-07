@@ -95,7 +95,6 @@ class DashboardController extends Controller
 
                 $expired = Penawaran::with('jadwal') 
                     ->where('id_pembeli', $pembeli->id)
-                    ->where('id_jadwal', $jadwal->id)
                     ->whereHas('jadwal', function ($query) {
                         $query->where('status', 'expired');
                     })
