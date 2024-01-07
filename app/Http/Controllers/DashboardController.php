@@ -98,7 +98,7 @@ class DashboardController extends Controller
                     ->whereHas('jadwal', function ($query) {
                         $query->where('status', 'expired');
                     })
-                    ->get();
+                    ->paginate(5);
 
                 $penawaranAvailable = $available->isEmpty() ? null : $available;
                 $penawaranExpired = $expired->isEmpty() ? null : $expired;
