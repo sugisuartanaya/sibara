@@ -5,7 +5,7 @@
 
 @if(session('success'))
   <div aria-live="polite" aria-atomic="true" class="position-relative bd-example-toasts rounded-3">
-    <div class="toast-container top-0 end-0 p-3" id="toastPlacement">
+    <div class="toast-container top-0 end-0 p-0" id="toastPlacement">
       <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header">
           <strong class="me-auto">Sukses</strong>
@@ -20,7 +20,7 @@
   </div>
 @elseif(session('error'))
   <div aria-live="polite" aria-atomic="true" class="position-relative bd-example-toasts rounded-3">
-    <div class="toast-container top-0 end-0 p-3" id="toastPlacement">
+    <div class="toast-container top-0 end-0 p-0" id="toastPlacement">
       <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header">
           <strong class="me-auto">Gagal</strong>
@@ -38,7 +38,7 @@
 
 @if($errors->has('password'))
   <div aria-live="polite" aria-atomic="true" class="position-relative bd-example-toasts rounded-3">
-    <div class="toast-container top-0 end-0 p-3" id="toastPlacement">
+    <div class="toast-container top-0 end-0 p-0" id="toastPlacement">
       <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header">
           <strong class="me-auto">Gagal</strong>
@@ -133,7 +133,7 @@
                       <label class="form-label">Masukkan No. Telepon yang baru</label>
                       <div class="input-group">
                         <span class="input-group-text" id="basic-addon1">+62</span>
-                        <input type="number" name="no_telepon" class="form-control" placeholder="Pastikan nomor terhubung dengan WhatsApp" required>
+                        <input type="number" name="no_telepon" class="form-control" placeholder="Pastikan nomor terhubung dengan WhatsApp" value="{{ auth()->user()->pembeli->no_telepon }}">
                       </div>
                   </div>
                   <div class="modal-footer">
