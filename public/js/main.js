@@ -211,4 +211,9 @@ $(function() {
         }
     });
 
+    $(document).ready(function () {
+        var toast = new bootstrap.Toast(document.querySelector('.toast'));
+        toast.show();
+    });
+
 });

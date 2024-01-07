@@ -4,11 +4,10 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\User;
-use App\Models\Jadwal;
 use App\Models\Pembeli;
-use App\Models\Penawaran;
 use App\Models\Verifikasi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
@@ -23,6 +22,39 @@ class PembeliController extends Controller
             'active' => 'active',
             'statusPenawaran' => $statusPenawaran,
         ]);
+    }
+
+    public function updateProfileData(Request $request, $id)
+    {
+        $pembeli = Pembeli::find($id);
+        $pembeli->no_telepon = $request->no_telepon;
+        $pembeli->save();
+
+        Session::flash('success', 'Berhasil Update No. Telepon');
+        return back();
+    }
+
+    public function updatePassword(Request $request, $id)
+    {
+        $validateddata = $request->validate([
+            'current_password' => 'required|string',
+            'password' => 'required|string|confirmed|min:3',
+        ], [
+            'password.confirmed' => 'Password yang anda masukkan tidak sama.',
+        ]);
+    
+        $user = User::find($id);
+    
+        if (!Hash::check($request->current_password, $user->password)) {
+            Session::flash('error', 'Password saat ini salah');
+            return back();
+        }
+    
+        $user->password = bcrypt($validateddata['password']);
+        $user->save();
+    
+        Session::flash('success', 'Berhasil Update Password');
+        return back();
     }
 
     public function showPenawaran()

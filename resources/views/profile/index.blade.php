@@ -3,6 +3,56 @@
 
 @section('content')
 
+@if(session('success'))
+  <div aria-live="polite" aria-atomic="true" class="position-relative bd-example-toasts rounded-3">
+    <div class="toast-container top-0 end-0 p-3" id="toastPlacement">
+      <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+          <strong class="me-auto">Sukses</strong>
+          <small>1 detik yang lalu</small>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+          {{ session('success') }}
+        </div>
+      </div>
+    </div>
+  </div>
+@elseif(session('error'))
+  <div aria-live="polite" aria-atomic="true" class="position-relative bd-example-toasts rounded-3">
+    <div class="toast-container top-0 end-0 p-3" id="toastPlacement">
+      <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+          <strong class="me-auto">Gagal</strong>
+          <small>1 detik yang lalu</small>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+          {{ session('error') }}
+        </div>
+      </div>
+    </div>
+  </div>
+@endif
+
+
+@if($errors->has('password'))
+  <div aria-live="polite" aria-atomic="true" class="position-relative bd-example-toasts rounded-3">
+    <div class="toast-container top-0 end-0 p-3" id="toastPlacement">
+      <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+          <strong class="me-auto">Gagal</strong>
+          <small>1 detik yang lalu</small>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+          {{ $errors->first('password') }}
+        </div>
+      </div>
+    </div>
+  </div>
+@endif
+
 <div class="container py-4">
   <div class="row">
     <div class="col-md-3">
@@ -53,13 +103,76 @@
               </div>
             </div>
             <div>
-              <button class="btn btn-sm btn-outline-success">
+              <button class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#telepon">
                 Ubah No. Telepon
               </button>
-              <button class="btn btn-sm btn-outline-success">
+              <button class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#password">
                 Ubah Password
               </button>
             </div>
+
+            <div class="modal fade" id="telepon" tabindex="-1" aria-labelledby="telepon" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Ubah No. Telepon</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form action="/account/updateNotelp/{{ auth()->user()->pembeli->id }}" method="post" >
+                      @csrf
+                      @method('PUT')
+                      <label class="form-label">Masukkan No. Telepon yang baru</label>
+                      <div class="input-group">
+                        <span class="input-group-text" id="basic-addon1">+62</span>
+                        <input type="number" name="no_telepon" class="form-control" placeholder="Pastikan nomor terhubung dengan WhatsApp" required>
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-sm btn-success">Simpan</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="modal fade" id="password" tabindex="-1" aria-labelledby="password" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Ubah Password</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form action="/account/updatePassword/{{ auth()->user()->pembeli->id }}" method="POST">
+                      @csrf
+                      @method('PUT')
+                  
+                      <div class="mb-3">
+                        <label for="current_password" class="form-label">Password Saat Ini</label>
+                        <input type="password" name="current_password" class="form-control" placeholder="Masukkan Password Anda saat ini" required>
+                      </div>
+                  
+                      <div class="mb-3">
+                        <label for="password" class="form-label">Password Baru</label>
+                        <input type="password" name="password" class="form-control" placeholder="Masukkan Password Baru" required>
+                      </div>
+                  
+                      <div class="mb-3">
+                        <label for="password_confirmation" class="form-label">Konfirmasi Password Baru</label>
+                        <input type="password" name="password_confirmation" class="form-control" placeholder="Konfirmasi Password Baru" required>
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-sm btn-success">Simpan</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>

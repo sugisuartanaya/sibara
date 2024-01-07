@@ -31,6 +31,8 @@ Route::get('/account/register', [RegisterController::class, 'index']);
 Route::post('/account/register', [RegisterController::class, 'store']);
 
 Route::get('/account/profile', [PembeliController::class, 'index']);
+Route::put('/account/updateNotelp/{id}', [PembeliController::class, 'updateProfileData']);
+Route::put('/account/updatePassword/{id}', [PembeliController::class, 'updatePassword']);
 Route::get('/account/penawaran', [PembeliController::class, 'showPenawaran'])->name('showPenawaran');
 
 Route::put('/account/profile/{username}', [PembeliController::class, 'updateProfile']);

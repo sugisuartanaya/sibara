@@ -254,3 +254,7 @@ transform: scale(1.2);
   max-width: 300px; /* Sesuaikan dengan lebar yang diinginkan */
   /* Tambahkan properti lain sesuai kebutuhan */
 }
+
+.toast {
+  background-color: #ffff; /* Ganti dengan warna latar belakang yang diinginkan */
+}
