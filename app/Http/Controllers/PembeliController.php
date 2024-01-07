@@ -16,10 +16,16 @@ class PembeliController extends Controller
 {
     public function index()
     {
-        //
+        $statusPenawaran = DashboardController::statusPenawaran();
+
+        return view('profile.index', [
+            'title' => 'Profile',
+            'active' => 'active',
+            'statusPenawaran' => $statusPenawaran,
+        ]);
     }
 
-    public function myProfile()
+    public function showPenawaran()
     {
         $statusPenawaran = DashboardController::statusPenawaran();
         $penawaranAvailable = isset($statusPenawaran['penawaranAvailable']) ? $statusPenawaran['penawaranAvailable'] : null;
@@ -36,7 +42,7 @@ class PembeliController extends Controller
             });
         }
 
-        return view('profile.show',[
+        return view('profile.penawaran',[
             'title' => 'Profile',
             'active' => 'active',
             'statusPenawaran' => $statusPenawaran,

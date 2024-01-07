@@ -5,27 +5,30 @@
 
 <div class="container py-4">
   <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-3">
       <div class="outer-card">
         <div class="card background-card"></div>
         <div class="card mt-1">
           <div class="card-header">
-            <strong>Informasi Pribadi</strong>
+            <strong>My Profile</strong>
           </div>
-          <div class="card-body">
-            <p class="text-secondary mb-0" >Nama</p>          
-            <h6 class="mb-3">{{ auth()->user()->pembeli->nama_pembeli }}</h6>
-            <p class="text-secondary mb-0" >Pekerjaan</p>          
-            <h6 class="mb-3">{{ auth()->user()->pembeli->pekerjaan }}</h6>
-            <p class="text-secondary mb-0" >Alamat</p>          
-            <h6 class="mb-3">{{ auth()->user()->pembeli->alamat }}</h6>
-            <p class="text-secondary mb-0" >No Telepon</p>          
-            <h6 class="mb-3">+62{{ auth()->user()->pembeli->no_telepon }}</h6>
-          </div>
+          <ul class="list-group list-group-flush">
+            <a href="/account/profile" class="text-decoration-none"><li class="list-group-item d-flex justify-content-between align-items-center">
+              Informasi Pribadi
+            </li></a>
+            <a href="/account/penawaran" class="text-decoration-none"><li class="list-group-item d-flex justify-content-between align-items-center text-success">
+              <strong>Penawaran Anda</strong>
+              <span class="badge bg-success rounded-pill">2</span>
+            </li></a>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              Transaksi Penawaran
+              <span class="badge bg-success rounded-pill">1</span>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
-    <div class="col-md-8">
+    <div class="col-md-9">
       <div class="outer-card">
         <div class="card background-card"></div>
         <div class="card mt-1">
