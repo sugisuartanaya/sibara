@@ -124,7 +124,6 @@
                     @endif
                     <div class="d-flex justify-content-between align-items-start">
                       <h5 class=""><strong>Rp. {{ number_format($daftar->harga, 0, ',', '.') }}</strong></h5>
-                      <p class="text-secondary">0 <i class="fa fa-user"></i></p>
                     </div>
                     <div class="text-center">
                       <a href="/detail/{{ $daftar->id }}"><button class="btn btn-sm btn-outline-success">Detail Barang</button></a>
