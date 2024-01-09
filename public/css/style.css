@@ -258,3 +258,8 @@ transform: scale(1.2);
 .toast {
   background-color: #ffff; /* Ganti dengan warna latar belakang yang diinginkan */
 }
+
+.btn-close-white {
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Bayangan ringan */
+}

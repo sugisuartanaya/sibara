@@ -3,6 +3,28 @@
 
 @section('content')
 
+
+<!-- Modal -->
+@if($jadwal)
+  @if($status == 'range_jadwal' || $status == 'coming_soon')
+    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="bumperModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+          <div class="modal-body" style="position: relative; padding: 0px">
+              @if($status == 'coming_soon')
+                <a href="/jadwal" style="text-decoration: none;"><img src="{{ asset('images/banner 4.jpg') }}" class="d-block w-100" alt="..."></a>
+              @elseif($status == 'range_jadwal')
+                <a href="/jadwal" style="text-decoration: none;"><img src="{{ asset('images/banner 1.jpg') }}" class="d-block w-100" alt="..."></a>
+              @endif
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" style="position: absolute; top: 0; right: 0;"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  @endif
+@endif
+
+
 <div class="container-fluid cover" style="background-image: url('{{ asset('images/bg-carousel.jpg') }}');">
   <div class="container">
 

@@ -216,4 +216,24 @@ $(function() {
         toast.show();
     });
 
+    // $(document).ready(function() {
+    //     $('#myModal').modal('show');
+    // });
+
+    $(document).ready(function () {
+        var hasSeenModal = getCookie('hasSeenModal');
+
+        if (!hasSeenModal) {
+            var myModal = new bootstrap.Modal(document.getElementById('myModal'));
+            myModal.show();
+            document.cookie = 'hasSeenModal=true; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/';
+        }
+    });
+
+    function getCookie(name) {
+        var value = "; " + document.cookie;
+        var parts = value.split("; " + name + "=");
+        if (parts.length == 2) return parts.pop().split(";").shift();
+    }
+
 });
