@@ -221,19 +221,42 @@ $(function() {
     // });
 
     $(document).ready(function () {
-        var hasSeenModal = getCookie('hasSeenModal');
-
-        if (!hasSeenModal) {
+        var lastModalTime = getCookie('lastModalTime');
+        var currentTime = Math.floor(new Date().getTime() / 1000); // Waktu saat ini dalam detik
+    
+        if (!lastModalTime || isDifferentDay(lastModalTime, currentTime)) {
             var myModal = new bootstrap.Modal(document.getElementById('myModal'));
             myModal.show();
-            document.cookie = 'hasSeenModal=true; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/';
+            setCookie('lastModalTime', currentTime, 365); // Cookie akan kedaluwarsa dalam 1 tahun
         }
     });
-
+    
+    function setCookie(name, value, days) {
+        var expires = '';
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = '; expires=' + date.toUTCString();
+        }
+        document.cookie = name + '=' + value + expires + '; path=/';
+    }
+    
     function getCookie(name) {
         var value = "; " + document.cookie;
         var parts = value.split("; " + name + "=");
         if (parts.length == 2) return parts.pop().split(";").shift();
     }
+    
+    function isDifferentDay(lastTime, currentTime) {
+        var lastDate = new Date(lastTime * 1000);
+        var currentDate = new Date(currentTime * 1000);
+    
+        return (
+            lastDate.getUTCFullYear() !== currentDate.getUTCFullYear() ||
+            lastDate.getUTCMonth() !== currentDate.getUTCMonth() ||
+            lastDate.getUTCDate() !== currentDate.getUTCDate()
+        );
+    }
+    
 
 });
