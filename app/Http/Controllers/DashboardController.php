@@ -85,12 +85,15 @@ class DashboardController extends Controller
 
             // Check if $jadwal is not null before proceeding
             if ($jadwal) {
-                $available = Penawaran::with('jadwal') 
+                $available = Penawaran::with('jadwal')
+                    ->selectRaw('MAX(harga_bid) as harga_bid, id_barang')
                     ->where('id_pembeli', $pembeli->id)
                     ->where('id_jadwal', $jadwal->id)
                     ->whereHas('jadwal', function ($query) {
                         $query->where('status', 'available');
                     })
+                    ->orderBy('harga_bid', 'desc')
+                    ->groupBy('id_barang')
                     ->get();
 
                 $expired = Penawaran::with('jadwal') 
