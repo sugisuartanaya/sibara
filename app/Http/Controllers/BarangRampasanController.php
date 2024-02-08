@@ -101,7 +101,60 @@ class BarangRampasanController extends Controller
         ]);
     }
 
-    public function show($id)
+    public function checkTypeBid($id){
+        $jadwal_terkait = Daftar_barang::where('id_barang', $id)->latest('id')->first()?->jadwal;
+        $type = $jadwal_terkait->type;
+        if ($type == 'open') {
+            return $this->openBid($id);
+        } else {
+            return $this->closeBid($id);
+        }
+    }
+
+    public function openBid($id)
+    {
+        $statusPenawaran = DashboardController::statusPenawaran();
+        
+        $barang = Barang_rampasan::find($id);
+        $fotoBarangArray = json_decode($barang->foto_barang, true);
+        $harga = Harga_wajar::where('id_barang', $id)->latest('tgl_laporan_penilaian')->first();
+        $jadwal_terkait = Daftar_barang::where('id_barang', $id)->latest('id')->first()?->jadwal;
+
+        if($jadwal_terkait){
+            $jadwal_terkait->start_date = Carbon::parse($jadwal_terkait->start_date);
+            $jadwal_terkait->end_date = Carbon::parse($jadwal_terkait->end_date);
+            
+            $today = Carbon::now();
+    
+            if ($today->lt($jadwal_terkait->start_date)) {
+                $status = 'coming_soon';
+            } elseif ($today->gte($jadwal_terkait->start_date) && $today->lte($jadwal_terkait->end_date)) {
+                $status = 'range_jadwal';
+            } elseif ($today->gt($jadwal_terkait->end_date)) {
+                $status = 'past_event';
+            } 
+        } else {
+            $status = null;
+        }
+        
+        $penawaran = Penawaran::where('id_barang', $id)
+        ->orderBy('harga_bid', 'desc')
+        ->paginate(3);
+
+        return view('barangRampasan.openBid', [
+            'title' => 'Barang',
+            'active' => 'active',
+            'data_barang' => $barang,
+            'foto_barang' => $fotoBarangArray,
+            'harga' => $harga,
+            'status' => $status,
+            'jadwal' => optional($jadwal_terkait),
+            'tawaran' => $penawaran,
+            'statusPenawaran' => $statusPenawaran
+        ]);
+    }
+
+    public function closeBid($id)
     {
         $statusPenawaran = DashboardController::statusPenawaran();
         
@@ -137,7 +190,7 @@ class BarangRampasanController extends Controller
             $penawaran = null;
         }
 
-        return view('barangRampasan.show', [
+        return view('barangRampasan.closeBid', [
             'title' => 'Barang',
             'active' => 'active',
             'data_barang' => $barang,

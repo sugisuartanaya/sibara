@@ -76,35 +76,6 @@
       <h5>Deskripsi: </h5>
       <p style="font-size: 11pt">{{ $data_barang->deskripsi }}</p>
 
-      {{-- @if($data_penawar->isNotEmpty())
-        <h5>Penawar Tertinggi: </h5>
-        <table class="table table-borderless">
-          <thead>
-            <tr>
-              <th scope="col">No</th>
-              <th scope="col">Nama Penawar</th>
-              <th scope="col">Harga</th>
-              <th scope="col">Waktu</th>
-            </tr>
-          </thead>
-          <tbody>
-            @foreach ($data_penawar as $index => $penawaran)
-              <tr class="{{ $loop->first && $data_penawar->currentPage() == 1 ? 'table-active' : '' }}">
-                <td>{{ ($data_penawar->currentPage() - 1) * $data_penawar->perPage() + $loop->iteration }}</td>
-                <td>{{ $penawaran->pembeli->nama_pembeli }}</td>
-                <td>Rp. {{ number_format($penawaran->harga_bid, 0, ',', '.') }}</td>
-                <td>{{ \Carbon\Carbon::parse($penawaran->tanggal)->format('j M Y \j\a\m H:i') }}</td>
-              </tr>
-            @endforeach
-          </tbody>
-        </table>
-      @else
-        <h5>Urutan Penawar Tertinggi: </h5>
-        <p style="font-size: 11pt">Belum terdapat penawar</p>
-      @endif --}}
-
-      {{-- {{ $data_penawar->links('pagination::bootstrap-5') }} --}}
-
       <h5 class="mb-2 mt-3 align-self-center">Bagikan:&nbsp; </h5> 
       @php
         $itemId = urlencode($data_barang->id);

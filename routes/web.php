@@ -41,7 +41,7 @@ Route::get('/update-data/{username}', [PembeliController::class, 'updateData']);
 Route::get('/barang', [BarangRampasanController::class, 'index']);
 Route::get('/filter', [BarangRampasanController::class, 'filter']);
 
-Route::get('/detail/{id}', [BarangRampasanController::class, 'show']);
+Route::get('/detail/{id}', [BarangRampasanController::class, 'checkTypeBid']);
 
 Route::post('/penawaran', [PenawaranController::class, 'store']);
 Route::put('/penawaran/{id}', [PenawaranController::class, 'update']);
