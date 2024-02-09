@@ -15,8 +15,8 @@ return new class extends Migration
             $table->foreignId('id_barang');
             $table->foreignId('id_jadwal');
             $table->integer('harga_bid');
-            $table->dateTime('tanggal');
             $table->enum('status', ['pending', 'wanprestasi', 'kalah', 'menang'])->default('pending');
+            $table->timestamps();
         });
         
     }

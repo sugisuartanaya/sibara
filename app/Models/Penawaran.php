@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Penawaran extends Model
 {
     use HasFactory;
-    public $timestamps = false;
 
     public function pembeli()
     {
