@@ -112,7 +112,7 @@
                 <td>{{ ($tawaran->currentPage() - 1) * $tawaran->perPage() + $loop->iteration }}</td>
                 <td>{{ $penawaran->pembeli->nama_pembeli }}</td>
                 <td>Rp. {{ number_format($penawaran->harga_bid, 0, ',', '.') }}</td>
-                <td>{{ \Carbon\Carbon::parse($penawaran->tanggal)->format('j M Y \j\a\m H:i') }}</td>
+                <td>{{ \Carbon\Carbon::parse($penawaran->created_at)->format('j M Y \j\a\m H:i') }}</td>
               </tr>
             @endforeach
           </tbody>
