@@ -85,7 +85,7 @@ class DashboardController extends Controller
 
             // Check if $jadwal is not null before proceeding
             if ($jadwal) {
-                $available = Penawaran::with('jadwal')
+                $productCount = Penawaran::with('jadwal')
                     ->selectRaw('MAX(harga_bid) as harga_bid, id_barang, status')
                     ->where('id_pembeli', $pembeli->id)
                     ->where('id_jadwal', $jadwal->id)
@@ -96,20 +96,28 @@ class DashboardController extends Controller
                     ->groupBy('id_barang', 'status')
                     ->get();
 
+                $available = Penawaran::with('jadwal')
+                    ->where('id_pembeli', $pembeli->id)
+                    ->where('id_jadwal', $jadwal->id)
+                    ->whereHas('jadwal', function ($query) {
+                        $query->where('status', 'available');
+                    })
+                    ->orderBy('updated_at', 'desc')
+                    ->paginate(5);
+
                 $expired = Penawaran::with('jadwal') 
-                    ->selectRaw('MAX(harga_bid) as harga_bid, id_barang, status')
                     ->where('id_pembeli', $pembeli->id)
                     ->whereHas('jadwal', function ($query) {
                         $query->where('status', 'expired');
                     })
-                    ->orderBy('id', 'desc')
-                    ->groupBy('id_barang', 'status')
+                    ->orderBy('updated_at', 'desc')
                     ->paginate(5);
 
+                $productCount = $productCount->isEmpty() ? null : $productCount;
                 $penawaranAvailable = $available->isEmpty() ? null : $available;
                 $penawaranExpired = $expired->isEmpty() ? null : $expired;
 
-                return ['penawaranAvailable' => $penawaranAvailable, 'penawaranExpired' => $penawaranExpired];
+                return ['productCount' => $productCount, 'penawaranExpired' => $penawaranExpired, 'penawaranAvailable' => $penawaranAvailable];
             } 
         }
 

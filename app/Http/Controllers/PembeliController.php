@@ -62,20 +62,7 @@ class PembeliController extends Controller
         $statusPenawaran = DashboardController::statusPenawaran();
         $penawaranAvailable = isset($statusPenawaran['penawaranAvailable']) ? $statusPenawaran['penawaranAvailable'] : null;
         $penawaranExpired = isset($statusPenawaran['penawaranExpired']) ? $statusPenawaran['penawaranExpired'] : null;
-        
-        if($penawaranExpired){
-            $penawaranExpired->each(function ($penawaran) {
-                $penawaran->tanggal = Carbon::parse($penawaran->tanggal)->format('j M Y \j\a\m H:i');
-            });
-        }
-        if($penawaranAvailable){
-            $penawaranAvailable->each(function ($penawaran) {
-                $penawaran->tanggal = Carbon::parse($penawaran->tanggal)->format('j M Y \j\a\m H:i');
-            });
-        }
-
-        // dd($statusPenawaran);
-
+     
         return view('profile.penawaran',[
             'title' => 'Profile',
             'active' => 'active',

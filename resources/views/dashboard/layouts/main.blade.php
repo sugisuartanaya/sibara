@@ -24,23 +24,23 @@
           <ul class="nav">
             @auth
               @php
-                $penawaranAvailable = isset($statusPenawaran['penawaranAvailable']) ? $statusPenawaran['penawaranAvailable'] : null;
+                $productCount = isset($statusPenawaran['productCount']) ? $statusPenawaran['productCount'] : null;
               @endphp
               {{-- cart icon --}}
-              @if ($penawaranAvailable)
-                @if($penawaranAvailable->isNotEmpty())
+              @if ($productCount)
+                @if($productCount->isNotEmpty())
                   <li class="nav-item special-nav-item">
                     <a href="" class="nav-link position-relative">
                       <i class="fa-solid fa-cart-shopping"></i>
                       <span style="position: absolute; top: 0px; left: 80%; transform: translateX(-50%);" class="badge rounded-pill bg-danger">
-                        {{ $penawaranAvailable->count() }}
+                        {{ $productCount->count() }}
                       </span>
                     </a>
                     <div class="dropdown-content">
                       <div class="card">
                         <ul class="list-group list-group-flush">
                           <li class="list-group-item" style="font-weight: bold">Penawaran anda:</li>
-                          @foreach($penawaranAvailable as $penawaran)
+                          @foreach($productCount as $penawaran)
                             <a href="/detail/{{ $penawaran->id_barang }}" class="text-decoration-none text-dark"><li class="list-group-item" style="font-size: 10pt">{{ $penawaran->barang_rampasan->nama_barang }}</li></a>
                           @endforeach
                         </ul>

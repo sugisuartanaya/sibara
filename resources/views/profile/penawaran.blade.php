@@ -54,7 +54,7 @@
                     <tr>
                       <th scope="col">Tgl Penawaran</th>
                       <th scope="col" class="w-50 text-break">Nama Barang</th>
-                      <th scope="col">Penawaran Tertinggi</th>
+                      <th scope="col">Penawaran</th>
                       <th scope="col">Status</th>
                     </tr>
                   </thead>
@@ -62,7 +62,7 @@
                     @if($penawaranAvailable)
                       @foreach ($penawaranAvailable as $index => $penawaran)
                         <tr>
-                          <td>{{ $penawaran->tanggal }}</td>
+                          <td>{{ \Carbon\Carbon::parse($penawaran->updated_at)->format('j F Y \j\a\m H:i') }}</td>
                           <td class="w-50 text-break">{{ $penawaran->barang_rampasan->nama_barang }}</td>
                           <td>Rp. {{ number_format($penawaran->harga_bid, 0, ',', '.') }}</td>
                           <td><span class="badge text-bg-primary">{{ $penawaran->status }}</span></td>
@@ -71,6 +71,11 @@
                     @endif
                   </tbody>
                 </table>
+                <div>
+                  @if ($penawaranAvailable)
+                    {{ $penawaranAvailable->links('pagination::bootstrap-5') }}
+                  @endif
+                </div>
               </div>
 
               <div class="tab-pane fade" id="history">
@@ -88,7 +93,7 @@
                     @if($penawaranExpired)
                       @foreach ($penawaranExpired as $index => $riwayat)
                         <tr>
-                          <td>{{ $riwayat->tanggal }}</td>
+                          <td>{{ \Carbon\Carbon::parse($riwayat->updated_at)->format('j F Y \j\a\m H:i') }}</td>
                           <td class="w-50 text-break">{{ $riwayat->barang_rampasan->nama_barang }}</td>
                           <td>Rp. {{ number_format($riwayat->harga_bid, 0, ',', '.') }}</td>
                           @if($riwayat->status == 'menang')
