@@ -1,0 +1,114 @@
+@extends('dashboard.layouts.main')
+
+
+@section('content')
+<div class="container py-4">
+  <div class="row">
+    <div class="col-md-12 d-flex align-items-center">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/" class="text-decoration-none text-secondary">Beranda</a></li>
+          <li class="breadcrumb-item"><a href="/barang" class="text-decoration-none text-secondary">Barang Rampasan</a></li>
+          <li class="breadcrumb-item" aria-current="page">Detail Barang</li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+
+  @if(session('message'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      {{ session('message')['text'] }}
+        @if(session('message')['url'])
+          <a href="{{ session('message')['url'] }}">Lihat semua penawaran</a>
+        @endif
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  @endif
+
+  <div class="row">
+    <div class="col-md-5">
+      <div id="produkCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="magnifying-glass"></div>
+        <div class="carousel-inner">
+          @foreach($foto_barang as $index => $foto)
+            <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
+                {{-- <img class="d-block w-100" src="{{ asset($foto) }}"> --}}
+                <img class="d-block w-100" src="http://admin.sibara.test{{ $foto }}" alt="Foto {{ $index + 1 }}">
+            </div>
+          @endforeach
+        </div>
+      </div>
+      <div class="image-preview" id="thumbnailCarousel">
+        @foreach ($foto_barang as $index => $foto)
+          {{-- <img src="{{ asset($foto) }}" class="thumbnail" data-target="#produkCarousel" data-slide-to="{{ $index }}" alt="Thumbnail {{ $index + 1 }}"> --}}
+          <img src="http://admin.sibara.test{{ $foto }}" class="thumbnail" data-bs-target="#produkCarousel" data-bs-slide-to="{{ $index }}" alt="Thumbnail {{ $index + 1 }}">
+        @endforeach
+      </div>
+    </div>
+
+    <div class="col-md-4">
+
+      <h5 style="font-weight: bold">{{ $data_barang->nama_barang}}</h4>
+
+      @if ($data_barang->harga_wajar->count() > 1)
+        <div class="d-flex align-item-center">
+          <p class="text-decoration-line-through text-secondary" style="margin-bottom: 0px;">
+            Rp. {{ number_format($data_barang->harga_wajar->first()->harga, 0, ',', '.') }}</p>&nbsp;
+
+          {{-- Menghitung persentase pengurangan --}}
+              @php
+              $persentase_pengurangan = (($data_barang->harga_wajar->first()->harga - $data_barang->harga_wajar->last()->harga) 
+              / $data_barang->harga_wajar->first()->harga) * 100;
+            @endphp
+          {{-- ... --}}
+
+          <span class="badge text-bg-danger" style="margin-bottom: 0px; font-weight: bold; display: flex; align-items: center; justify-content: center;">
+            {{ number_format($persentase_pengurangan) }}% </span>
+        </div>
+      @endif
+
+      <h3><strong>Rp. {{ number_format($data_barang->harga_wajar->last()->harga, 0, ',', '.') }}</strong></h3>
+      <hr class="mb-1">
+      
+      <h5>Deskripsi: </h5>
+      <p style="font-size: 11pt">{{ $data_barang->deskripsi }}</p>
+
+      <h5 class="mb-2 mt-3 align-self-center">Bagikan:&nbsp; </h5> 
+      @php
+        $itemId = urlencode($data_barang->id);
+        $itemName = urlencode($data_barang->nama_barang);
+        $itemDescription = urlencode($data_barang->deskripsi);
+        $itemImage = url("http://admin.sibara.test{$data_barang->foto_thumbnail}");
+      @endphp
+      <button class="btn btn-sm btn-primary mb-3" id="facebook-share-btn" 
+        data-item-id="{{ $itemId }}" 
+        data-item-name="{{ $itemName }}" 
+        data-item-description="{{ $itemDescription }}" 
+        data-item-image="{{ $itemImage }}">
+        <i class="fa-brands fa-facebook"></i>&nbsp;Facebook
+      </button>&nbsp;
+
+      <a href="https://api.whatsapp.com/send?text=Lelang%20{{ $data_barang->nama_barang }}%20%7C%20Sibara%20http%3A%2F%2Fsibara.test%2Fdetail%2F{{ $data_barang->id }}" class="btn btn-sm btn-success mb-3">
+        <i class="fab fa-whatsapp"></i>&nbsp;WhatsApp
+      </a>
+
+    </div>
+
+    <div class="col-md-3">
+      <div class="card">
+        <div class="card-body">
+          <h5 style="font-weight: bold; margin-bottom: 2px">Waktu Server</h5>
+          <p class="text-secondary mb-0">
+            <i class="fa fa-clock-o"></i>
+            <span id="currentDate"></span>
+          </p>
+          <p class="text-secondary mb-0" id="currentTime"></p>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+  
+</div>
+
+@endsection
