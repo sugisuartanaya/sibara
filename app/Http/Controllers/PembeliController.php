@@ -74,6 +74,8 @@ class PembeliController extends Controller
             });
         }
 
+        // dd($statusPenawaran);
+
         return view('profile.penawaran',[
             'title' => 'Profile',
             'active' => 'active',

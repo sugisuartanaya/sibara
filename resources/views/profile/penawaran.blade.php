@@ -54,7 +54,7 @@
                     <tr>
                       <th scope="col">Tgl Penawaran</th>
                       <th scope="col" class="w-50 text-break">Nama Barang</th>
-                      <th scope="col">Penawaran</th>
+                      <th scope="col">Penawaran Tertinggi</th>
                       <th scope="col">Status</th>
                     </tr>
                   </thead>
