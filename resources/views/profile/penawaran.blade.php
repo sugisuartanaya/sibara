@@ -62,7 +62,7 @@
                     @if($penawaranAvailable)
                       @foreach ($penawaranAvailable as $index => $penawaran)
                         <tr>
-                          <td>{{ \Carbon\Carbon::parse($penawaran->updated_at)->format('j F Y \j\a\m H:i') }}</td>
+                          <td>{{ \Carbon\Carbon::parse($penawaran->created_at)->format('j F Y \j\a\m H:i') }}</td>
                           <td class="w-50 text-break">{{ $penawaran->barang_rampasan->nama_barang }}</td>
                           <td>Rp. {{ number_format($penawaran->harga_bid, 0, ',', '.') }}</td>
                           <td><span class="badge text-bg-primary">{{ $penawaran->status }}</span></td>
@@ -93,7 +93,7 @@
                     @if($penawaranExpired)
                       @foreach ($penawaranExpired as $index => $riwayat)
                         <tr>
-                          <td>{{ \Carbon\Carbon::parse($riwayat->updated_at)->format('j F Y \j\a\m H:i') }}</td>
+                          <td>{{ \Carbon\Carbon::parse($riwayat->created_at)->format('j F Y \j\a\m H:i') }}</td>
                           <td class="w-50 text-break">{{ $riwayat->barang_rampasan->nama_barang }}</td>
                           <td>Rp. {{ number_format($riwayat->harga_bid, 0, ',', '.') }}</td>
                           @if($riwayat->status == 'menang')

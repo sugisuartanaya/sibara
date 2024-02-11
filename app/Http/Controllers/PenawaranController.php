@@ -48,7 +48,7 @@ class PenawaranController extends Controller
     {
         $penawaran = Penawaran::find($id);
 
-        // $today = Carbon::now();
+        $today = Carbon::now();
 
         $bid = str_replace('.', '', $request->input('harga_bid'));
         $harga_bid = intval($bid);
@@ -65,7 +65,7 @@ class PenawaranController extends Controller
         )->validate();
 
         $penawaran->harga_bid = $harga_bid;
-        // $penawaran->tanggal = $today;
+        $penawaran->created_at = $today;
         $penawaran->save();
         return back()->with('message', [
             'text' => 'Berhasil ubah penawaran.',
