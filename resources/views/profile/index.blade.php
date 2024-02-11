@@ -76,13 +76,19 @@
             <a href="/account/penawaran" class="text-decoration-none"><li class="list-group-item d-flex justify-content-between align-items-center">
               Penawaran Anda
               @if ($penawaranAvailable)
-                <span class="badge bg-success rounded-pill">{{ $penawaranAvailable->count() }}</span>
+                <span class="badge bg-success rounded-pill" style="position: absolute; top: 50%; transform: translateY(-50%); right: 10px;">{{ $penawaranAvailable->count() }}</span>
               @endif
             </li></a>
-            <a href="/pembayaran" class="text-decoration-none"><li class="list-group-item d-flex justify-content-between align-items-center">
-              Transaksi
-              <span class="badge bg-success rounded-pill">1</span>
-            </li></a>
+            <li class="list-group-item dropdown" style="position: relative;">
+              <a class="dropdown-toggle text-decoration-none text-dark" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                Transaksi
+                <span class="badge bg-success rounded-pill" style="position: absolute; top: 50%; transform: translateY(-50%); right: 10px;">1</span>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink">
+                <li><a class="dropdown-item" href="#">Menunggu Pembayaran</a></li>
+                <li><a class="dropdown-item" href="#">Transaksi Anda</a></li>
+              </ul>
+            </li>
           </ul>
         </div>
       </div>

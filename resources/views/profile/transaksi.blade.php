@@ -20,26 +20,29 @@
 
 
           <ul class="list-group list-group-flush">
-            <a href="/account/profile" class="text-decoration-none"><li class="list-group-item d-flex justify-content-between align-items-center">
-              Informasi Pribadi
-            </li></a>
-            <a href="/account/penawaran" class="text-decoration-none"><li class="list-group-item d-flex justify-content-between align-items-center">
-              Penawaran Anda
-              @if ($penawaranAvailable)
-                <span class="badge bg-success rounded-pill">{{ $penawaranAvailable->count() }}</span>
-              @endif
-            </li></a>
-            <li class="list-group-item dropdown ">
+            <a href="/account/profile" class="text-decoration-none">
+              <li class="list-group-item" style="position: relative;">
+                Informasi Pribadi
+              </li>
+            </a>
+            <a href="/account/penawaran" class="text-decoration-none">
+              <li class="list-group-item" style="position: relative;">
+                Penawaran Anda
+                @if ($penawaranAvailable)
+                  <span class="badge bg-success rounded-pill" style="position: absolute; top: 50%; transform: translateY(-50%); right: 10px;">{{ $penawaranAvailable->count() }}</span>
+                @endif
+              </li>
+            </a>
+            <li class="list-group-item dropdown" style="position: relative;">
               <a class="dropdown-toggle text-decoration-none text-success" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                 <strong>Transaksi</strong>
-                <span class="badge bg-success rounded-pill">1</span>
+                <span class="badge bg-success rounded-pill" style="position: absolute; top: 50%; transform: translateY(-50%); right: 10px;">1</span>
               </a>
               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink">
-                <li><a class="dropdown-item" href="#">Menunggu Pembayaran</a></li>
+                <li><a class="dropdown-item active success" style="background-color: #0d8c46" href="#">Menunggu Pembayaran</a></li>
                 <li><a class="dropdown-item" href="#">Transaksi Anda</a></li>
               </ul>
             </li>
-            
           </ul>
         </div>
       </div>
@@ -51,7 +54,7 @@
         <div class="card mt-1">
           <div class="card-body">
             <h5><strong>Pembayaran Lelang</strong></h5>
-            <p>Berikut adalah list pembayaran lelang yang anda menangkan</p>
+            <p>Berikut adalah daftar transaksi yang belum anda selesaikan.</p>
             <table class="table table-striped table-bordered datatable">
               <thead>
                 <tr>
