@@ -22,10 +22,10 @@
                 <span class="badge bg-success rounded-pill">{{ $penawaranAvailable->count() }}</span>
               @endif
             </li></a>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              Transaksi Penawaran
+            <a href="/pembayaran" class="text-decoration-none"><li class="list-group-item d-flex justify-content-between align-items-center">
+              Transaksi
               <span class="badge bg-success rounded-pill">1</span>
-            </li>
+            </li></a>
           </ul>
         </div>
       </div>

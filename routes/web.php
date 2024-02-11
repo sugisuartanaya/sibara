@@ -9,6 +9,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\PenawaranController;
 use App\Http\Controllers\PengumumanController;
+use App\Http\Controllers\TransaksiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,3 +50,5 @@ Route::put('/penawaran/{id}', [PenawaranController::class, 'update']);
 Route::get('/jadwal', [JadwalController::class, 'index']);
 
 Route::get('/pengumuman', [PengumumanController::class, 'index']);
+
+Route::get('/pembayaran', [TransaksiController::class, 'index']);

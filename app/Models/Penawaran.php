@@ -24,6 +24,10 @@ class Penawaran extends Model
         return $this->belongsTo(Jadwal::class, 'id_jadwal');
     }
 
+    public function transaksi(){
+        return $this->hasMany(Transaksi::class, 'id_penawaran');
+    }
+
     protected $fillable = [
         'id_barang',
         'id_pembeli',

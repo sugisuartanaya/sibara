@@ -8,4 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Transaksi extends Model
 {
     use HasFactory;
+    public $timestamps = false;
+
+    public function pembeli()
+    {
+        return $this->belongsTo(Pembeli::class, 'id_pembeli');
+    }
+
+    public function penawaran()
+    {
+        return $this->belongsTo(Penawaran::class, 'id_penawaran');
+    }
 }

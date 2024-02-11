@@ -33,4 +33,8 @@ class Pembeli extends Model
     public function penawaran(){
         return $this->hasMany(Penawaran::class, 'id_pembeli');
     }
+    
+    public function transaksi(){
+        return $this->hasMany(Penawaran::class, 'id_pembeli');
+    }
 }
