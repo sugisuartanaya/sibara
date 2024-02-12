@@ -28,8 +28,8 @@
                 <span class="badge bg-success rounded-pill" style="position: absolute; top: 50%; transform: translateY(-50%); right: 10px;">1</span>
               </a>
               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink">
-                <li><a class="dropdown-item" href="#">Menunggu Pembayaran</a></li>
-                <li><a class="dropdown-item" href="#">Transaksi Anda</a></li>
+                <li><a class="dropdown-item" href="/pembayaran">Menunggu Pembayaran</a></li>
+                <li><a class="dropdown-item" href="/transaksi">Transaksi Anda</a></li>
               </ul>
             </li>
           </ul>

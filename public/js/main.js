@@ -65,6 +65,19 @@ $(function() {
     });
 
     $(document).ready(function() {
+        var endDate = document.getElementById("batas").getAttribute("dataEndDate");
+        var myCountDown = new ysCountDown(endDate, function (remaining, finished) {
+            console.log(myCountDown);
+            if (finished) {
+                document.getElementById("batas").style.display = "block";
+            } else {
+                document.getElementById("countdownWinner").innerHTML = remaining.hours + "h : " + remaining.minutes + "m : " + remaining.seconds + "s";
+            }
+          
+          });
+    });
+
+    $(document).ready(function() {
         $('#select-urutan').change(function() {
             $('#filter').submit();
         });

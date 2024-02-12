@@ -51,4 +51,6 @@ Route::get('/jadwal', [JadwalController::class, 'index']);
 
 Route::get('/pengumuman', [PengumumanController::class, 'index']);
 
-Route::get('/pembayaran', [TransaksiController::class, 'index']);
+Route::get('/pembayaran', [TransaksiController::class, 'payment']);
+Route::get('/transaksi', [TransaksiController::class, 'transaction']);
+Route::get('/pembayaran/{id}', [TransaksiController::class, 'invoice']);
