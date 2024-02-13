@@ -72,9 +72,18 @@ class TransaksiController extends Controller
     }
 
     
-    public function create()
+    public function invoice($id)
     {
-        //
+        $statusPenawaran = DashboardController::statusPenawaran();
+
+        $penawaran = Penawaran::where('id', $id)->first();
+
+        return view('profile.invoice',[
+            'title' => 'Profile',
+            'active' => 'active',
+            'statusPenawaran' => $statusPenawaran,
+            'penawaran' => $penawaran
+        ]);
     }
 
     

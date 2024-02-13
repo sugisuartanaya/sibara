@@ -25,7 +25,7 @@ use App\Http\Controllers\TransaksiController;
 Route::get('/', [DashboardController::class, 'index']);
 
 Route::get('/account/login', [LoginController::class, 'index']);
-Route::post('/account/login', [LoginController::class, 'authenticate']);
+Route::post('/account/login', [LoginController::class, 'authenticate'])->name('login')->middleware('guest');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::get('/account/register', [RegisterController::class, 'index']);
@@ -51,6 +51,6 @@ Route::get('/jadwal', [JadwalController::class, 'index']);
 
 Route::get('/pengumuman', [PengumumanController::class, 'index']);
 
-Route::get('/pembayaran', [TransaksiController::class, 'payment']);
-Route::get('/transaksi', [TransaksiController::class, 'transaction']);
-Route::get('/pembayaran/{id}', [TransaksiController::class, 'invoice']);
+Route::get('/pembayaran', [TransaksiController::class, 'payment'])->middleware('auth');
+Route::get('/transaksi', [TransaksiController::class, 'transaction'])->middleware('auth');
+Route::get('/pembayaran/{id}', [TransaksiController::class, 'invoice'])->middleware('auth');

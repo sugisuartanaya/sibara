@@ -270,6 +270,5 @@ $(function() {
             lastDate.getUTCDate() !== currentDate.getUTCDate()
         );
     }
-    
 
 });
