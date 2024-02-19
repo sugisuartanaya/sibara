@@ -6,8 +6,8 @@ use Carbon\Carbon;
 use App\Models\Pembeli;
 use App\Models\Penawaran;
 use App\Models\Transaksi;
-use Carbon\Doctrine\CarbonDoctrineType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class TransaksiController extends Controller
 {
@@ -76,14 +76,47 @@ class TransaksiController extends Controller
     {
         $statusPenawaran = DashboardController::statusPenawaran();
 
-        $penawaran = Penawaran::where('id', $id)->first();
+        $user = auth()->id();
+        $pembeli = Pembeli::where('user_id', $user)->first();
+
+        $penawaran = Penawaran::where('id_pembeli', $pembeli->id)
+                    ->where('id', $id)
+                    ->first();
+        $countdownWinners = Carbon::parse($penawaran->updated_at)->addHours(24)->toIso8601String();
+        $today = Carbon::now()->toIso8601String();
+
+        if ($countdownWinners > $today) {
+            $expired = false;
+        } else {
+            $expired = true;
+        }
 
         return view('profile.invoice',[
             'title' => 'Profile',
             'active' => 'active',
             'statusPenawaran' => $statusPenawaran,
-            'penawaran' => $penawaran
+            'penawaran' => $penawaran,
+            'countdownWinner' => $countdownWinners,
+            'expired' => $expired
         ]);
+    }
+
+    public function upload(Request $request)
+    {
+        $image = $request->file('foto_bukti');
+        $path = $image->storeAs('public/photos/transaksi', 'transaksi_'.$request->nama_pembeli . time() . '.' . $image->getClientOriginalExtension());
+        $url_transaksi = Storage::url($path);
+
+        $today = Carbon::now();
+
+        Transaksi::create([
+            'id_pembeli' => $request->input('id_pembeli'),
+            'id_penawaran' => $request->input('id_penawaran'),
+            'tanggal' => $today,
+            'foto_bukti' => $url_transaksi,
+        ]);
+
+        return back();
     }
 
     

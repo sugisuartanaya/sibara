@@ -19,4 +19,12 @@ class Transaksi extends Model
     {
         return $this->belongsTo(Penawaran::class, 'id_penawaran');
     }
+
+    protected $fillable = [
+        'id_pembeli',
+        'id_penawaran',
+        'tanggal',
+        'foto_bukti',
+        'status'
+    ];
 }

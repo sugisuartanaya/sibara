@@ -53,4 +53,5 @@ Route::get('/pengumuman', [PengumumanController::class, 'index']);
 
 Route::get('/pembayaran', [TransaksiController::class, 'payment'])->middleware('auth');
 Route::get('/transaksi', [TransaksiController::class, 'transaction'])->middleware('auth');
-Route::get('/pembayaran/{id}', [TransaksiController::class, 'invoice'])->middleware('auth');
+Route::get('/invoice/{id}', [TransaksiController::class, 'invoice'])->middleware('auth');
+Route::post('/pembayaran/{id}', [TransaksiController::class, 'upload'])->middleware('auth');

@@ -79,7 +79,7 @@
                       <div class="col-md-4">
                         <p>Bayar sebelum: <strong id="countdownWinner" class="text-danger"></strong></p>
                         <p id="batas" dataEndDate= {{ $countdownWinner }}></p>
-                        <a href="/pembayaran/{{ $pay->id }}"><button class="btn btn-success">Bayar Sekarang</button></a>
+                        <a href="/invoice/{{ $pay->id }}"><button class="btn btn-success">Bayar Sekarang</button></a>
                       </div>
                     </div>
                   @endforeach
