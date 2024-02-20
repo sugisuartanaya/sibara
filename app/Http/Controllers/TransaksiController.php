@@ -7,6 +7,7 @@ use App\Models\Pembeli;
 use App\Models\Penawaran;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
 class TransaksiController extends Controller
@@ -54,20 +55,26 @@ class TransaksiController extends Controller
 
         $user = auth()->id();
         $pembeli = Pembeli::where('user_id', $user)->first();
+        
+        $countdownWinners = [];
+        $transaksi = Transaksi::where('id_pembeli', $pembeli->id)->get();
+        
+        // dd($transaksi);
 
-        $transaksi = Transaksi::with('penawaran')
-                    ->where('id_pembeli', $pembeli->id)
-                    ->whereHas('penawaran', function ($query) {
-                        $query->where('status', 'menang')
-                        ->orderBy('updated_at', 'asc');
-                    })
-                    ->get();
+        foreach ($transaksi as $trans) {
+            $id_penawaran = $trans->id_penawaran;
+            $penawaran = Penawaran::find($id_penawaran);
+            $countdownWinners[] = Carbon::parse($penawaran->updated_at)->addHours(24)->toIso8601String();
+        }
+
+        $countdownWinner = !empty($countdownWinners) ? $countdownWinners[0] : null;
 
         return view('profile.transaksi',[
             'title' => 'Profile',
             'active' => 'active',
             'statusPenawaran' => $statusPenawaran,
-            'transaksi' => $transaksi
+            'transaksi' => $transaksi,
+            'countdownWinner' => $countdownWinner,
         ]);
     }
 
@@ -115,8 +122,9 @@ class TransaksiController extends Controller
             'tanggal' => $today,
             'foto_bukti' => $url_transaksi,
         ]);
-
-        return back();
+        
+        Session::flash('success', 'Transaksi anda sedang dicheck oleh admin');
+        return redirect('transaksi');
     }
 
     
