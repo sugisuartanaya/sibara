@@ -23,9 +23,10 @@ class TransaksiController extends Controller
         $countdownWinners = [];
         $payment = Penawaran::where('id_pembeli', $pembeli->id)
                     ->where('status', 'menang')
+                    ->whereDoesntHave('transaksi')
                     ->orderBy('updated_at', 'asc')
                     ->get();
-
+       
         foreach ($payment as $pay) {
             if ($pay->transaksi->isEmpty()) {
                 $countdownWinners[] = Carbon::parse($pay->updated_at)->addHours(24)->toIso8601String();
@@ -42,6 +43,7 @@ class TransaksiController extends Controller
         } else {
             $expired = true;
         }
+
 
         return view('profile.pembayaran',[
             'title' => 'Profile',
