@@ -114,6 +114,35 @@ class TransaksiController extends Controller
         ]);
     }
 
+    public function revisi($id)
+    {
+        $statusPenawaran = DashboardController::statusPenawaran();
+
+        $user = auth()->id();
+        $pembeli = Pembeli::where('user_id', $user)->first();
+
+        $penawaran = Penawaran::where('id_pembeli', $pembeli->id)
+                    ->where('id', $id)
+                    ->first();
+        $countdownWinners = Carbon::parse($penawaran->updated_at)->addHours(24)->toIso8601String();
+        $today = Carbon::now()->toIso8601String();
+
+        if ($countdownWinners > $today) {
+            $expired = false;
+        } else {
+            $expired = true;
+        }
+
+        return view('profile.revisi',[
+            'title' => 'Profile',
+            'active' => 'active',
+            'statusPenawaran' => $statusPenawaran,
+            'penawaran' => $penawaran,
+            'countdownWinner' => $countdownWinners,
+            'expired' => $expired
+        ]);
+    }
+
     public function upload(Request $request)
     {
         $image = $request->file('foto_bukti');
@@ -128,6 +157,24 @@ class TransaksiController extends Controller
             'tanggal' => $today,
             'foto_bukti' => $url_transaksi,
         ]);
+        
+        Session::flash('success', 'Transaksi anda sedang dicheck oleh admin');
+        return redirect('transaksi');
+    }
+
+    public function uploadRevisi(Request $request, $id)
+    {
+        $image = $request->file('foto_bukti');
+        $path = $image->storeAs('public/photos/transaksi', 'transaksi_'.$request->nama_pembeli . time() . '.' . $image->getClientOriginalExtension());
+        $url_transaksi = Storage::url($path);
+
+        $today = Carbon::now();
+
+        $transaksi = Transaksi::where('id_penawaran', $id)->first();
+        $transaksi->tanggal = $today;
+        $transaksi->status = 'review';
+        $transaksi->foto_bukti = $url_transaksi;
+        $transaksi->save();
         
         Session::flash('success', 'Transaksi anda sedang dicheck oleh admin');
         return redirect('transaksi');

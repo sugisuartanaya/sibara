@@ -74,35 +74,37 @@
           <div class="card-body">
             <h5 class="text-secondary">Daftar Transaksi</h5>
             <br>
-            <div class="card">
-              <div class="card-body" style="box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
-                @foreach ($transaksi as $index => $pembelian)
-                  <div class="row">
-                    <div class="col-md-8">
-                      <p class=""><strong>Pembayaran</strong> {{ \Carbon\Carbon::parse($pembelian->tanggal)->format('j M Y \j\a\m H:i') }}
-                        @if($pembelian->status == 'review')
-                          <span class="badge text-bg-secondary">Menunggu Konfirmasi</span>
-                        @elseif ($pembelian->status == 'data_salah')
-                          <span class="badge text-bg-danger">Transaksi Salah</span>
-                        @else 
-                          <span class="badge text-bg-success">Sukses</span>
+              @foreach ($transaksi as $index => $pembelian)
+                <div class="card">
+                  <div class="card-body" style="box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                    <div class="row">
+                      <div class="col-md-8">
+                        <p class=""><strong>Pembayaran</strong> {{ \Carbon\Carbon::parse($pembelian->tanggal)->format('j M Y \j\a\m H:i') }}
+                          @if($pembelian->status == 'review')
+                            <span class="badge text-bg-secondary">Menunggu Konfirmasi</span>
+                          @elseif ($pembelian->status == 'data_salah')
+                            <span class="badge text-bg-danger">Transaksi Salah</span>
+                          @else 
+                            <span class="badge text-bg-success">Sukses</span>
+                          @endif
+                        </p>
+                        <p>{{ $pembelian->penawaran->barang_rampasan->nama_barang }}</p>
+                        
+                      </div>
+                      <div class="col-md-4">
+                        @if ($pembelian->status == 'data_salah')
+                          <p>Bayar sebelum: <strong id="countdownWinner" class="text-danger"></strong></p>
+                          <p id="batas" dataEndDate= {{ $countdownWinner }}></p>
+                          <a href="/revisi/{{ $pembelian->penawaran->id }}"><button class="btn btn-success">Upload Ulang</button></a>
                         @endif
-                      </p>
-                      <p>{{ $pembelian->penawaran->barang_rampasan->nama_barang }}</p>
-                      
-                    </div>
-                    <div class="col-md-4">
-                      @if ($pembelian->status == 'data_salah')
-                        <p>Bayar sebelum: <strong id="countdownWinner" class="text-danger"></strong></p>
-                        <p id="batas" dataEndDate= {{ $countdownWinner }}></p>
-                        <a href="/invoice/{{ $pembelian->penawaran->id }}"><button class="btn btn-success">Bayar Sekarang</button></a>
-                      @endif
+                      </div>
                     </div>
                   </div>
-                @endforeach
+                </div>
+                <br>
+              @endforeach
                 
-              </div>
-            </div>
+              
             <br><br><br>
             
           </div>
