@@ -27,7 +27,11 @@ class TransaksiController extends Controller
                     ->get();
 
         foreach ($payment as $pay) {
-            $countdownWinners[] = Carbon::parse($pay->updated_at)->addHours(24)->toIso8601String();
+            if ($pay->transaksi->isEmpty()) {
+                $countdownWinners[] = Carbon::parse($pay->updated_at)->addHours(24)->toIso8601String();
+            } else {
+                $payment = [];
+            }
         }
 
         $countdownWinner = !empty($countdownWinners) ? $countdownWinners[0] : null;
@@ -44,7 +48,7 @@ class TransaksiController extends Controller
             'active' => 'active',
             'statusPenawaran' => $statusPenawaran,
             'payment' => $payment,
-            'countdownWinner' => $countdownWinner,
+            'countdownWinner' => $countdownWinners,
             'expired' => $expired
         ]);
     }

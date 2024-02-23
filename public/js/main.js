@@ -65,6 +65,20 @@ $(function() {
     });
 
     $(document).ready(function() {
+        $('.batas').each(function(index, element) {
+            var endDate = $(element).data("end-date");
+            var countdownElement = $(element).closest('.col-md-4').find('.countdownWinner');
+            var myCountDown = new ysCountDown(endDate, function (remaining, finished) {
+                if (finished) {
+                    countdownElement.css("display", "none");
+                } else {
+                    countdownElement.text(remaining.hours + "h : " + remaining.minutes + "m : " + remaining.seconds + "s");
+                }
+            });
+        });
+    });
+
+    $(document).ready(function() {
         var endDate = document.getElementById("batas").getAttribute("dataEndDate");
         var myCountDown = new ysCountDown(endDate, function (remaining, finished) {
             console.log(myCountDown);
@@ -76,6 +90,7 @@ $(function() {
           
           });
     });
+    
 
     $(document).ready(function() {
         $('#select-urutan').change(function() {

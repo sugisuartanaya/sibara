@@ -55,19 +55,18 @@
           <div class="card-body">
             <h5 class="text-secondary">Menunggu Pembayaran</h5>
             <br>
-            <div class="card">
-              <div class="card-body" style="box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
-                {{-- @if($payment->isEmpty())
-                  <p>Belum ada pembayaran</p>
-                  <br><br><br>
-                @else
-                  
-                @endif --}}
-                @if ($expired == true)
-                  <p>Belum ada pembayaran</p>
-                  <br><br><br>
-                @else
-                  @foreach ($payment as $index => $pay)
+              @if ($expired == true)
+                <div class="card">
+                  <div class="card-body" style="box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                    <p>Belum ada pembayaran</p>
+                    <br>
+                  </div>
+                </div>
+                <br><br>
+              @else
+                @foreach ($payment as $index => $pay)
+                <div class="card">
+                  <div class="card-body" style="box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
                     <div class="row">
                       <div class="col-md-8">
                         <p class="mb-1"><strong>Nama Barang: </strong></p>
@@ -77,16 +76,16 @@
                         <p>Rp. {{ number_format($pay->harga_bid, 0, ',', '.') }}</p>
                       </div>
                       <div class="col-md-4">
-                        <p>Bayar sebelum: <strong id="countdownWinner" class="text-danger"></strong></p>
-                        <p id="batas" dataEndDate= {{ $countdownWinner }}></p>
+                        <p>Bayar sebelum: <strong class="countdownWinner text-danger"></strong></p>
+                        <p class="batas" data-end-date="{{ $countdownWinner[$index] }}" data-index="{{ $index }}"></p>
                         <a href="/invoice/{{ $pay->id }}"><button class="btn btn-success">Bayar Sekarang</button></a>
                       </div>
                     </div>
-                  @endforeach
-                @endif
-                
-              </div>
-            </div>
+                  </div>
+                </div>
+                <br>
+                @endforeach
+              @endif
             <br><br><br>
             
           </div>
