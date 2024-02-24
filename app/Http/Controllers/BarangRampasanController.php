@@ -19,7 +19,8 @@ class BarangRampasanController extends Controller
     public function index()
     {
         $statusPenawaran = DashboardController::statusPenawaran();
-        
+        $notif = DashboardController::notification();
+
         $kategori = Kategori::all();
 
         $daftar_barang = Barang_rampasan::select(
@@ -40,7 +41,8 @@ class BarangRampasanController extends Controller
             'active' => 'active',
             'daftar_barang' => $daftar_barang,
             'daftar_kategori' => $kategori,
-            'statusPenawaran' => $statusPenawaran
+            'statusPenawaran' => $statusPenawaran,
+            'notif' => $notif
         ]);
 
     }
@@ -48,6 +50,7 @@ class BarangRampasanController extends Controller
     public function filter(Request $request)
     {
         $statusPenawaran = DashboardController::statusPenawaran();
+        $notif = DashboardController::notification();
 
         $kategori = Kategori::all();
         $keyword = $request->input('search');
@@ -97,7 +100,8 @@ class BarangRampasanController extends Controller
             'daftar_barang' => $daftar_barang,
             'daftar_kategori' => $kategori,
             'request' => $request,
-            'statusPenawaran' => $statusPenawaran
+            'statusPenawaran' => $statusPenawaran,
+            'notif' => $notif
         ]);
     }
 
@@ -118,7 +122,8 @@ class BarangRampasanController extends Controller
     public function openBid($id)
     {
         $statusPenawaran = DashboardController::statusPenawaran();
-        
+        $notif = DashboardController::notification();
+
         $barang = Barang_rampasan::find($id);
         $fotoBarangArray = json_decode($barang->foto_barang, true);
         $harga = Harga_wajar::where('id_barang', $id)->latest('tgl_laporan_penilaian')->first();
@@ -155,14 +160,16 @@ class BarangRampasanController extends Controller
             'status' => $status,
             'jadwal' => optional($jadwal_terkait),
             'tawaran' => $penawaran,
-            'statusPenawaran' => $statusPenawaran
+            'statusPenawaran' => $statusPenawaran,
+            'notif' => $notif
         ]);
     }
 
     public function closeBid($id)
     {
         $statusPenawaran = DashboardController::statusPenawaran();
-        
+        $notif = DashboardController::notification();
+
         $barang = Barang_rampasan::find($id);
         $fotoBarangArray = json_decode($barang->foto_barang, true);
         $harga = Harga_wajar::where('id_barang', $id)->latest('tgl_laporan_penilaian')->first();
@@ -205,14 +212,16 @@ class BarangRampasanController extends Controller
             'status' => $status,
             'jadwal' => optional($jadwal_terkait),
             'tawaran' => $penawaran,
-            'statusPenawaran' => $statusPenawaran
+            'statusPenawaran' => $statusPenawaran,
+            'notif' => $notif
         ]);
     }
 
     public function offBid($id)
     {
         $statusPenawaran = DashboardController::statusPenawaran();
-        
+        $notif = DashboardController::notification();
+
         $barang = Barang_rampasan::find($id);
         $fotoBarangArray = json_decode($barang->foto_barang, true);
         $harga = Harga_wajar::where('id_barang', $id)->latest('tgl_laporan_penilaian')->first();
@@ -255,7 +264,8 @@ class BarangRampasanController extends Controller
             'status' => $status,
             'jadwal' => optional($jadwal_terkait),
             'tawaran' => $penawaran,
-            'statusPenawaran' => $statusPenawaran
+            'statusPenawaran' => $statusPenawaran,
+            'notif' => $notif
         ]);
     }
     

@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Jadwal;
 use App\Models\Pembeli;
 use App\Models\Penawaran;
+use App\Models\Transaksi;
 use App\Models\Harga_wajar;
 use Illuminate\Http\Request;
 use App\Models\Daftar_barang;
@@ -17,6 +18,8 @@ class DashboardController extends Controller
     public function index()
     {
         $statusPenawaran = DashboardController::statusPenawaran();
+        $notif = DashboardController::notification();
+
         $jadwal = Jadwal::latest('id')->first();
 
         if($jadwal){
@@ -69,7 +72,8 @@ class DashboardController extends Controller
             'daftar_barang' => $daftar_barang,
             'harga_terakhir' => $harga_terakhir,
             'harga_awal' => $harga_awal,
-            'statusPenawaran' => $statusPenawaran
+            'statusPenawaran' => $statusPenawaran,
+            'notif' => $notif
         ]);
         
     }
@@ -122,5 +126,18 @@ class DashboardController extends Controller
         }
 
     }
+
+    public static function notification()
+    {
+        $user = auth()->id();
+        $pembeli = Pembeli::where('user_id', $user)->first();
+
+        $transaksi = Penawaran::where('id_pembeli', $pembeli->id)
+                    ->where('status', 'menang')
+                    ->whereDoesntHave('transaksi')
+                    ->orderBy('updated_at', 'asc')
+                    ->get();
+        return ['transaksi' => $transaksi];
+    } 
 
 }

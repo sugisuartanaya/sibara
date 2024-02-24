@@ -15,6 +15,8 @@ class PengumumanController extends Controller
     public function index()
     {
         $statusPenawaran = DashboardController::statusPenawaran();
+        $notif = DashboardController::notification();
+
         $jadwal = Jadwal::latest('id')
                     ->where('status', 'expired')
                     ->first();
@@ -43,15 +45,14 @@ class PengumumanController extends Controller
             $barangs = null;
         }
         
-        // dd($bidderTertinggi);
-
         return view('pengumuman.index', [
             'title' => 'Pengumuman',
             'active' => 'active',
             'statusPenawaran' => $statusPenawaran,
             'daftar_barang' => $barangs,
             'penawarTertinggi' => $bidderTertinggi,
-            'jadwal' => $jadwal
+            'jadwal' => $jadwal,
+            'notif' => $notif
         ]);
     }
 

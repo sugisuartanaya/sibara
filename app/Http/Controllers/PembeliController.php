@@ -16,11 +16,13 @@ class PembeliController extends Controller
     public function index()
     {
         $statusPenawaran = DashboardController::statusPenawaran();
+        $notif = DashboardController::notification();
 
         return view('profile.index', [
             'title' => 'Profile',
             'active' => 'active',
             'statusPenawaran' => $statusPenawaran,
+            'notif' => $notif
         ]);
     }
 
@@ -60,6 +62,8 @@ class PembeliController extends Controller
     public function showPenawaran()
     {
         $statusPenawaran = DashboardController::statusPenawaran();
+        $notif = DashboardController::notification();
+
         $penawaranAvailable = isset($statusPenawaran['penawaranAvailable']) ? $statusPenawaran['penawaranAvailable'] : null;
         $penawaranExpired = isset($statusPenawaran['penawaranExpired']) ? $statusPenawaran['penawaranExpired'] : null;
      
@@ -69,6 +73,7 @@ class PembeliController extends Controller
             'statusPenawaran' => $statusPenawaran,
             'penawaranExpired' => $penawaranExpired,
             'penawaranAvailable' => $penawaranAvailable,
+            'notif' => $notif
         ]);
     }
 
@@ -133,28 +138,4 @@ class PembeliController extends Controller
         return redirect('/');
     }
 
-    public function store(Request $request)
-    {
-        //
-    }
-
-    public function show($id)
-    {
-        //
-    }
-
-    public function edit($id)
-    {
-        //
-    }
-
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    public function destroy($id)
-    {
-        //
-    }
 }

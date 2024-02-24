@@ -15,7 +15,8 @@ class JadwalController extends Controller
     public function index()
     {
         $statusPenawaran = DashboardController::statusPenawaran();
-        
+        $notif = DashboardController::notification();
+
         $jadwal = Jadwal::latest('id')->first();
 
         if($jadwal){
@@ -45,7 +46,8 @@ class JadwalController extends Controller
             'jadwal' => $jadwal,
             'status' => $status,
             'daftar_barang' => $barang,
-            'statusPenawaran' => $statusPenawaran
+            'statusPenawaran' => $statusPenawaran,
+            'notif' => $notif
         ]);
     }
 

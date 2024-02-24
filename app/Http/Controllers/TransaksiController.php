@@ -17,6 +17,7 @@ class TransaksiController extends Controller
     public function payment()
     {
         $statusPenawaran = DashboardController::statusPenawaran();
+        $notif = DashboardController::notification();
 
         $user = auth()->id();
         $pembeli = Pembeli::where('user_id', $user)->first();
@@ -52,13 +53,15 @@ class TransaksiController extends Controller
             'statusPenawaran' => $statusPenawaran,
             'payment' => $payment,
             'countdownWinner' => $countdownWinners,
-            'expired' => $expired
+            'expired' => $expired,
+            'notif' => $notif
         ]);
     }
 
     public function transaction()
     {
         $statusPenawaran = DashboardController::statusPenawaran();
+        $notif = DashboardController::notification();
 
         $user = auth()->id();
         $pembeli = Pembeli::where('user_id', $user)->first();
@@ -80,6 +83,7 @@ class TransaksiController extends Controller
             'title' => 'Profile',
             'active' => 'active',
             'statusPenawaran' => $statusPenawaran,
+            'notif' => $notif,
             'transaksi' => $transaksi,
             'countdownWinner' => $countdownWinner,
         ]);
@@ -89,6 +93,7 @@ class TransaksiController extends Controller
     public function invoice($id)
     {
         $statusPenawaran = DashboardController::statusPenawaran();
+        $notif = DashboardController::notification();
 
         $user = auth()->id();
         $pembeli = Pembeli::where('user_id', $user)->first();
@@ -109,6 +114,7 @@ class TransaksiController extends Controller
             'title' => 'Profile',
             'active' => 'active',
             'statusPenawaran' => $statusPenawaran,
+            'notif' => $notif,
             'penawaran' => $penawaran,
             'countdownWinner' => $countdownWinners,
             'expired' => $expired
@@ -118,6 +124,7 @@ class TransaksiController extends Controller
     public function revisi($id)
     {
         $statusPenawaran = DashboardController::statusPenawaran();
+        $notif = DashboardController::notification();
 
         $user = auth()->id();
         $pembeli = Pembeli::where('user_id', $user)->first();
@@ -138,9 +145,10 @@ class TransaksiController extends Controller
             'title' => 'Profile',
             'active' => 'active',
             'statusPenawaran' => $statusPenawaran,
+            'notif' => $notif,
             'penawaran' => $penawaran,
             'countdownWinner' => $countdownWinners,
-            'expired' => $expired
+            'expired' => $expired,
         ]);
     }
 
