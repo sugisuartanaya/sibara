@@ -142,6 +142,7 @@ class BarangRampasanController extends Controller
         }
         
         $penawaran = Penawaran::where('id_barang', $id)
+        ->where('id_jadwal', $jadwal_terkait->id)
         ->orderBy('harga_bid', 'desc')
         ->paginate(3);
 
@@ -189,6 +190,7 @@ class BarangRampasanController extends Controller
         if ($pembeli) {
             $penawaran = Penawaran::where('id_barang', $id)
                 ->where('id_pembeli', $pembeli->id)
+                ->where('id_jadwal', $jadwal_terkait->id)
                 ->first();
         } else {
             $penawaran = null;
@@ -238,6 +240,7 @@ class BarangRampasanController extends Controller
         if ($pembeli) {
             $penawaran = Penawaran::where('id_barang', $id)
                 ->where('id_pembeli', $pembeli->id)
+                ->where('id_jadwal', $jadwal_terkait->id)
                 ->first();
         } else {
             $penawaran = null;
