@@ -57,3 +57,5 @@ Route::get('/invoice/{id}', [TransaksiController::class, 'invoice'])->middleware
 Route::get('/revisi/{id}', [TransaksiController::class, 'revisi'])->middleware('auth');
 Route::post('/pembayaran/{id}', [TransaksiController::class, 'upload'])->middleware('auth');
 Route::put('/pembayaran/revisi/{id}', [TransaksiController::class, 'uploadRevisi'])->middleware('auth');
+
+Route::get('print-pdf/{id}', [TransaksiController::class, 'printPdf']);

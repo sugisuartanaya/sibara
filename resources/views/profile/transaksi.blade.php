@@ -96,6 +96,8 @@
                           <p>Bayar sebelum: <strong id="countdownWinner" class="text-danger"></strong></p>
                           <p id="batas" dataEndDate= {{ $countdownWinner }}></p>
                           <a href="/revisi/{{ $pembelian->penawaran->id }}"><button class="btn btn-success">Upload Ulang</button></a>
+                        @elseif ($pembelian->status == 'verified')
+                          <a href="/print-pdf/{{ $pembelian->id }}"><button class="btn btn-success mt-4"><i class="fa-solid fa-print"></i>&nbsp; Cetak Bukti Pembayaran</button></a>
                         @endif
                       </div>
                     </div>

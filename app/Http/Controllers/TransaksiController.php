@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Pembeli;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Penawaran;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
@@ -181,32 +182,8 @@ class TransaksiController extends Controller
     }
 
     
-    public function store(Request $request)
-    {
-        //
-    }
-
-   
-    public function show($id)
-    {
-        //
-    }
-
-    
-    public function edit($id)
-    {
-        //
-    }
-
-    
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    
-    public function destroy($id)
-    {
-        //
+    public function printPdf($id){
+        $pdf = PDF::loadView('pdf.bukti_pembayaran', ['id' => $id]);
+        return $pdf->download('bukti_pembayaran.pdf');
     }
 }
