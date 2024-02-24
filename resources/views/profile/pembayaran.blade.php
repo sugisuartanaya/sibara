@@ -16,6 +16,7 @@
           
           @php
             $penawaranAvailable = isset($statusPenawaran['penawaranAvailable']) ? $statusPenawaran['penawaranAvailable'] : null;
+            $notifCount = isset($notif['transaksi']) ? $notif['transaksi'] : null;
           @endphp
 
 
@@ -36,7 +37,12 @@
             <li class="list-group-item dropdown" style="position: relative;">
               <a class="dropdown-toggle text-decoration-none text-success" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                 <strong>Transaksi</strong>
-                <span class="badge bg-success rounded-pill" style="position: absolute; top: 50%; transform: translateY(-50%); right: 10px;">1</span>
+                @if ($notifCount)
+                  @if($notifCount->isNotEmpty())
+                    <span class="badge bg-success rounded-pill" style="position: absolute; top: 50%; transform: translateY(-50%); right: 10px;">
+                    {{ $notifCount->count() }}</span>
+                  @endif
+                @endif
               </a>
               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink">
                 <li><a class="dropdown-item active success" style="background-color: #0d8c46" href="/pembayaran">Menunggu Pembayaran</a></li>
