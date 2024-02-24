@@ -183,8 +183,7 @@ class TransaksiController extends Controller
 
     
     public function printPdf($id){
-        $transaksi = Transaksi::find($id)->first();
-
+        $transaksi = Transaksi::find($id);
         $pdf = PDF::loadView('pdf.bukti_pembayaran', ['transaksi' => $transaksi]);
         return $pdf->download('bukti_pembayaran.pdf');
         // return view('pdf.bukti');
