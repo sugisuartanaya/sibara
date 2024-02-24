@@ -7,6 +7,7 @@ use App\Models\Jadwal;
 use App\Models\Penawaran;
 use Illuminate\Http\Request;
 use App\Models\Daftar_barang;
+use App\Models\Transaksi;
 
 class PengumumanController extends Controller
 {
@@ -27,14 +28,15 @@ class PengumumanController extends Controller
             $bidderTertinggi = [];
 
             foreach ($barangs as $barang) {
-            $penawarTertinggi = Penawaran::where('id_jadwal', $id_jadwal)
-                ->where('id_barang', $barang->id)
-                ->orderBy('harga_bid', 'desc')
-                ->first();
+                $pemenang = Penawaran::where('id_jadwal', $id_jadwal)
+                    ->where('id_barang', $barang->id)
+                    ->where('status', 'menang')
+                    ->orderBy('harga_bid', 'desc')
+                    ->first();
 
-                if ($penawarTertinggi) {
-                    $bidderTertinggi[$barang->id] = $penawarTertinggi;
-                }
+                    if ($pemenang) {
+                        $bidderTertinggi[$barang->id] = $pemenang;
+                    }
             }
         } else {
             $bidderTertinggi = null;
