@@ -93,8 +93,8 @@
                       </div>
                       <div class="col-md-4">
                         @if ($pembelian->status == 'data_salah')
-                          <p>Bayar sebelum: <strong id="countdownWinner" class="text-danger"></strong></p>
-                          <p id="batas" dataEndDate= {{ $countdownWinner }}></p>
+                          <p>Bayar sebelum: <strong class="countdownWinner text-danger"></strong></p>
+                          <p class="batas" data-end-date="{{ $countdownWinner[$index] }}" data-index="{{ $index }}"></p>
                           <a href="/revisi/{{ $pembelian->penawaran->id }}"><button class="btn btn-success">Upload Ulang</button></a>
                         @elseif ($pembelian->status == 'verified')
                           <a href="/print-pdf/{{ $pembelian->id }}"><button class="btn btn-success mt-4"><i class="fa-solid fa-print"></i>&nbsp; Cetak Bukti Pembayaran</button></a>

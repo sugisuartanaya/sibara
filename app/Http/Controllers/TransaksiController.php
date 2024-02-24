@@ -65,19 +65,22 @@ class TransaksiController extends Controller
 
         $user = auth()->id();
         $pembeli = Pembeli::where('user_id', $user)->first();
-        
-        $countdownWinners = [];
-        $transaksi = Transaksi::where('id_pembeli', $pembeli->id)->get();
-        
-        // dd($transaksi);
 
+        $countdownWinners = [];
+        $transaksi = Transaksi::with('penawaran')
+                        ->where('id_pembeli', $pembeli->id)
+                        ->whereHas('penawaran', function ($query) {
+                            $query->whereNotIn('status', ['wanprestasi']);
+                        })
+                        ->get();
+        
         foreach ($transaksi as $trans) {
             $id_penawaran = $trans->id_penawaran;
             $penawaran = Penawaran::find($id_penawaran);
             $countdownWinners[] = Carbon::parse($penawaran->updated_at)->addHours(24)->toIso8601String();
         }
 
-        $countdownWinner = !empty($countdownWinners) ? $countdownWinners[0] : null;
+        // $countdownWinner = !empty($countdownWinners) ? $countdownWinners[0] : null;
 
         return view('profile.transaksi',[
             'title' => 'Profile',
@@ -85,7 +88,7 @@ class TransaksiController extends Controller
             'statusPenawaran' => $statusPenawaran,
             'notif' => $notif,
             'transaksi' => $transaksi,
-            'countdownWinner' => $countdownWinner,
+            'countdownWinner' => $countdownWinners,
         ]);
     }
 
