@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\Jadwal;
 use App\Models\Pembeli;
-use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Penawaran;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
@@ -19,16 +20,31 @@ class TransaksiController extends Controller
         $statusPenawaran = DashboardController::statusPenawaran();
         $notif = DashboardController::notification();
 
+        $jadwal = Jadwal::latest('id')
+                    ->where('status', 'expired')
+                    ->first();
+
         $user = auth()->id();
         $pembeli = Pembeli::where('user_id', $user)->first();
 
         $countdownWinners = [];
-        $payment = Penawaran::where('id_pembeli', $pembeli->id)
-                    ->where('status', 'menang')
-                    ->whereDoesntHave('transaksi')
-                    ->orderBy('updated_at', 'asc')
-                    ->get();
-       
+
+        if($jadwal){
+            $id_jadwal = $jadwal->id;
+            $payment = Penawaran::where('id_pembeli', $pembeli->id)
+                        ->where('status', 'menang')
+                        ->where('id_jadwal', $id_jadwal)
+                        ->whereDoesntHave('transaksi')
+                        ->orderBy('updated_at', 'asc')
+                        ->get();
+        } else {
+            $payment = Penawaran::where('id_pembeli', $pembeli->id)
+                        ->where('status', 'menang')
+                        ->whereDoesntHave('transaksi')
+                        ->orderBy('updated_at', 'asc')
+                        ->get();
+        }
+
         foreach ($payment as $pay) {
             if ($pay->transaksi->isEmpty()) {
                 $countdownWinners[] = Carbon::parse($pay->updated_at)->addHours(24)->toIso8601String();
@@ -45,6 +61,8 @@ class TransaksiController extends Controller
         } else {
             $expired = true;
         }
+
+        // dd($expired);
 
 
         return view('profile.pembayaran',[

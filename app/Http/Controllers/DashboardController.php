@@ -131,13 +131,16 @@ class DashboardController extends Controller
     {
         $user = auth()->id();
         $pembeli = Pembeli::where('user_id', $user)->first();
+        if ($pembeli) {
+            $transaksi = Penawaran::where('id_pembeli', $pembeli->id)
+                        ->where('status', 'menang')
+                        ->whereDoesntHave('transaksi')
+                        ->orderBy('updated_at', 'asc')
+                        ->get();
+            return ['transaksi' => $transaksi];
+        }
 
-        $transaksi = Penawaran::where('id_pembeli', $pembeli->id)
-                    ->where('status', 'menang')
-                    ->whereDoesntHave('transaksi')
-                    ->orderBy('updated_at', 'asc')
-                    ->get();
-        return ['transaksi' => $transaksi];
+        
     } 
 
 }
