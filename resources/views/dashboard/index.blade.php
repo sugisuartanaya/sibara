@@ -82,6 +82,13 @@
                   <img src="{{ asset('images/banner 3.jpg') }}" class="d-block w-100" alt="...">
                 </div>
               @endif
+            @else
+              <div class="carousel-item active">
+                <img src="{{ asset('images/banner 2.jpg') }}" class="d-block w-100" alt="...">
+              </div>
+              <div class="carousel-item">
+                <img src="{{ asset('images/banner 3.jpg') }}" class="d-block w-100" alt="...">
+              </div>
             @endif
           </div>
           <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
