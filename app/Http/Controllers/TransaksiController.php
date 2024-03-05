@@ -21,7 +21,7 @@ class TransaksiController extends Controller
         $notif = DashboardController::notification();
 
         $jadwal = Jadwal::latest('id')
-                    ->where('status', 'expired')
+                    // ->where('status', 'expired')
                     ->first();
 
         $user = auth()->id();
