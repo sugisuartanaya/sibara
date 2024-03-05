@@ -33,8 +33,10 @@
       }
     
       .logo {
-        width: 70px; /* Atur ukuran logo sesuai kebutuhan */
+        width: 100px; /* Atur ukuran logo sesuai kebutuhan */
         height: auto; /* Atur ketinggian agar logo tidak terdistorsi */
+        margin-right: 50px; /* Memberi jarak antara logo dan teks */
+        margin-left: -50px;
       }
     
       .text-container {
@@ -80,10 +82,11 @@
       <div class="container">
         <a href="/"><img src="{{ asset('images/logo2.png') }}" alt="logo" class="logo"></a>
         <div class="text-container">
-          <h5 style="font-weight: normal; margin-bottom: 1px">Kejaksaan Republik Indonesia</h5>
-          <h3 style="margin-bottom: 1px"><strong>Kejaksaan Negeri Denpasar</strong></h3>
-          <p style="margin-bottom: 1px; font-size: 10pt;">Jl. PB. Sudirman No. 3, Denpasar Telp. (0361)221999</p>
-          <p style="margin-bottom: 1px; font-size: 10pt;">www.kejari-denpasar.go.id</p>
+          <h5 style="font-weight: normal; margin-bottom: 1px">KEJAKSAAN REPUBLIK INDONESIA</h5>
+          <h5 style="font-weight: normal; margin-bottom: 0px">KEJAKSAAN TINGGI BALI</h5>
+          <h2 style="margin-bottom: 1px"><strong>KEJAKSAAN NEGERI DENPASAR</strong></h2>
+          <p style="margin-bottom: 1px; font-size: 10pt;"> JALAN PB. SUDIRMAN NO. 3 DENPASAR BALI 80232</p>
+          <p style="margin-bottom: 1px; font-size: 10pt;">Telp. (0361)-221999, Fax: (0361)-236954. <u>www.kejari-denpasar.go.id</u></p>
         </div>
       </div>
       <hr style="border-top: 3px solid black;">
