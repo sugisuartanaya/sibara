@@ -81,7 +81,15 @@
                           <td>{{ \Carbon\Carbon::parse($penawaran->created_at)->format('j F Y \j\a\m H:i') }}</td>
                           <td class="w-50 text-break">{{ $penawaran->barang_rampasan->nama_barang }}</td>
                           <td>Rp. {{ number_format($penawaran->harga_bid, 0, ',', '.') }}</td>
-                          <td><span class="badge text-bg-primary">{{ $penawaran->status }}</span></td>
+                          @if($penawaran->status == 'menang')
+                            <td><span class="badge text-bg-success">Menang</span></td>
+                          @elseif($penawaran->status == 'pending')
+                            <td><span class="badge text-bg-secondary">Pending</span></td>
+                          @elseif($penawaran->status == 'kalah')
+                            <td><span class="badge text-bg-warning">Kalah</span></td>
+                          @elseif($penawaran->status == 'wanprestasi')
+                            <td><span class="badge text-bg-danger">Wanprestasi</span></td>
+                          @endif
                         </tr>
                       @endforeach
                     @endif
@@ -113,13 +121,13 @@
                           <td class="w-50 text-break">{{ $riwayat->barang_rampasan->nama_barang }}</td>
                           <td>Rp. {{ number_format($riwayat->harga_bid, 0, ',', '.') }}</td>
                           @if($riwayat->status == 'menang')
-                            <td><span class="badge text-bg-success">{{ $riwayat->status }}</span></td>
+                            <td><span class="badge text-bg-success">Menang</span></td>
                           @elseif($riwayat->status == 'pending')
-                            <td><span class="badge text-bg-primary">{{ $riwayat->status }}</span></td>
+                            <td><span class="badge text-bg-secondary">Pending</span></td>
                           @elseif($riwayat->status == 'kalah')
-                            <td><span class="badge text-bg-warning">{{ $riwayat->status }}</span></td>
+                            <td><span class="badge text-bg-warning">Kalah</span></td>
                           @elseif($riwayat->status == 'wanprestasi')
-                            <td><span class="badge text-bg-danger">{{ $riwayat->status }}</span></td>
+                            <td><span class="badge text-bg-danger">Wanprestasi</span></td>
                           @endif
                         </tr>
                       @endforeach
