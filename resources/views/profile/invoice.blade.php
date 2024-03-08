@@ -15,15 +15,15 @@
               <tbody>
                 <tr>
                   <td><strong>AN</strong></td>
-                  <td><strong>I Gusti Ngurah Budiyasa</strong></td>
+                  <td><strong>: RPL 037 KEJARI DENPASAR</strong></td>
                 </tr>
                 <tr>
                   <td><strong>BRI</strong></td>
-                  <td><strong>123456789</strong></td>
+                  <td><strong>: 001701002536305</strong></td>
                 </tr>
                 <tr>
                   <td><strong>Total</strong></td>
-                  <td><strong>Rp. {{ number_format($penawaran->harga_bid, 0, ',', '.') }}</strong></td>
+                  <td><strong>: Rp. {{ number_format($penawaran->harga_bid, 0, ',', '.') }}</strong></td>
                 </tr>
               </tbody>
             </table>
