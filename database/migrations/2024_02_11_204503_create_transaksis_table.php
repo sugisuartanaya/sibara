@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('id_pembeli');
             $table->foreignId('id_penawaran');
+            $table->foreignId('id_jadwal');
             $table->enum('status', ['review', 'data_salah', 'verified'])->default('review');
             $table->datetime('tanggal');
             $table->text('foto_bukti');

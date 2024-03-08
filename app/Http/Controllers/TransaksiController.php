@@ -184,6 +184,7 @@ class TransaksiController extends Controller
         Transaksi::create([
             'id_pembeli' => $request->input('id_pembeli'),
             'id_penawaran' => $request->input('id_penawaran'),
+            'id_jadwal' => $request->input('id_jadwal'),
             'tanggal' => $today,
             'foto_bukti' => $url_transaksi,
         ]);

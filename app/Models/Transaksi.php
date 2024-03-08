@@ -20,9 +20,15 @@ class Transaksi extends Model
         return $this->belongsTo(Penawaran::class, 'id_penawaran');
     }
 
+    public function jadwal()
+    {
+        return $this->belongsTo(Jadwal::class, 'id_jadwal');
+    }
+
     protected $fillable = [
         'id_pembeli',
         'id_penawaran',
+        'id_jadwal',
         'tanggal',
         'foto_bukti',
         'status'

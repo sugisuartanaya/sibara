@@ -44,10 +44,6 @@
             @csrf
             @method("PUT")
             <input name="foto_bukti" type="file" id="image-selfie" accept="image/*" class="form-control" required>
-            <input type="hidden" value={{ $penawaran->pembeli->nama_pembeli }} name="nama_pembeli">
-            <input type="hidden" value={{ $penawaran->pembeli->id }} name="id_pembeli">
-            <input type="hidden" value={{ $penawaran->id }} name="id_penawaran">
-
             <img id="image-preview-selfie" class="image-preview" alt="Image Preview Selfie">
             <br>
             <button type="submit" class="btn btn-success d-block mx-auto">Upload ulang</button>

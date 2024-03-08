@@ -27,6 +27,11 @@ class Jadwal extends Model
     {
         return $this->hasMany(Penawaran::class, 'id_jadwal');
     }
+    
+    public function transaksi()
+    {
+        return $this->hasMany(Transaksi::class, 'id_jadwal');
+    }
 
     public function isExpired()
     {
