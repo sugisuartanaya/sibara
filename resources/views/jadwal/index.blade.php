@@ -156,7 +156,7 @@
         @foreach ($daftar_barang as $daftar)
           <div class="col-md-3 py-3">
             <div class="card">
-              <a href="/detail/{{ $daftar->barang_rampasan->id }}"><img class="bd-placeholder-img card-img-top" src="http://admin.sibara.test{{ $daftar->barang_rampasan->foto_thumbnail }}" style="object-fit: cover; width: 100%; height: 300px;"  alt="Your Alt Text"></a>
+              <a href="/detail/{{ $daftar->barang_rampasan->id }}"><img class="bd-placeholder-img card-img-top" src="{{ $daftar->barang_rampasan->foto_thumbnail }}" style="object-fit: cover; width: 100%; height: 300px;"  alt="Your Alt Text"></a>
               <div class="card-body d-flex" style="background-color: #f8f9fa; display: flex; flex-direction: column;">
                 <a href="/detail/{{ $daftar->barang_rampasan->id }}" class="text-decoration-none text-dark">
                   <h6 class="text-left mb-2" style="flex-shrink: 0;">
