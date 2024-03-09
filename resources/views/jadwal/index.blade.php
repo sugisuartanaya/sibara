@@ -186,13 +186,8 @@
 
                 <div class="d-flex justify-content-between align-items-start mb-2">
                   <h4 class="mb-0"><strong>Rp. {{ number_format($daftar->barang_rampasan->harga_wajar->last()->harga, 0, ',', '.') }}</strong></h4>
-                  <p class="text-secondary mb-0">0 <i class="fa fa-user"></i></p>
-                </div>
-
-                <div class="text-center mt-2">
                   <a href="/detail/{{ $daftar->barang_rampasan->id }}"><button class="btn btn-sm btn-outline-success">Detail Barang</button></a>
                 </div>
-
               </div>
             </div>
           </div>
