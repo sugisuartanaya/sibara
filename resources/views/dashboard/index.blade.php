@@ -362,7 +362,7 @@
       <div class="col-md-3 mb-4">
         <div class="card shadow-sm position-relative">
           {{-- <img class="bd-placeholder-img card-img-top" src="asset{{ $daftar->barang_rampasan->foto_thumbnail }}" style="object-fit: cover; width: 100%; height: 300px;"  alt="Your Alt Text"> --}}
-          <a href="/detail/{{ $daftar->id }}"><img class="bd-placeholder-img card-img-top" src="http://admin.sibara.test{{ $daftar->foto_thumbnail }}" style="object-fit: cover; width: 100%; height: 300px;"  alt="Your Alt Text"></a>
+          <a href="/detail/{{ $daftar->id }}"><img class="bd-placeholder-img card-img-top" src="{{ $daftar->foto_thumbnail }}" style="object-fit: cover; width: 100%; height: 300px;"  alt="Your Alt Text"></a>
 
           {{-- <div class="position-absolute top-0 start-0 m-3">
             <span class="badge bg-danger" style="border-radius: 4px;">Sale!</span>
