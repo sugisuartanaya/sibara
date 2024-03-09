@@ -32,16 +32,14 @@
         <div class="carousel-inner">
           @foreach($foto_barang as $index => $foto)
             <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
-                {{-- <img class="d-block w-100" src="{{ asset($foto) }}"> --}}
-                <img class="d-block w-100" src="http://admin.sibara.test{{ $foto }}" alt="Foto {{ $index + 1 }}">
+                <img class="d-block w-100" src="{{ $foto }}" alt="Foto {{ $index + 1 }}">
             </div>
           @endforeach
         </div>
       </div>
       <div class="image-preview" id="thumbnailCarousel">
         @foreach ($foto_barang as $index => $foto)
-          {{-- <img src="{{ asset($foto) }}" class="thumbnail" data-target="#produkCarousel" data-slide-to="{{ $index }}" alt="Thumbnail {{ $index + 1 }}"> --}}
-          <img src="http://admin.sibara.test{{ $foto }}" class="thumbnail" data-bs-target="#produkCarousel" data-bs-slide-to="{{ $index }}" alt="Thumbnail {{ $index + 1 }}">
+          <img src="{{ $foto }}" class="thumbnail" data-bs-target="#produkCarousel" data-bs-slide-to="{{ $index }}" alt="Thumbnail {{ $index + 1 }}">
         @endforeach
       </div>
     </div>

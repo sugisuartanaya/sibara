@@ -95,8 +95,7 @@
           @foreach ($daftar_barang as $daftar)
             <div class="col-md-3 mb-4">
               <div class="card position-relative">
-                {{-- <img class="bd-placeholder-img card-img-top" src="asset{{ $daftar->foto_thumbnail }}" style="object-fit: cover; width: 100%; height: 300px;"  alt="Your Alt Text"> --}}
-                <a href="/detail/{{ $daftar->id }}"><img class="bd-placeholder-img card-img-top" src="http://admin.sibara.test{{ $daftar->foto_thumbnail }}" style="object-fit: cover; width: 100%; height: 300px;"  alt="Your Alt Text"></a>
+                <a href="/detail/{{ $daftar->id }}"><img class="bd-placeholder-img card-img-top" src="{{ $daftar->foto_thumbnail }}" style="object-fit: cover; width: 100%; height: 300px;"  alt="Your Alt Text"></a>
 
                 <div class="card-body" style="background-color: #F4F4F2;">
                   <div class="card-text">
