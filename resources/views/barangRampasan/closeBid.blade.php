@@ -253,9 +253,9 @@
               <div class="card-body">
                 <h5 style="font-weight: bold; margin-bottom: 2px">Pelaksanaan Lelang Mendatang:</h5>
                 <p class="text-secondary mb-0" style="font-size: 11pt">
-                  {{ $jadwal->start_date->format('j F Y \j\a\m H:i') }}  s/d </p>
+                  {{ \Carbon\Carbon::parse($jadwal->start_date)->translatedFormat('j F Y \j\a\m H:i') }} s/d </p>
                 <p class="text-secondary mb-0" style="font-size: 11pt">
-                  {{ $jadwal->end_date->format('j F Y \j\a\m H:i') }} WITA</p>
+                  {{ \Carbon\Carbon::parse($jadwal->end_date)->translatedFormat('j F Y \j\a\m H:i') }} WITA</p>
               </div>
             </div>
             <div class="card mt-3">
@@ -347,9 +347,9 @@
                 <div class="card-body">
                   <h5 style="font-weight: bold; margin-bottom: 2px">Pelaksanaan Lelang:</h5>
                   <p class="text-secondary mb-0" style="font-size: 11pt">
-                    {{ $jadwal->start_date->format('j F Y \j\a\m H:i') }}  s/d </p>
+                    {{ \Carbon\Carbon::parse($jadwal->start_date)->translatedFormat('j F Y \j\a\m H:i') }} s/d </p>
                   <p class="text-secondary mb-0" style="font-size: 11pt">
-                    {{ $jadwal->end_date->format('j F Y \j\a\m H:i') }} WITA</p>
+                    {{ \Carbon\Carbon::parse($jadwal->end_date)->translatedFormat('j F Y \j\a\m H:i') }} WITA</p>
                 </div>
               </div>
             </div>
