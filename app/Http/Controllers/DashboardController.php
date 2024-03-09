@@ -96,8 +96,8 @@ class DashboardController extends Controller
                     ->whereHas('jadwal', function ($query) {
                         $query->where('status', 'available');
                     })
-                    ->orderBy('id', 'desc')
                     ->groupBy('id_barang', 'status')
+                    ->orderByRaw('MAX(id) desc') // Order by MAX(id) instead of id
                     ->get();
 
                 $available = Penawaran::with('jadwal')
