@@ -8,6 +8,7 @@ use App\Models\Pembeli;
 use App\Models\Verifikasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
@@ -96,8 +97,20 @@ class PembeliController extends Controller
 
         if ($request->hasFile('foto_ktp')) {
             $image_ktp = $request->file('foto_ktp');
-            $path_ktp = $image_ktp->storeAs('public/photos', 'ktp_'.$request->nama_pembeli . time() . '.' . $image_ktp->getClientOriginalExtension());
-            $url_ktp = Storage::url($path_ktp);
+            $fileName = 'ktp_'.$request->nama_pembeli . time() . '.' . $image_ktp->getClientOriginalExtension();
+
+            // Path untuk menyimpan gambar di dalam folder storage
+            $storagePath = $image_ktp->storeAs('public/photos/pembeli/', $fileName);
+
+            // Path untuk menyimpan gambar di dalam folder public
+            $publicPath = public_path('photos/pembeli/' . $fileName);
+
+            // Resize gambar sebelum disimpan
+            $img = Image::make($image_ktp);
+            $img->save($publicPath); // Simpan gambar di folder public
+
+            // URL gambar yang akan disimpan di database
+            $url_ktp = asset('photos/pembeli/' . $fileName);
             $pembeli->foto_ktp = $url_ktp;  
 
         }
@@ -105,8 +118,20 @@ class PembeliController extends Controller
         // Simpan foto pembeli
         if ($request->hasFile('foto_pembeli')) {
             $image_pembeli = $request->file('foto_pembeli');
-            $path_pembeli = $image_pembeli->storeAs('public/photos', 'pembeli_'.$request->nama_pembeli . time() . '.' . $image_pembeli->getClientOriginalExtension());
-            $url_pembeli = Storage::url($path_pembeli);
+            $fileName = 'selfie_'.$request->nama_pembeli . time() . '.' . $image_pembeli->getClientOriginalExtension();
+
+            // Path untuk menyimpan gambar di dalam folder storage
+            $storagePath = $image_pembeli->storeAs('public/photos/pembeli/', $fileName);
+
+            // Path untuk menyimpan gambar di dalam folder public
+            $publicPath = public_path('photos/pembeli/' . $fileName);
+
+            // Resize gambar sebelum disimpan
+            $img = Image::make($image_pembeli);
+            $img->save($publicPath); // Simpan gambar di folder public
+
+            // URL gambar yang akan disimpan di database
+            $url_pembeli = asset('photos/pembeli/' . $fileName);
             $pembeli->foto_pembeli = $url_pembeli;  
         }
 
