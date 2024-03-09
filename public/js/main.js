@@ -186,26 +186,14 @@ $(function() {
     });
 
     $(document).ready(function() {
-        $('#facebook-share-btn').click(function() {
-            var itemId = $(this).data('item-id');
-            var itemName = $(this).data('item-name');
-            var itemDescription = $(this).data('item-description');
-            var itemImage = $(this).data('item-image');
-
-            var urlToShare = window.location.origin + '/detail/' + itemId;
-            shareOnFacebook(urlToShare, itemName, itemDescription, itemImage);
-
-            console.log(itemImage);
+        $(document).ready(function() {
+            $('.share-facebook').on('click', function(event) {
+                event.preventDefault();
+                var url = encodeURIComponent($(this).data('url'));
+                var shareUrl = 'https://www.facebook.com/sharer/sharer.php?u=' + url;
+                window.open(shareUrl, 'facebook-share-dialog', 'width=626,height=436');
+            });
         });
-
-        function shareOnFacebook(url, name, description, image) {
-            var facebookUrl = 'https://www.facebook.com/sharer/sharer.php';
-            facebookUrl += '?u=' + encodeURIComponent(url);
-            facebookUrl += '&quote=' + encodeURIComponent(description);
-            facebookUrl += '&picture=' + encodeURIComponent(image);
-
-            window.open(facebookUrl, 'facebook-share-dialog', 'width=626,height=436');
-        }
     });
 
     $(document).ready(function () {
