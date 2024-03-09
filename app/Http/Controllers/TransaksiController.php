@@ -9,6 +9,7 @@ use App\Models\Penawaran;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
@@ -176,8 +177,20 @@ class TransaksiController extends Controller
     public function upload(Request $request)
     {
         $image = $request->file('foto_bukti');
-        $path = $image->storeAs('public/photos/transaksi', 'transaksi_'.$request->nama_pembeli . time() . '.' . $image->getClientOriginalExtension());
-        $url_transaksi = Storage::url($path);
+        $fileName = 'buktiTransfer_'.$request->nama_pembeli . time() . '.' . $image->getClientOriginalExtension();
+
+        // Path untuk menyimpan gambar di dalam folder storage
+        $storagePath = $image->storeAs('public/photos/transaksi/', $fileName);
+
+        // Path untuk menyimpan gambar di dalam folder public
+        $publicPath = public_path('photos/transaksi/' . $fileName);
+
+        // Resize gambar sebelum disimpan
+        $img = Image::make($image);
+        $img->save($publicPath); // Simpan gambar di folder public
+
+        // URL gambar yang akan disimpan di database
+        $url_transaksi = asset('photos/transaksi/' . $fileName);
 
         $today = Carbon::now();
 
@@ -196,8 +209,21 @@ class TransaksiController extends Controller
     public function uploadRevisi(Request $request, $id)
     {
         $image = $request->file('foto_bukti');
-        $path = $image->storeAs('public/photos/transaksi', 'transaksi_'.$request->nama_pembeli . time() . '.' . $image->getClientOriginalExtension());
-        $url_transaksi = Storage::url($path);
+        
+        $fileName = 'RevisiBuktiTransfer_'.$request->nama_pembeli . time() . '.' . $image->getClientOriginalExtension();
+
+        // Path untuk menyimpan gambar di dalam folder storage
+        $storagePath = $image->storeAs('public/photos/transaksi/', $fileName);
+
+        // Path untuk menyimpan gambar di dalam folder public
+        $publicPath = public_path('photos/transaksi/' . $fileName);
+
+        // Resize gambar sebelum disimpan
+        $img = Image::make($image);
+        $img->save($publicPath); // Simpan gambar di folder public
+
+        // URL gambar yang akan disimpan di database
+        $url_transaksi = asset('photos/transaksi/' . $fileName);
 
         $today = Carbon::now();
 
