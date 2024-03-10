@@ -230,7 +230,6 @@ class BarangRampasanController extends Controller
         if($jadwal_terkait){
             $jadwal_terkait->start_date = Carbon::parse($jadwal_terkait->start_date);
             $jadwal_terkait->end_date = Carbon::parse($jadwal_terkait->end_date);
-            
             $today = Carbon::now();
     
             if ($today->lt($jadwal_terkait->start_date)) {
@@ -247,10 +246,14 @@ class BarangRampasanController extends Controller
         $user = auth()->id();
         $pembeli = Pembeli::where('user_id', $user)->first();
         if ($pembeli) {
-            $penawaran = Penawaran::where('id_barang', $id)
+            if($jadwal_terkait) {
+                $penawaran = Penawaran::where('id_barang', $id)
                 ->where('id_pembeli', $pembeli->id)
                 ->where('id_jadwal', $jadwal_terkait->id)
                 ->first();
+            } else {
+                $penawaran = null;
+            }
         } else {
             $penawaran = null;
         }
