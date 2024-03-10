@@ -109,6 +109,8 @@
               <div class="col-5">
                 <p class="text-secondary mb-0" >Username</p>          
                 <h6 class="mb-3">{{ auth()->user()->username }}</h6>
+                <p class="text-secondary mb-0" >Email</p>          
+                <h6 class="mb-3">{{ auth()->user()->email }}</h6>
                 <p class="text-secondary mb-0" >Nama</p>          
                 <h6 class="mb-3">{{ auth()->user()->pembeli->nama_pembeli }}</h6>
                 <p class="text-secondary mb-0" >Pekerjaan</p>          
