@@ -47,7 +47,7 @@
               <br>
               <button type="submit" class="btn btn-success d-block mx-auto w-100">Masuk</button>
               <br>
-              <a href="#" class="text-success" style="text-decoration: none;"><p style="margin: 0;">Lupa password?</p></a>
+              <a href="/forgot-password" class="text-success" style="text-decoration: none;"><p style="margin: 0;">Lupa password?</p></a>
               <a href="/account/register" class="text-success" style="text-decoration: none;"><p>Belum punya akun? Daftar</p></a>
             </form>
           </div>

@@ -1,15 +1,16 @@
 <?php
 
-use App\Http\Controllers\BarangRampasanController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\PembeliController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\PenawaranController;
-use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\PengumumanController;
+use App\Http\Controllers\BarangRampasanController;
+use App\Http\Controllers\ForgotPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,14 @@ use App\Http\Controllers\TransaksiController;
 Route::get('/', [DashboardController::class, 'index']);
 
 Route::get('/account/login', [LoginController::class, 'index']);
+Route::get('/forgot-password', [LoginController::class, 'forgotPass']);
+
+Route::get('/forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+
+Route::get('password/reset/{token}', [ForgotPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::post('password/reset', [ForgotPasswordController::class, 'reset'])->name('password.update');
+
 Route::post('/account/login', [LoginController::class, 'authenticate'])->name('login')->middleware('guest');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
