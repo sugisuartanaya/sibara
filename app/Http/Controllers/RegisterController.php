@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
@@ -23,22 +24,48 @@ class RegisterController extends Controller
 
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
+         // Validasi data user
+        $validator = Validator::make($request->all(), [
             'username' => 'required|unique:users',
             'password' => 'required|min:8',
             'nama_pembeli' => 'required',
             'role' => 'required',
             'pekerjaan' => 'required',
-            'no_telepon' => 'required',
+            'no_telepon' => 'required|numeric',
             'alamat' => 'required',
             'foto_ktp' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'foto_pembeli' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ], [
+            'username.required' => 'Username belum diisi',
+            'username.unique' => 'Username sudah digunakan',
+            'password.required' => 'Password belum diisi',
+            'password.min' => 'Password minimal terdiri dari :min karakter',
+            'nama_pembeli.required' => 'Nama belum diisi',
+            'role.required' => 'Role belum diisi',
+            'pekerjaan.required' => 'Pekerjaan belum diisi',
+            'no_telepon.required' => 'Nomor telepon belum diisi',
+            'no_telepon.numeric' => 'Nomor telepon harus dalam angka',
+            'alamat.required' => 'Alamat belum diisi',
+            'foto_ktp.required' => 'Foto KTP belum diunggah',
+            'foto_ktp.image' => 'File harus berupa gambar',
+            'foto_ktp.mimes' => 'Format file harus jpeg, png, jpg, atau gif',
+            'foto_ktp.max' => 'Ukuran file tidak boleh lebih dari 2MB',
+            'foto_pembeli.required' => 'Foto pembeli belum diunggah',
+            'foto_pembeli.image' => 'File harus berupa gambar',
+            'foto_pembeli.mimes' => 'Format file harus jpeg, png, jpg, atau gif',
+            'foto_pembeli.max' => 'Ukuran file tidak boleh lebih dari 2MB',
         ]);
 
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        // Buat entitas User
         $user = User::create([
-            'username' => $validatedData['username'],
-            'password' => bcrypt($validatedData['password']),
-            'role' => $validatedData['role'],
+            'username' => $request->input('username'),
+            'password' => bcrypt($request->input('password')),
+            'role' => $request->input('role'),
+            // sesuaikan dengan kolom lainnya
         ]);
 
         
@@ -85,10 +112,10 @@ class RegisterController extends Controller
 
         $pembeli = Pembeli::create([
             'user_id' => $user->id,
-            'nama_pembeli' => $validatedData['nama_pembeli'],
-            'pekerjaan' => $validatedData['pekerjaan'],
-            'no_telepon' => $validatedData['no_telepon'],
-            'alamat' => $validatedData['alamat'],
+            'nama_pembeli' => $request->input('nama_pembeli'),
+            'pekerjaan' => $request->input('pekerjaan'),
+            'no_telepon' => $request->input('no_telepon'),
+            'alamat' => $request->input('alamat'),
             'foto_ktp' => $url_ktp,
             'foto_pembeli' => $url_pembeli,
             // 'is_verified' => $request->has('is_verified')

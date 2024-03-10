@@ -13,7 +13,7 @@
     <div class="card mt-1">
       <div class="card-body">
         <div class="alert alert-success" role="alert">
-          Silakan lengkapi form pendaftaran berikut. Akun pengguna yang didaftarkan harus data yang sebenar benarnya.
+          Silakan lengkapi form pendaftaran berikut. Akun pengguna yang didaftarkan harus data yang sebenar benarnya. No. telepon wajib terhubung dengan whatsapp agar kami dapat menginformasikan status verifikasi Anda.
         </div>
   
         <form action="/account/register" method="post" enctype="multipart/form-data">
