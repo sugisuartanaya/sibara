@@ -57,6 +57,22 @@
 
           <div class="row mb-3">
             <div class="col-sm-3 col-md-3 col-xs-12">
+              <label for="email" class="col-form-label">Email</label>
+              <span style="color: #eb340a;">*</span>
+            </div>
+            <div class="col-sm-9 col-md-9 col-xs-12">
+              <input type="text" name="email" id="email" placeholder="Isi dengan alamat email anda" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" >
+              @error('email')
+                <div class="invalid-feedback">
+                  {{ $message }}
+                </div>
+              @enderror
+            </div>
+          </div>
+
+
+          <div class="row mb-3">
+            <div class="col-sm-3 col-md-3 col-xs-12">
               <label for="nama_pembeli" class="col-form-label">Nama Lengkap</label>
               <span style="color: #eb340a;">*</span>
             </div>

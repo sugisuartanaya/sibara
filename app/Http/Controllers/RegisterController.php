@@ -27,6 +27,7 @@ class RegisterController extends Controller
          // Validasi data user
         $validator = Validator::make($request->all(), [
             'username' => 'required|unique:users',
+            'email' => 'required|unique:users',
             'password' => 'required|min:8',
             'nama_pembeli' => 'required',
             'role' => 'required',
@@ -38,6 +39,8 @@ class RegisterController extends Controller
         ], [
             'username.required' => 'Username belum diisi',
             'username.unique' => 'Username sudah digunakan',
+            'email.required' => 'email belum diisi',
+            'email.unique' => 'Email sudah digunakan',
             'password.required' => 'Password belum diisi',
             'password.min' => 'Password minimal terdiri dari :min karakter',
             'nama_pembeli.required' => 'Nama belum diisi',
@@ -63,6 +66,7 @@ class RegisterController extends Controller
         // Buat entitas User
         $user = User::create([
             'username' => $request->input('username'),
+            'email' => $request->input('email'),
             'password' => bcrypt($request->input('password')),
             'role' => $request->input('role'),
             // sesuaikan dengan kolom lainnya
