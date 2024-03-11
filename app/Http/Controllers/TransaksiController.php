@@ -37,13 +37,13 @@ class TransaksiController extends Controller
                         ->where('id_jadwal', $id_jadwal)
                         ->whereDoesntHave('transaksi')
                         ->orderBy('updated_at', 'asc')
-                        ->get();
+                        ->paginate(5);
         } else {
             $payment = Penawaran::where('id_pembeli', $pembeli->id)
                         ->where('status', 'menang')
                         ->whereDoesntHave('transaksi')
                         ->orderBy('updated_at', 'asc')
-                        ->get();
+                        ->paginate(5);
         }
 
         foreach ($payment as $pay) {
@@ -91,7 +91,8 @@ class TransaksiController extends Controller
                         ->whereHas('penawaran', function ($query) {
                             $query->whereNotIn('status', ['wanprestasi']);
                         })
-                        ->get();
+                        ->orderBy('id', 'desc')
+                        ->paginate(5);
         
         foreach ($transaksi as $trans) {
             $id_penawaran = $trans->id_penawaran;

@@ -93,7 +93,11 @@
                 @endforeach
               @endif
             <br><br><br>
-            
+
+            @if ($payment)
+              {{ $payment->links('pagination::bootstrap-5') }}
+            @endif
+
           </div>
         </div>
       </div>

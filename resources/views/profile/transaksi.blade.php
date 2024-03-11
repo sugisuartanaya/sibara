@@ -80,41 +80,52 @@
           <div class="card-body">
             <h5 class="text-secondary">Daftar Transaksi</h5>
             <br>
-              @foreach ($transaksi as $index => $pembelian)
-                <div class="card">
-                  <div class="card-body" style="box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
-                    <div class="row">
-                      <div class="col-md-8">
-                        <p class=""><strong>Pembayaran</strong> {{ \Carbon\Carbon::parse($pembelian->tanggal)->format('j M Y \j\a\m H:i') }}
-                          @if($pembelian->status == 'review')
-                            <span class="badge text-bg-secondary">Menunggu Konfirmasi</span>
-                          @elseif ($pembelian->status == 'data_salah')
-                            <span class="badge text-bg-danger">Transaksi Salah</span>
-                          @else 
-                            <span class="badge text-bg-success">Sukses</span>
+              @if($transaksi->isNotEmpty())
+                @foreach ($transaksi as $index => $pembelian)
+                  <div class="card">
+                    <div class="card-body" style="box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                      <div class="row">
+                        <div class="col-md-8">
+                          <p class=""><strong>Pembayaran</strong> {{ \Carbon\Carbon::parse($pembelian->tanggal)->format('j M Y \j\a\m H:i') }}
+                            @if($pembelian->status == 'review')
+                              <span class="badge text-bg-secondary">Menunggu Konfirmasi</span>
+                            @elseif ($pembelian->status == 'data_salah')
+                              <span class="badge text-bg-danger">Transaksi Salah</span>
+                            @else 
+                              <span class="badge text-bg-success">Sukses</span>
+                            @endif
+                          </p>
+                          <p>{{ $pembelian->penawaran->barang_rampasan->nama_barang }}</p>
+                          
+                        </div>
+                        <div class="col-md-4">
+                          @if ($pembelian->status == 'data_salah')
+                            <p>Bayar sebelum: <strong class="countdownWinner text-danger"></strong></p>
+                            <p class="batas" data-end-date="{{ $countdownWinner[$index] }}" data-index="{{ $index }}"></p>
+                            <a href="/revisi/{{ $pembelian->penawaran->id }}"><button class="btn btn-success">Upload Ulang</button></a>
+                          @elseif ($pembelian->status == 'verified')
+                            <a href="/print-pdf/{{ $pembelian->id }}"><button class="btn btn-success mt-4"><i class="fa-solid fa-print"></i>&nbsp; Cetak Bukti Pembayaran</button></a>
                           @endif
-                        </p>
-                        <p>{{ $pembelian->penawaran->barang_rampasan->nama_barang }}</p>
-                        
-                      </div>
-                      <div class="col-md-4">
-                        @if ($pembelian->status == 'data_salah')
-                          <p>Bayar sebelum: <strong class="countdownWinner text-danger"></strong></p>
-                          <p class="batas" data-end-date="{{ $countdownWinner[$index] }}" data-index="{{ $index }}"></p>
-                          <a href="/revisi/{{ $pembelian->penawaran->id }}"><button class="btn btn-success">Upload Ulang</button></a>
-                        @elseif ($pembelian->status == 'verified')
-                          <a href="/print-pdf/{{ $pembelian->id }}"><button class="btn btn-success mt-4"><i class="fa-solid fa-print"></i>&nbsp; Cetak Bukti Pembayaran</button></a>
-                        @endif
+                        </div>
                       </div>
                     </div>
                   </div>
+                  <br>
+                @endforeach
+              @else
+                <div class="card">
+                  <div class="card-body" style="box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                    <p>Belum ada transaksi</p>
+                    <br>
+                  </div>
                 </div>
-                <br>
-              @endforeach
-                
-              
+                <br><br>
+              @endif
             <br><br><br>
-            
+
+            @if ($transaksi)
+              {{ $transaksi->links('pagination::bootstrap-5') }}
+            @endif
           </div>
         </div>
       </div>
