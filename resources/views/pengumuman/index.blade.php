@@ -22,9 +22,9 @@
       <p style="font-weight: bold; margin-bottom: 0px">No Surat Keterangan Penjualan Langsung: </p>
       <p class="mt-0 mb-2">{{ $jadwal->no_sprint }}</p>
       <p style="font-weight: bold; margin-bottom: 0px">Tanggal Surat Keterangan Penjualan Langsung: </p>
-      <p class="mt-0 mb-2">{{ \Carbon\Carbon::parse($jadwal->tgl_sprint)->format('d F Y') }}</p>
+      <p class="mt-0 mb-2">{{ \Carbon\Carbon::parse($jadwal->tgl_sprint)->translatedFormat('d F Y') }}</p>
       <p style="font-weight: bold; margin-bottom: 0px">Pelaksanaan Lelang Penjualan Langsung: </p>
-      <p class="mt-0 mb-2">{{ \Carbon\Carbon::parse($jadwal->start_date)->format('d F Y') }} s/d {{ \Carbon\Carbon::parse($jadwal->end_date)->format('d F Y') }}, jam {{ \Carbon\Carbon::parse($jadwal->start_date)->format('H.i') }} - {{ \Carbon\Carbon::parse($jadwal->end_date)->format('H.i') }} WITA</p>
+      <p class="mt-0 mb-2">{{ \Carbon\Carbon::parse($jadwal->start_date)->translatedFormat('d F Y') }} s/d {{ \Carbon\Carbon::parse($jadwal->end_date)->translatedFormat('d F Y') }}, jam {{ \Carbon\Carbon::parse($jadwal->start_date)->format('H.i') }} - {{ \Carbon\Carbon::parse($jadwal->end_date)->format('H.i') }} WITA</p>
 
       <div class="col-md-12 mt-3">
         <table class="table table-bordered table-striped">
