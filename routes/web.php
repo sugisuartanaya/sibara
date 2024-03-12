@@ -37,8 +37,8 @@ Route::post('password/reset', [ForgotPasswordController::class, 'reset'])->name(
 Route::post('/account/login', [LoginController::class, 'authenticate'])->name('login')->middleware('guest');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::get('/account/register', [RegisterController::class, 'index']);
-Route::post('/account/register', [RegisterController::class, 'store']);
+Route::get('/account/register', [RegisterController::class, 'index'])->middleware('guest');
+Route::post('/account/register', [RegisterController::class, 'store'])->middleware('guest');
 
 Route::get('/account/profile', [PembeliController::class, 'index']);
 Route::put('/account/updateNotelp/{id}', [PembeliController::class, 'updateProfileData']);
@@ -67,4 +67,4 @@ Route::get('/revisi/{id}', [TransaksiController::class, 'revisi'])->middleware('
 Route::post('/pembayaran/{id}', [TransaksiController::class, 'upload'])->middleware('auth');
 Route::put('/pembayaran/revisi/{id}', [TransaksiController::class, 'uploadRevisi'])->middleware('auth');
 
-Route::get('print-pdf/{id}', [TransaksiController::class, 'printPdf']);
+Route::get('print-pdf/{id}', [TransaksiController::class, 'printPdf'])->middleware('auth');
